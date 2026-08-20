@@ -1,0 +1,354 @@
+// Prisma schema — Dailys backend
+// Sumber kebenaran struktur: ../../schema.md (13 entity + konvensi global)
+//
+// Catatan desain: field DB di sini pakai snake_case supaya 1:1 dengan kontrak
+// JSON di API-SPEC.md (mis. "mata_kuliah_id", "start_time") tanpa perlu layer
+// mapping camelCase<->snake_case terpisah. Trade-off: sedikit tidak idiomatis
+// dibanding konvensi Prisma/JS pada umumnya, tapi lebih simpel untuk project
+// single-dev ini.
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Prioritas {
+  low
+  medium
+  high
+}
+
+enum TugasStatus {
+  belum
+  progress
+  selesai
+}
+
+enum ActivityStatus {
+  belum_mulai
+  berjalan
+  selesai
+  dilewati
+}
+
+enum ActivitySource {
+  manual
+  pomodoro
+  timebox
+  tugas
+  habit
+}
+
+enum PomodoroJenis {
+  fokus
+  istirahat_pendek
+  istirahat_panjang
+}
+
+enum PomodoroStatus {
+  completed
+  cancelled
+}
+
+enum Hari {
+  senin
+  selasa
+  rabu
+  kamis
+  jumat
+  sabtu
+  minggu
+}
+
+enum HabitLogStatus {
+  done
+  skip
+  missed
+}
+
+enum AkunTipe {
+  cash
+  bank
+  ewallet
+  custom
+}
+
+enum KeuanganTipe {
+  income
+  expense
+}
+
+enum TransaksiTipe {
+  income
+  expense
+  transfer
+}
+
+model User {
+  id            String   @id @default(uuid())
+  nama          String
+  email         String   @unique
+  password_hash String
+  created_at    DateTime @default(now())
+  updated_at    DateTime @updatedAt
+  is_deleted    Boolean  @default(false)
+  deleted_at    DateTime?
+
+  @@map("users")
+}
+
+model MataKuliah {
+  id         String    @id @default(uuid())
+  user_id    String
+  nama       String
+  dosen      String?
+  sks        Int?
+  semester   String?
+  warna      String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  is_deleted Boolean   @default(false)
+  deleted_at DateTime?
+
+  tugas Tugas[]
+
+  @@map("mata_kuliah")
+}
+
+model Tugas {
+  id               String      @id @default(uuid())
+  user_id          String
+  mata_kuliah_id   String?
+  judul            String
+  deskripsi        String?
+  deadline         DateTime
+  prioritas        Prioritas
+  estimasi_menit   Int?
+  status           TugasStatus @default(belum)
+  reminder_offsets Json        @default("[7,3,1,0]")
+  created_at       DateTime    @default(now())
+  updated_at       DateTime    @updatedAt
+  is_deleted       Boolean     @default(false)
+  deleted_at       DateTime?
+
+  mata_kuliah      MataKuliah?       @relation(fields: [mata_kuliah_id], references: [id])
+  checklist        TugasChecklist[]
+  pomodoro_sessions PomodoroSession[]
+  timebox_schedules TimeboxSchedule[]
+
+  @@map("tugas")
+}
+
+model TugasChecklist {
+  id         String    @id @default(uuid())
+  tugas_id   String
+  judul      String
+  is_done    Boolean   @default(false)
+  urutan     Int
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  is_deleted Boolean   @default(false)
+  deleted_at DateTime?
+
+  tugas Tugas @relation(fields: [tugas_id], references: [id])
+
+  @@map("tugas_checklist")
+}
+
+model Activity {
+  id                  String         @id @default(uuid())
+  user_id             String
+  judul               String
+  kategori             String
+  start_time           DateTime?
+  end_time             DateTime?
+  is_all_day           Boolean        @default(false)
+  status                ActivityStatus
+  is_recurring          Boolean        @default(false)
+  recurring_days        Json?
+  recurring_end_date    DateTime?
+  source                ActivitySource @default(manual)
+  source_id             String?
+  catatan               String?
+  created_at            DateTime       @default(now())
+  updated_at            DateTime       @updatedAt
+  is_deleted            Boolean        @default(false)
+  deleted_at            DateTime?
+
+  @@map("activity")
+}
+
+model PomodoroSession {
+  id            String         @id @default(uuid())
+  user_id       String
+  tugas_id      String?
+  habit_id      String?
+  start_time    DateTime
+  end_time      DateTime?
+  durasi_menit  Int
+  jenis         PomodoroJenis
+  status        PomodoroStatus
+  created_at    DateTime       @default(now())
+  updated_at    DateTime       @updatedAt
+  is_deleted    Boolean        @default(false)
+  deleted_at    DateTime?
+
+  tugas Tugas? @relation(fields: [tugas_id], references: [id])
+  habit Habit? @relation(fields: [habit_id], references: [id])
+
+  @@map("pomodoro_session")
+}
+
+model TimeboxSchedule {
+  id                String    @id @default(uuid())
+  user_id           String
+  tugas_id          String?
+  habit_id          String?
+  judul             String
+  kategori          String
+  start_time        String
+  end_time          String
+  hari              Hari?
+  tanggal_spesifik  DateTime?
+  is_recurring      Boolean
+  is_active         Boolean   @default(true)
+  created_at        DateTime  @default(now())
+  updated_at        DateTime  @updatedAt
+  is_deleted        Boolean   @default(false)
+  deleted_at        DateTime?
+
+  tugas Tugas? @relation(fields: [tugas_id], references: [id])
+  habit Habit? @relation(fields: [habit_id], references: [id])
+
+  @@map("timebox_schedule")
+}
+
+model Habit {
+  id                     String    @id @default(uuid())
+  user_id                String
+  nama                   String
+  target_hari            Json
+  warna                  String
+  icon                   String?
+  longest_streak         Int       @default(0)
+  max_izin_per_periode   Int       @default(1)
+  is_archived            Boolean   @default(false)
+  urutan                 Int
+  created_at             DateTime  @default(now())
+  updated_at             DateTime  @updatedAt
+  is_deleted             Boolean   @default(false)
+  deleted_at             DateTime?
+
+  logs              HabitLog[]
+  pomodoro_sessions PomodoroSession[]
+  timebox_schedules TimeboxSchedule[]
+
+  @@map("habit")
+}
+
+model HabitLog {
+  id         String         @id @default(uuid())
+  habit_id   String
+  tanggal    DateTime       @db.Date
+  status     HabitLogStatus
+  catatan    String?
+  created_at DateTime       @default(now())
+  updated_at DateTime       @updatedAt
+  is_deleted Boolean        @default(false)
+  deleted_at DateTime?
+
+  habit Habit @relation(fields: [habit_id], references: [id])
+
+  @@map("habit_log")
+}
+
+model Akun {
+  id         String    @id @default(uuid())
+  user_id    String
+  nama       String
+  tipe       AkunTipe
+  saldo      Decimal   @default(0)
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  is_deleted Boolean   @default(false)
+  deleted_at DateTime?
+
+  transaksi_asal   Transaksi[] @relation("TransaksiAkunAsal")
+  transaksi_tujuan Transaksi[] @relation("TransaksiAkunTujuan")
+
+  @@map("akun")
+}
+
+model CategoryKeuangan {
+  id         String       @id @default(uuid())
+  user_id    String
+  nama       String
+  tipe       KeuanganTipe
+  icon       String?
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+  is_deleted Boolean      @default(false)
+  deleted_at DateTime?
+
+  transaksi Transaksi[]
+
+  @@map("category_keuangan")
+}
+
+model Transaksi {
+  id               String        @id @default(uuid())
+  user_id          String
+  akun_id          String
+  akun_tujuan_id   String?
+  category_id      String?
+  jumlah           Decimal
+  tipe             TransaksiTipe
+  tanggal          DateTime      @db.Date
+  catatan          String?
+  created_at       DateTime      @default(now())
+  updated_at       DateTime      @updatedAt
+  is_deleted       Boolean       @default(false)
+  deleted_at       DateTime?
+
+  akun          Akun              @relation("TransaksiAkunAsal", fields: [akun_id], references: [id])
+  akun_tujuan   Akun?             @relation("TransaksiAkunTujuan", fields: [akun_tujuan_id], references: [id])
+  category      CategoryKeuangan? @relation(fields: [category_id], references: [id])
+
+  @@map("transaksi")
+}
+
+/// v1.1 — Future Scope (lihat PRD Section 8), disiapkan di schema tapi belum dipakai endpoint manapun di v1.
+model QuickCapture {
+  id                 String    @id @default(uuid())
+  user_id            String
+  konten             String
+  tipe_tujuan        String
+  status             String
+  processed_to_id    String?
+  processed_to_type  String?
+  created_at         DateTime  @default(now())
+  updated_at         DateTime  @updatedAt
+  is_deleted         Boolean   @default(false)
+  deleted_at         DateTime?
+
+  @@map("quick_capture")
+}
+
+/// v1.1 — Future Scope (lihat PRD Section 8), disiapkan di schema tapi belum dipakai endpoint manapun di v1.
+model BackupExportLog {
+  id         String    @id @default(uuid())
+  user_id    String
+  tipe       String
+  file_path  String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  is_deleted Boolean   @default(false)
+  deleted_at DateTime?
+
+  @@map("backup_export_log")
+}

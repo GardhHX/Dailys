@@ -1,0 +1,12 @@
+{
+  "@@locale": "id",
+  "appTitle": "Dailys",
+  "@appTitle": {
+    "description": "Nama aplikasi"
+  },
+  "navHome": "Home",
+  "navTugas": "Tugas",
+  "navPomodoro": "Pomodoro",
+  "navKeuangan": "Keuangan",
+  "navHabit": "Habit"
+}
