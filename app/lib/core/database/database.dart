@@ -5,6 +5,7 @@ import 'package:drift/native.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
+import 'daos/activity_dao.dart';
 import 'tables.dart';
 
 part 'database.g.dart';
@@ -23,12 +24,20 @@ part 'database.g.dart';
     CategoryKeuangan,
     Transaksi,
   ],
+  daos: [ActivityDao],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
+  AppDatabase.forTesting(super.executor);
+
   @override
   int get schemaVersion => 1;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onCreate: (m) => m.createAll(),
+      );
 }
 
 LazyDatabase _openConnection() {
