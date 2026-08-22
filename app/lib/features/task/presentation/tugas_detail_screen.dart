@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/database/database.dart';
+import '../../../core/theme/app_colors.dart';
 import '../application/tugas_providers.dart';
 import 'widgets/tugas_format.dart';
 import 'widgets/tugas_form_sheet.dart';
@@ -33,7 +34,7 @@ class _TugasDetailScreenState extends ConsumerState<TugasDetailScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Detail Tugas'),
+        title: const Text('Tugas detail'),
         actions: [
           IconButton(
             icon: const Icon(Icons.edit),
@@ -51,11 +52,11 @@ class _TugasDetailScreenState extends ConsumerState<TugasDetailScreen> {
       body: tugasAsync.when(
         data: (list) {
           final tugas = list.where((t) => t.id == widget.tugasId).firstOrNull;
-          if (tugas == null) return const Center(child: Text('Tugas tidak ditemukan (mungkin sudah dihapus).'));
+          if (tugas == null) return const Center(child: Text('Tugas not found (it may have been deleted).'));
           return _buildBody(context, tugas, checklistAsync);
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Gagal memuat: $e')),
+        error: (e, _) => Center(child: Text('Failed to load: $e')),
       ),
     );
   }
@@ -68,7 +69,7 @@ class _TugasDetailScreenState extends ConsumerState<TugasDetailScreen> {
         const SizedBox(height: 4),
         Text(
           '${formatDate(tugas.deadline)} • ${countdownLabel(tugas.deadline)}',
-          style: TextStyle(color: isOverdue(tugas.deadline, tugas.status) ? Colors.red : null),
+          style: TextStyle(color: isOverdue(tugas.deadline, tugas.status) ? AppColors.danger : null),
         ),
         const SizedBox(height: 16),
         Text('Status', style: Theme.of(context).textTheme.labelLarge),
@@ -80,7 +81,7 @@ class _TugasDetailScreenState extends ConsumerState<TugasDetailScreen> {
         ),
         if (tugas.deskripsi != null && tugas.deskripsi!.isNotEmpty) ...[
           const SizedBox(height: 16),
-          Text('Catatan', style: Theme.of(context).textTheme.labelLarge),
+          Text('Notes', style: Theme.of(context).textTheme.labelLarge),
           const SizedBox(height: 4),
           Text(tugas.deskripsi!),
         ],
@@ -109,7 +110,7 @@ class _TugasDetailScreenState extends ConsumerState<TugasDetailScreen> {
                   Expanded(
                     child: TextField(
                       controller: _newItemController,
-                      decoration: const InputDecoration(hintText: 'Tambah item checklist'),
+                      decoration: const InputDecoration(hintText: 'Add checklist item'),
                       onSubmitted: (_) => _addChecklistItem(items.length),
                     ),
                   ),
@@ -119,7 +120,7 @@ class _TugasDetailScreenState extends ConsumerState<TugasDetailScreen> {
             ],
           ),
           loading: () => const CircularProgressIndicator(),
-          error: (e, _) => Text('Gagal memuat checklist: $e'),
+          error: (e, _) => Text('Failed to load checklist: $e'),
         ),
       ],
     );
@@ -136,11 +137,11 @@ class _TugasDetailScreenState extends ConsumerState<TugasDetailScreen> {
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Hapus tugas?'),
-        content: const Text('Tugas ini akan dihapus dari daftar.'),
+        title: const Text('Delete tugas?'),
+        content: const Text('This tugas will be removed from the list.'),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Batal')),
-          TextButton(onPressed: () => Navigator.pop(context, true), child: const Text('Hapus')),
+          TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
+          TextButton(onPressed: () => Navigator.pop(context, true), child: const Text('Delete')),
         ],
       ),
     );

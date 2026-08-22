@@ -5,6 +5,20 @@ import '../data/activity_repository.dart';
 
 enum ActivityViewMode { list, timeline }
 
+/// Toggle level Home (bukan level Activity): Today View vs Weekly Grid
+/// Timebox (PRD Section 7 — Home menggabungkan Activity + Timebox di 1 tab).
+/// Ditaruh di sini karena `HomeScreen` sendiri sudah tinggal di
+/// `features/activity/presentation` sejak Phase 1.
+enum HomeViewMode { today, weeklyGrid }
+
+final homeViewModeProvider = StateProvider<HomeViewMode>((ref) => HomeViewMode.today);
+
+/// Tanggal terakhir user men-dismiss banner konflik jadwal — dibandingkan
+/// terhadap [selectedDateProvider] (bukan flag boolean polos) supaya
+/// otomatis muncul lagi begitu pindah ke tanggal lain, tanpa perlu logic
+/// reset manual.
+final dismissedConflictDateProvider = StateProvider<DateTime?>((ref) => null);
+
 final databaseProvider = Provider<AppDatabase>((ref) {
   final db = AppDatabase();
   ref.onDispose(db.close);

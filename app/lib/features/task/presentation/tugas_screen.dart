@@ -2,103 +2,125 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../core/database/database.dart';
+import '../../../shared/widgets/screen_header.dart';
 import '../application/tugas_providers.dart';
 import 'widgets/tugas_form_sheet.dart';
 import 'widgets/tugas_status_column.dart';
 
-/// Tugas List — layout 3 kolom by status: Due Tugas (belum) di kiri,
-/// Progress & Done ditumpuk di kanan. Status diubah langsung per-tile
-/// (bukan lewat filter) — FR-6.7, FR-6.10, FR-6.13.
-class TugasScreen extends ConsumerWidget {
+/// Tugas List — 3 kolom kanban SEJAJAR (Due Tugas / Progress / Done),
+/// masing-masing 1fr, persis `grid-template-columns:repeat(3,1fr)` di file
+/// desain Claude Design. Sebelumnya "Due Tugas" memenuhi kolom kiri penuh
+/// sementara Progress & Done ditumpuk di kanan — itu tidak ada di desain,
+/// diperbaiki 23 Agu 2026 atas permintaan user (FR-6.7, FR-6.13).
+/// **Filter chip prioritas & mata kuliah (FR-6.10) sengaja TIDAK dipasang**
+/// meski ada di file desain — dihapus ulang atas permintaan eksplisit user
+/// 22 Agu 2026 (setelah sempat dikembalikan di sesi sebelumnya karena
+/// desain menunjukkannya). Ini penyimpangan sadar dari file desain, bukan
+/// asumsi AI — lihat catatan di `PLAN.md` & `DESIGN.md` Section 6.
+class TugasScreen extends ConsumerStatefulWidget {
   const TugasScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<TugasScreen> createState() => _TugasScreenState();
+}
+
+class _TugasScreenState extends ConsumerState<TugasScreen> {
+  @override
+  Widget build(BuildContext context) {
     final tugasAsync = ref.watch(tugasListProvider);
     final mataKuliahAsync = ref.watch(mataKuliahListProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Tugas'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.school_outlined),
-            tooltip: 'Mata Kuliah',
-            onPressed: () => context.push('/tugas/matakuliah'),
+      body: Column(
+        children: [
+          ScreenHeader(
+            eyebrow: 'TUGAS',
+            title: 'Coursework',
+            subtitle: 'Deadlines, priority and progress by mata kuliah',
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                OutlinedButton.icon(
+                  // Override minimumSize — theme default width infinite
+                  // crash kalau dipakai langsung di Row, lihat catatan yang
+                  // sama di home_screen.dart.
+                  style: OutlinedButton.styleFrom(
+                    minimumSize: const Size(0, 40),
+                  ),
+                  onPressed: () => context.push('/tugas/matakuliah'),
+                  icon: const Icon(Icons.school_outlined, size: 18),
+                  label: const Text('Mata Kuliah'),
+                ),
+                const SizedBox(width: 8),
+                FilledButton.icon(
+                  style: FilledButton.styleFrom(minimumSize: const Size(0, 40)),
+                  onPressed: () => showTugasFormSheet(context),
+                  icon: const Icon(Icons.add, size: 18),
+                  label: const Text('Add Tugas'),
+                ),
+              ],
+            ),
           ),
+          Expanded(child: _buildBody(context, mataKuliahAsync, tugasAsync)),
         ],
       ),
-      body: mataKuliahAsync.when(
-        data: (mataKuliahList) {
-          final mataKuliahById = {for (final mk in mataKuliahList) mk.id: mk};
+    );
+  }
 
-          return Column(
-            children: [
-              Expanded(
-                child: tugasAsync.when(
-                  data: (list) {
-                    final sorted = [...list]..sort((a, b) => a.deadline.compareTo(b.deadline));
-                    final belum = sorted.where((t) => t.status == 'belum').toList();
-                    final progress = sorted.where((t) => t.status == 'progress').toList();
-                    final selesai = sorted.where((t) => t.status == 'selesai').toList();
+  Widget _buildBody(
+    BuildContext context,
+    AsyncValue<List<MataKuliahData>> mataKuliahAsync,
+    AsyncValue<List<TugasData>> tugasAsync,
+  ) {
+    return mataKuliahAsync.when(
+      data: (mataKuliahList) {
+        final mataKuliahById = {for (final mk in mataKuliahList) mk.id: mk};
 
-                    void onTap(t) => context.push('/tugas/${t.id}');
+        return tugasAsync.when(
+          data: (list) {
+            final sorted = [...list]
+              ..sort((a, b) => a.deadline.compareTo(b.deadline));
 
-                    return Padding(
-                      padding: const EdgeInsets.all(12),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Expanded(
-                            child: TugasStatusColumn(
-                              title: 'Due Tugas',
-                              items: belum,
-                              mataKuliahById: mataKuliahById,
-                              onTapTugas: onTap,
-                            ),
-                          ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Column(
-                              children: [
-                                Expanded(
-                                  child: TugasStatusColumn(
-                                    title: 'Progress',
-                                    items: progress,
-                                    mataKuliahById: mataKuliahById,
-                                    onTapTugas: onTap,
-                                  ),
-                                ),
-                                const SizedBox(height: 12),
-                                Expanded(
-                                  child: TugasStatusColumn(
-                                    title: 'Done',
-                                    items: selesai,
-                                    mataKuliahById: mataKuliahById,
-                                    onTapTugas: onTap,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+            void onTap(TugasData t) => context.push('/tugas/${t.id}');
+
+            // Kolom didefinisikan sebagai data (label, key status) supaya
+            // ketiganya dibangun lewat 1 loop — menjamin lebar & jarak
+            // ketiga kolom benar-benar identik seperti grid di desain,
+            // alih-alih 3 blok widget terpisah yang gampang melenceng.
+            const columns = [
+              ('Due Tugas', 'belum'),
+              ('Progress', 'progress'),
+              ('Done', 'selesai'),
+            ];
+
+            return SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(24, 20, 24, 48),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (final (label, status) in columns) ...[
+                    if (status != columns.first.$2) const SizedBox(width: 20),
+                    Expanded(
+                      child: TugasStatusColumn(
+                        title: label,
+                        status: status,
+                        items: sorted.where((t) => t.status == status).toList(),
+                        mataKuliahById: mataKuliahById,
+                        onTapTugas: onTap,
                       ),
-                    );
-                  },
-                  loading: () => const Center(child: CircularProgressIndicator()),
-                  error: (e, _) => Center(child: Text('Gagal memuat: $e')),
-                ),
+                    ),
+                  ],
+                ],
               ),
-            ],
-          );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Gagal memuat: $e')),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => showTugasFormSheet(context),
-        child: const Icon(Icons.add),
-      ),
+            );
+          },
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (e, _) => Center(child: Text('Failed to load: $e')),
+        );
+      },
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (e, _) => Center(child: Text('Failed to load: $e')),
     );
   }
 }

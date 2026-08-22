@@ -7,12 +7,16 @@ import '../../features/habit/presentation/habit_screen.dart';
 import '../../features/pomodoro/presentation/pomodoro_screen.dart';
 import '../../features/task/presentation/mata_kuliah_screen.dart';
 import '../../features/task/presentation/tugas_detail_screen.dart';
+import '../../features/settings/presentation/settings_screen.dart';
 import '../../features/task/presentation/tugas_screen.dart';
 import '../../shared/widgets/main_scaffold.dart';
 
 final appRouter = GoRouter(
   initialLocation: '/home',
   routes: [
+    // Sibling dari shell (bukan salah satu 5 tab) — diakses lewat link
+    // "Settings" di sidebar, dari layar manapun (PRD Section 7).
+    GoRoute(path: '/settings', builder: (context, state) => const SettingsScreen()),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) => _AppShell(navigationShell: navigationShell),
       branches: [

@@ -33,6 +33,32 @@ class ActivityOccurrence {
 
   /// Untuk occurrence virtual, ini id dari recurring template asalnya.
   String get templateId => data.id;
+
+  /// Key unik per kemunculan (bukan cuma per template) — dipakai untuk
+  /// menandai occurrence mana saja yang bentrok jadwalnya di 1 hari yang
+  /// sama tanpa keliru menyamakan 2 kemunculan berbeda dari 1 template.
+  String get occurrenceKey => '$templateId-${occurrenceDate.toIso8601String()}';
+}
+
+/// FR-1.8 — hitung set [ActivityOccurrence.occurrenceKey] yang jadwalnya
+/// bentrok dengan occurrence lain di [occurrences] (dipakai untuk banner
+/// konflik & highlight kartu di Today View, bukan cuma validasi form).
+Set<String> overlappingOccurrenceKeys(List<ActivityOccurrence> occurrences) {
+  final timed = occurrences
+      .where((o) => !o.data.isAllDay && o.data.startTime != null && o.data.endTime != null)
+      .toList();
+  final result = <String>{};
+  for (var i = 0; i < timed.length; i++) {
+    for (var j = i + 1; j < timed.length; j++) {
+      final a = timed[i];
+      final b = timed[j];
+      if (a.data.startTime!.isBefore(b.data.endTime!) && b.data.startTime!.isBefore(a.data.endTime!)) {
+        result.add(a.occurrenceKey);
+        result.add(b.occurrenceKey);
+      }
+    }
+  }
+  return result;
 }
 
 /// Layer di antara UI dan [ActivityDao] — nampung business rule yang bukan

@@ -7,6 +7,7 @@ const healthRoutes = require('./routes/health.routes');
 const activityRoutes = require('./routes/activity.routes');
 const matakuliahRoutes = require('./routes/matakuliah.routes');
 const tugasRoutes = require('./routes/tugas.routes');
+const timeboxRoutes = require('./routes/timebox.routes');
 
 const app = express();
 
@@ -22,8 +23,9 @@ app.use('/api/v1', authMiddleware);
 app.use('/api/v1', activityRoutes);
 app.use('/api/v1', matakuliahRoutes);
 app.use('/api/v1', tugasRoutes);
+app.use('/api/v1', timeboxRoutes);
 
-// Route per resource lain ditambahkan di sini seiring Phase 3-6 (lihat PLAN.md).
+// Route per resource lain ditambahkan di sini seiring Phase 4-6 (lihat PLAN.md).
 
 app.use(notFoundHandler);
 app.use(errorHandler);

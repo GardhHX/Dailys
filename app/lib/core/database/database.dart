@@ -6,6 +6,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 import 'daos/activity_dao.dart';
+import 'daos/timebox_dao.dart';
 import 'daos/tugas_dao.dart';
 import 'tables.dart';
 
@@ -25,7 +26,7 @@ part 'database.g.dart';
     CategoryKeuangan,
     Transaksi,
   ],
-  daos: [ActivityDao, TugasDao],
+  daos: [ActivityDao, TugasDao, TimeboxDao],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());

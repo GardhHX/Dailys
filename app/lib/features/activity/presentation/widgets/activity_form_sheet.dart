@@ -5,12 +5,18 @@ import '../../../../core/database/database.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../shared/widgets/form_dialog.dart';
 import '../../application/activity_providers.dart';
 
-const _weekdayLabels = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+const _weekdayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const _customKategoriValue = '__custom__';
 
-/// Modal bottom sheet tambah/edit activity — FR-1.1, FR-1.2, FR-1.3, FR-1.4,
-/// FR-1.12. Dipanggil lewat [showActivityFormSheet].
+/// Form tambah/edit activity — FR-1.1, FR-1.2, FR-1.3, FR-1.4, FR-1.12.
+/// Dipanggil lewat [showActivityFormSheet]. Tampil sebagai [AppFormDialog]
+/// (modal terpusat) — DIREVISI 23 Agu 2026 dari bottom sheet, lihat catatan
+/// di `form_dialog.dart`. Field & copy 1:1 dgn screenshot "Add activity"
+/// yang dikirim user: dropdown kategori (bukan chip), toggle bergaya radio
+/// utk all-day/recurring (bukan Switch), field waktu kotak+ikon jam.
 class ActivityFormSheet extends ConsumerStatefulWidget {
   const ActivityFormSheet({super.key, this.editing, required this.initialDate});
 
@@ -121,7 +127,7 @@ class _ActivityFormSheetState extends ConsumerState<ActivityFormSheet> {
     if (!_formKey.currentState!.validate()) return;
     if (!_isAllDay && (_startTime == null || _endTime == null)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Isi jam mulai & selesai, atau tandai all-day.')),
+        const SnackBar(content: Text('Set start & end time, or mark as all-day.')),
       );
       return;
     }
@@ -130,7 +136,7 @@ class _ActivityFormSheetState extends ConsumerState<ActivityFormSheet> {
       final end = _combineDate(_endTime)!;
       if (!end.isAfter(start)) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Jam selesai harus setelah jam mulai.')),
+          const SnackBar(content: Text('End time must be after start time.')),
         );
         return;
       }
@@ -182,105 +188,87 @@ class _ActivityFormSheetState extends ConsumerState<ActivityFormSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-        bottom: MediaQuery.viewInsetsOf(context).bottom,
-        left: AppSpacing.md,
-        right: AppSpacing.md,
-        top: AppSpacing.md,
-      ),
-      child: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(_isEditing ? 'Edit Activity' : 'Tambah Activity', style: Theme.of(context).textTheme.titleLarge),
-              const SizedBox(height: AppSpacing.md),
-              TextFormField(
-                controller: _judulController,
-                decoration: const InputDecoration(labelText: 'Judul'),
-                validator: (v) => (v == null || v.trim().isEmpty) ? 'Judul wajib diisi' : null,
-                autofocus: !_isEditing,
-              ),
-              const SizedBox(height: AppSpacing.md),
-              _buildKategoriPicker(),
-              const SizedBox(height: AppSpacing.md),
-              SwitchListTile(
-                contentPadding: EdgeInsets.zero,
-                title: const Text('Sepanjang hari (all-day)'),
-                value: _isAllDay,
-                onChanged: (v) => setState(() {
-                  _isAllDay = v;
-                  _overlapWarning = [];
-                }),
-              ),
-              if (!_isAllDay) _buildTimePickers(),
-              if (_overlapWarning.isNotEmpty) _buildOverlapWarning(),
+    return AppFormDialog(
+      title: _isEditing ? 'Edit activity' : 'Add activity',
+      saveLabel: 'Save activity',
+      saving: _saving,
+      onCancel: () => Navigator.of(context).pop(),
+      onSave: _save,
+      child: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Title', style: Theme.of(context).textTheme.bodyMedium),
+            const SizedBox(height: 4),
+            TextFormField(
+              controller: _judulController,
+              decoration: const InputDecoration(hintText: 'e.g. Read chapter 4'),
+              validator: (v) => (v == null || v.trim().isEmpty) ? 'Title is required' : null,
+              autofocus: !_isEditing,
+            ),
+            const SizedBox(height: AppSpacing.md),
+            Text('Category', style: Theme.of(context).textTheme.bodyMedium),
+            const SizedBox(height: 4),
+            _buildKategoriDropdown(),
+            const SizedBox(height: AppSpacing.sm),
+            RadioToggleRow(
+              label: 'All day / no specific time',
+              value: _isAllDay,
+              onChanged: (v) => setState(() {
+                _isAllDay = v;
+                _overlapWarning = [];
+              }),
+            ),
+            if (!_isAllDay) ...[
               const SizedBox(height: AppSpacing.sm),
-              SwitchListTile(
-                contentPadding: EdgeInsets.zero,
-                title: const Text('Ulangi (recurring)'),
-                value: _isRecurring,
-                onChanged: (v) => setState(() => _isRecurring = v),
-              ),
-              if (_isRecurring) _buildRecurringPicker(),
-              const SizedBox(height: AppSpacing.md),
-              TextFormField(
-                controller: _catatanController,
-                decoration: const InputDecoration(labelText: 'Catatan (opsional)'),
-                maxLines: 2,
-              ),
-              const SizedBox(height: AppSpacing.lg),
-              SizedBox(
-                width: double.infinity,
-                child: FilledButton(
-                  onPressed: _saving ? null : _save,
-                  child: _saving
-                      ? const SizedBox(height: 18, width: 18, child: CircularProgressIndicator(strokeWidth: 2))
-                      : const Text('Simpan'),
-                ),
-              ),
-              const SizedBox(height: AppSpacing.lg),
+              _buildTimePickers(),
             ],
-          ),
+            if (_overlapWarning.isNotEmpty) _buildOverlapWarning(),
+            RadioToggleRow(
+              label: 'Recurring',
+              value: _isRecurring,
+              onChanged: (v) => setState(() => _isRecurring = v),
+            ),
+            if (_isRecurring) _buildRecurringPicker(),
+            const SizedBox(height: AppSpacing.md),
+            Text('Notes', style: Theme.of(context).textTheme.bodyMedium),
+            const SizedBox(height: 4),
+            TextFormField(
+              controller: _catatanController,
+              decoration: const InputDecoration(hintText: 'Optional'),
+              maxLines: 2,
+            ),
+          ],
         ),
       ),
     );
   }
 
-  Widget _buildKategoriPicker() {
+  Widget _buildKategoriDropdown() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Wrap(
-          spacing: AppSpacing.sm,
-          children: [
-            for (final k in AppColors.kategoriDefault.keys)
-              ChoiceChip(
-                label: Text(k),
-                selected: !_isCustomKategori && _kategori == k,
-                onSelected: (_) => setState(() {
-                  _isCustomKategori = false;
-                  _kategori = k;
-                }),
-              ),
-            ChoiceChip(
-              label: const Text('Custom'),
-              selected: _isCustomKategori,
-              onSelected: (_) => setState(() => _isCustomKategori = true),
-            ),
+        DropdownButtonFormField<String>(
+          initialValue: _isCustomKategori ? _customKategoriValue : _kategori,
+          items: [
+            for (final k in AppColors.kategoriDefault.keys) DropdownMenuItem(value: k, child: Text(k)),
+            const DropdownMenuItem(value: _customKategoriValue, child: Text('Custom')),
           ],
+          onChanged: (v) => setState(() {
+            _isCustomKategori = v == _customKategoriValue;
+            _kategori = _isCustomKategori ? null : v;
+          }),
         ),
         if (_isCustomKategori)
           Padding(
             padding: const EdgeInsets.only(top: AppSpacing.sm),
             child: TextFormField(
               controller: _customKategoriController,
-              decoration: const InputDecoration(labelText: 'Nama kategori custom'),
+              decoration: const InputDecoration(hintText: 'Custom category name'),
               validator: (v) =>
-                  _isCustomKategori && (v == null || v.trim().isEmpty) ? 'Kategori wajib diisi' : null,
+                  _isCustomKategori && (v == null || v.trim().isEmpty) ? 'Category name is required' : null,
             ),
           ),
       ],
@@ -291,16 +279,18 @@ class _ActivityFormSheetState extends ConsumerState<ActivityFormSheet> {
     return Row(
       children: [
         Expanded(
-          child: OutlinedButton(
-            onPressed: () => _pickTime(isStart: true),
-            child: Text(_startTime == null ? 'Jam mulai' : _startTime!.format(context)),
+          child: TimeFieldBox(
+            label: 'Start',
+            value: _startTime == null ? '--:--' : _startTime!.format(context),
+            onTap: () => _pickTime(isStart: true),
           ),
         ),
         const SizedBox(width: AppSpacing.sm),
         Expanded(
-          child: OutlinedButton(
-            onPressed: () => _pickTime(isStart: false),
-            child: Text(_endTime == null ? 'Jam selesai' : _endTime!.format(context)),
+          child: TimeFieldBox(
+            label: 'End',
+            value: _endTime == null ? '--:--' : _endTime!.format(context),
+            onTap: () => _pickTime(isStart: false),
           ),
         ),
       ],
@@ -309,7 +299,7 @@ class _ActivityFormSheetState extends ConsumerState<ActivityFormSheet> {
 
   Widget _buildOverlapWarning() {
     return Padding(
-      padding: const EdgeInsets.only(top: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
       child: Container(
         padding: const EdgeInsets.all(AppSpacing.sm),
         decoration: BoxDecoration(
@@ -317,7 +307,7 @@ class _ActivityFormSheetState extends ConsumerState<ActivityFormSheet> {
           borderRadius: BorderRadius.circular(AppRadius.sm),
         ),
         child: Text(
-          'Bentrok dengan: ${_overlapWarning.map((a) => a.judul).join(', ')}',
+          'Conflicts with: ${_overlapWarning.map((a) => a.judul).join(', ')}',
           style: TextStyle(color: AppColors.warning.withValues(alpha: 1)),
         ),
       ),
@@ -325,42 +315,45 @@ class _ActivityFormSheetState extends ConsumerState<ActivityFormSheet> {
   }
 
   Widget _buildRecurringPicker() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Wrap(
-          spacing: AppSpacing.xs,
-          children: [
-            for (var i = 0; i < 7; i++)
-              FilterChip(
-                label: Text(_weekdayLabels[i]),
-                selected: _recurringDays.contains(i + 1),
-                onSelected: (sel) => setState(() {
-                  if (sel) {
-                    _recurringDays.add(i + 1);
-                  } else {
-                    _recurringDays.remove(i + 1);
-                  }
-                }),
-              ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        OutlinedButton(
-          onPressed: () async {
-            final picked = await showDatePicker(
-              context: context,
-              initialDate: _recurringEndDate ?? widget.initialDate.add(const Duration(days: 30)),
-              firstDate: widget.initialDate,
-              lastDate: DateTime(2100),
-            );
-            if (picked != null) setState(() => _recurringEndDate = picked);
-          },
-          child: Text(_recurringEndDate == null
-              ? 'Tanggal berakhir (opsional)'
-              : 'Berakhir: ${_recurringEndDate!.toLocal().toString().split(' ').first}'),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(top: AppSpacing.sm),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Wrap(
+            spacing: AppSpacing.xs,
+            children: [
+              for (var i = 0; i < 7; i++)
+                FilterChip(
+                  label: Text(_weekdayLabels[i]),
+                  selected: _recurringDays.contains(i + 1),
+                  onSelected: (sel) => setState(() {
+                    if (sel) {
+                      _recurringDays.add(i + 1);
+                    } else {
+                      _recurringDays.remove(i + 1);
+                    }
+                  }),
+                ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          OutlinedButton(
+            onPressed: () async {
+              final picked = await showDatePicker(
+                context: context,
+                initialDate: _recurringEndDate ?? widget.initialDate.add(const Duration(days: 30)),
+                firstDate: widget.initialDate,
+                lastDate: DateTime(2100),
+              );
+              if (picked != null) setState(() => _recurringEndDate = picked);
+            },
+            child: Text(_recurringEndDate == null
+                ? 'End date (optional)'
+                : 'Ends: ${_recurringEndDate!.toLocal().toString().split(' ').first}'),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -370,9 +363,8 @@ Future<void> showActivityFormSheet(
   ActivityData? editing,
   required DateTime initialDate,
 }) {
-  return showModalBottomSheet(
+  return showDialog(
     context: context,
-    isScrollControlled: true,
     builder: (_) => ActivityFormSheet(editing: editing, initialDate: initialDate),
   );
 }
