@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../data/activity_repository.dart';
 
 const _hourHeight = 60.0;
@@ -61,7 +62,7 @@ class ActivityTimelineView extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             color: color.withValues(alpha: 0.85),
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(AppRadius.sm),
           ),
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
           alignment: Alignment.topLeft,

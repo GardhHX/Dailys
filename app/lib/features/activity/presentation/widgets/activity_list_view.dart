@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/theme/app_radius.dart';
 import '../../application/activity_providers.dart';
 import '../../data/activity_repository.dart';
 import 'activity_tile.dart';
@@ -45,7 +46,7 @@ class ActivityListView extends ConsumerWidget {
     return Container(
       decoration: BoxDecoration(
         border: Border.all(color: Theme.of(context).dividerColor),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(AppRadius.md),
       ),
       child: Column(
         children: [

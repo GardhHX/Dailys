@@ -652,7 +652,7 @@ class MataKuliahCompanion extends UpdateCompanion<MataKuliahData> {
   }
 }
 
-class $TugasTable extends Tugas with TableInfo<$TugasTable, Tuga> {
+class $TugasTable extends Tugas with TableInfo<$TugasTable, TugasData> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
@@ -832,7 +832,7 @@ class $TugasTable extends Tugas with TableInfo<$TugasTable, Tuga> {
   static const String $name = 'tugas';
   @override
   VerificationContext validateIntegrity(
-    Insertable<Tuga> instance, {
+    Insertable<TugasData> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
@@ -949,9 +949,9 @@ class $TugasTable extends Tugas with TableInfo<$TugasTable, Tuga> {
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Tuga map(Map<String, dynamic> data, {String? tablePrefix}) {
+  TugasData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Tuga(
+    return TugasData(
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
         data['${effectivePrefix}id'],
@@ -1017,7 +1017,7 @@ class $TugasTable extends Tugas with TableInfo<$TugasTable, Tuga> {
   }
 }
 
-class Tuga extends DataClass implements Insertable<Tuga> {
+class TugasData extends DataClass implements Insertable<TugasData> {
   final String id;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -1032,7 +1032,7 @@ class Tuga extends DataClass implements Insertable<Tuga> {
   final int? estimasiMenit;
   final String status;
   final String reminderOffsets;
-  const Tuga({
+  const TugasData({
     required this.id,
     required this.createdAt,
     required this.updatedAt,
@@ -1103,12 +1103,12 @@ class Tuga extends DataClass implements Insertable<Tuga> {
     );
   }
 
-  factory Tuga.fromJson(
+  factory TugasData.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Tuga(
+    return TugasData(
       id: serializer.fromJson<String>(json['id']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
@@ -1146,7 +1146,7 @@ class Tuga extends DataClass implements Insertable<Tuga> {
     };
   }
 
-  Tuga copyWith({
+  TugasData copyWith({
     String? id,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -1161,7 +1161,7 @@ class Tuga extends DataClass implements Insertable<Tuga> {
     Value<int?> estimasiMenit = const Value.absent(),
     String? status,
     String? reminderOffsets,
-  }) => Tuga(
+  }) => TugasData(
     id: id ?? this.id,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
@@ -1179,8 +1179,8 @@ class Tuga extends DataClass implements Insertable<Tuga> {
     status: status ?? this.status,
     reminderOffsets: reminderOffsets ?? this.reminderOffsets,
   );
-  Tuga copyWithCompanion(TugasCompanion data) {
-    return Tuga(
+  TugasData copyWithCompanion(TugasCompanion data) {
+    return TugasData(
       id: data.id.present ? data.id.value : this.id,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
@@ -1206,7 +1206,7 @@ class Tuga extends DataClass implements Insertable<Tuga> {
 
   @override
   String toString() {
-    return (StringBuffer('Tuga(')
+    return (StringBuffer('TugasData(')
           ..write('id: $id, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
@@ -1245,7 +1245,7 @@ class Tuga extends DataClass implements Insertable<Tuga> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Tuga &&
+      (other is TugasData &&
           other.id == this.id &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt &&
@@ -1262,7 +1262,7 @@ class Tuga extends DataClass implements Insertable<Tuga> {
           other.reminderOffsets == this.reminderOffsets);
 }
 
-class TugasCompanion extends UpdateCompanion<Tuga> {
+class TugasCompanion extends UpdateCompanion<TugasData> {
   final Value<String> id;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
@@ -1319,7 +1319,7 @@ class TugasCompanion extends UpdateCompanion<Tuga> {
        deadline = Value(deadline),
        prioritas = Value(prioritas),
        status = Value(status);
-  static Insertable<Tuga> custom({
+  static Insertable<TugasData> custom({
     Expression<String>? id,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
@@ -7950,6 +7950,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   );
   late final $TransaksiTable transaksi = $TransaksiTable(this);
   late final ActivityDao activityDao = ActivityDao(this as AppDatabase);
+  late final TugasDao tugasDao = TugasDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -8542,14 +8543,14 @@ class $$TugasTableTableManager
         RootTableManager<
           _$AppDatabase,
           $TugasTable,
-          Tuga,
+          TugasData,
           $$TugasTableFilterComposer,
           $$TugasTableOrderingComposer,
           $$TugasTableAnnotationComposer,
           $$TugasTableCreateCompanionBuilder,
           $$TugasTableUpdateCompanionBuilder,
-          (Tuga, BaseReferences<_$AppDatabase, $TugasTable, Tuga>),
-          Tuga,
+          (TugasData, BaseReferences<_$AppDatabase, $TugasTable, TugasData>),
+          TugasData,
           PrefetchHooks Function()
         > {
   $$TugasTableTableManager(_$AppDatabase db, $TugasTable table)
@@ -8643,14 +8644,14 @@ typedef $$TugasTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
       $TugasTable,
-      Tuga,
+      TugasData,
       $$TugasTableFilterComposer,
       $$TugasTableOrderingComposer,
       $$TugasTableAnnotationComposer,
       $$TugasTableCreateCompanionBuilder,
       $$TugasTableUpdateCompanionBuilder,
-      (Tuga, BaseReferences<_$AppDatabase, $TugasTable, Tuga>),
-      Tuga,
+      (TugasData, BaseReferences<_$AppDatabase, $TugasTable, TugasData>),
+      TugasData,
       PrefetchHooks Function()
     >;
 typedef $$TugasChecklistTableCreateCompanionBuilder =

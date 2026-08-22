@@ -5,6 +5,8 @@ import '../../features/activity/presentation/home_screen.dart';
 import '../../features/finance/presentation/keuangan_screen.dart';
 import '../../features/habit/presentation/habit_screen.dart';
 import '../../features/pomodoro/presentation/pomodoro_screen.dart';
+import '../../features/task/presentation/mata_kuliah_screen.dart';
+import '../../features/task/presentation/tugas_detail_screen.dart';
 import '../../features/task/presentation/tugas_screen.dart';
 import '../../shared/widgets/main_scaffold.dart';
 
@@ -18,7 +20,20 @@ final appRouter = GoRouter(
           GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
         ]),
         StatefulShellBranch(routes: [
-          GoRoute(path: '/tugas', builder: (context, state) => const TugasScreen()),
+          GoRoute(
+            path: '/tugas',
+            builder: (context, state) => const TugasScreen(),
+            routes: [
+              GoRoute(
+                path: 'matakuliah',
+                builder: (context, state) => const MataKuliahScreen(),
+              ),
+              GoRoute(
+                path: ':id',
+                builder: (context, state) => TugasDetailScreen(tugasId: state.pathParameters['id']!),
+              ),
+            ],
+          ),
         ]),
         StatefulShellBranch(routes: [
           GoRoute(path: '/pomodoro', builder: (context, state) => const PomodoroScreen()),

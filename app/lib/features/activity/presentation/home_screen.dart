@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/theme/app_colors.dart';
 import '../application/activity_providers.dart';
 import '../data/activity_repository.dart';
 import 'widgets/activity_form_sheet.dart';
@@ -10,18 +9,11 @@ import 'widgets/activity_timeline_view.dart';
 
 /// Today View — Daily Activity Log (FR-1.1 s/d FR-1.14). Timebox digabung
 /// di sini nanti pada Phase 3 (PRD Section 7).
-class HomeScreen extends ConsumerStatefulWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  ConsumerState<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends ConsumerState<HomeScreen> {
-  String? _kategoriFilter;
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final selectedDate = ref.watch(selectedDateProvider);
     final viewMode = ref.watch(activityViewModeProvider);
     final activitiesAsync = ref.watch(activitiesForSelectedDateProvider);
@@ -56,22 +48,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
       body: Column(
         children: [
-          _buildHeader(context, selectedDate, completionAsync.valueOrNull, viewMode),
-          _buildKategoriFilter(),
+          _buildHeader(context, ref, selectedDate, completionAsync.valueOrNull, viewMode),
           Expanded(
             child: activitiesAsync.when(
               data: (occurrences) {
-                final filtered = _kategoriFilter == null
-                    ? occurrences
-                    : occurrences.where((o) => o.data.kategori == _kategoriFilter).toList();
                 return viewMode == ActivityViewMode.list
                     ? ActivityListView(
-                        occurrences: filtered,
-                        onTapOccurrence: (o) => _openEditor(context, o, selectedDate),
+                        occurrences: occurrences,
+                        onTapOccurrence: (o) => _openEditor(context, ref, o, selectedDate),
                       )
                     : ActivityTimelineView(
-                        occurrences: filtered,
-                        onTapOccurrence: (o) => _openEditor(context, o, selectedDate),
+                        occurrences: occurrences,
+                        onTapOccurrence: (o) => _openEditor(context, ref, o, selectedDate),
                       );
               },
               loading: () => const Center(child: CircularProgressIndicator()),
@@ -90,7 +78,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   /// Edit occurrence yang virtual berarti "lepas dari template" — dibuatkan
   /// row asli dulu (materialize) untuk hari itu saja, baru form edit dibuka
   /// untuk row barunya. Hari-hari lain tetap ikut template asli.
-  Future<void> _openEditor(BuildContext context, ActivityOccurrence occurrence, DateTime selectedDate) async {
+  Future<void> _openEditor(
+    BuildContext context,
+    WidgetRef ref,
+    ActivityOccurrence occurrence,
+    DateTime selectedDate,
+  ) async {
     var target = occurrence.data;
     if (occurrence.isVirtual) {
       final repo = ref.read(activityRepositoryProvider);
@@ -105,6 +98,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
 
   Widget _buildHeader(
     BuildContext context,
+    WidgetRef ref,
     DateTime selectedDate,
     CompletionRate? completion,
     ActivityViewMode viewMode,
@@ -164,35 +158,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               Text('$completed/$total selesai'),
             ],
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildKategoriFilter() {
-    return SizedBox(
-      height: 40,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            child: ChoiceChip(
-              label: const Text('Semua'),
-              selected: _kategoriFilter == null,
-              onSelected: (_) => setState(() => _kategoriFilter = null),
-            ),
-          ),
-          for (final k in AppColors.kategoriDefault.keys)
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              child: ChoiceChip(
-                label: Text(k),
-                selected: _kategoriFilter == k,
-                onSelected: (_) => setState(() => _kategoriFilter = k),
-              ),
-            ),
         ],
       ),
     );

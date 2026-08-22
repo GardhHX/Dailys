@@ -30,6 +30,10 @@ class MataKuliah extends Table with SyncColumns, UserOwned {
   TextColumn get warna => text()();
 }
 
+// Drift men-singularize nama tabel yang terlihat plural secara default,
+// jadi "Tugas" (Indonesia) kena strip "s" salah kira jadi "Tuga" — nama
+// row class harus dipaksa eksplisit.
+@DataClassName('TugasData')
 class Tugas extends Table with SyncColumns, UserOwned {
   TextColumn get mataKuliahId => text().named('mata_kuliah_id').nullable()();
   TextColumn get judul => text()();
