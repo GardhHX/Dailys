@@ -1,8 +1,8 @@
 import 'package:go_router/go_router.dart';
 
 import '../core/db/database.dart';
-import '../features/activity/activity_home_screen.dart';
 import '../features/onboarding/onboarding_screen.dart';
+import '../features/shell/home_shell.dart';
 import '../features/splash/splash_screen.dart';
 import '../features/splash/splash_state.dart';
 
@@ -48,7 +48,7 @@ GoRouter buildAppRouter() => GoRouter(
           path: '/home',
           builder: (context, state) {
             final session = state.extra! as LocalSession;
-            return ActivityHomeScreen(
+            return HomeShell(
               db: session.db,
               userId: session.userId,
               deviceId: session.deviceId,

@@ -15,11 +15,20 @@ class MataKuliahDao extends DatabaseAccessor<AppDatabase>
   Future<void> insertMataKuliah(MataKuliahCompanion row) =>
       into(mataKuliah).insert(row);
 
+  Future<MataKuliahRow?> getById(String id) =>
+      (select(mataKuliah)..where((t) => t.id.equals(id))).getSingleOrNull();
+
   Stream<List<MataKuliahRow>> watchActiveMataKuliah(String userId) =>
       (select(mataKuliah)
             ..where((t) => t.userId.equals(userId) & t.isDeleted.equals(false))
             ..orderBy([(t) => OrderingTerm(expression: t.nama)]))
           .watch();
+
+  Future<void> updateMataKuliah(String id, MataKuliahCompanion patch, {DateTime? now}) async {
+    final ts = now ?? DateTime.now().toUtc();
+    await (update(mataKuliah)..where((t) => t.id.equals(id)))
+        .write(patch.copyWith(updatedAt: Value(ts)));
+  }
 
   /// Delete policy for MataKuliah (schema Section 2): in one transaction,
   /// cascade-tombstone every CourseNote, detach Tugas (`mata_kuliah_id = null`,
