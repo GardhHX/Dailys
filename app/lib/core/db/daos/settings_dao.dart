@@ -10,6 +10,23 @@ part 'settings_dao.g.dart';
 class SettingsDao extends DatabaseAccessor<AppDatabase> with _$SettingsDaoMixin {
   SettingsDao(super.db);
 
+  /// The single locally-provisioned user, if any (M1 is single-user/single-
+  /// device; a local SQLite file never holds more than one). Used by Splash to
+  /// tell a fresh install from an existing one without a separate identity
+  /// store (M1-PLAN Section 7: "Identitas user hasil provisioning lokal stabil
+  /// sebelum seed UUIDv5 dibuat").
+  Future<UserRow?> getLocalUser() => select(users).getSingleOrNull();
+
+  /// The single local `DeviceSettings` row, if any — same one-row assumption as
+  /// [getLocalUser].
+  Future<DeviceSettingsRow?> getLocalDeviceSettings() =>
+      select(deviceSettings).getSingleOrNull();
+
+  Future<void> markOnboardingCompleted(String deviceId, {DateTime? now}) =>
+      (update(deviceSettings)..where((t) => t.deviceId.equals(deviceId))).write(
+        DeviceSettingsCompanion(onboardingCompletedAt: Value(now ?? DateTime.now().toUtc())),
+      );
+
   Stream<UserSettingsRow?> watchUserSettings(String userId) =>
       (select(userSettings)..where((t) => t.userId.equals(userId)))
           .watchSingleOrNull();
@@ -39,4 +56,8 @@ class SettingsDao extends DatabaseAccessor<AppDatabase> with _$SettingsDaoMixin 
   /// never leaves the device (schema 3.2).
   Future<void> upsertDeviceSettings(DeviceSettingsCompanion row) =>
       into(deviceSettings).insertOnConflictUpdate(row);
+
+  /// Partial update of the local-only device row (theme, alarm volume, …).
+  Future<void> updateDeviceSettings(String deviceId, DeviceSettingsCompanion patch) =>
+      (update(deviceSettings)..where((t) => t.deviceId.equals(deviceId))).write(patch);
 }

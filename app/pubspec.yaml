@@ -16,6 +16,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  intl: any              # dipin oleh flutter_localizations; dipakai gen_l10n
   uuid: ^4.4.0            # UUIDv4 + UUIDv5 deterministik (schema "Deterministic IDs")
   timezone: ^0.9.4        # tzdb; kebijakan DST clamp diterapkan manual (schema 2, 23.1)
   drift: ^2.20.0         # SQLite source of truth lokal (schema.md kontrak tabel)
@@ -26,6 +29,9 @@ dependencies:
   crypto: ^3.0.3         # SHA-256 manifest backup migration (OPERATIONS 3)
   cryptography: ^2.7.0   # AES-GCM enkripsi copy backup (OPERATIONS 3)
   flutter_secure_storage: ^9.2.2  # key device-local utk enkripsi backup (OPERATIONS 3)
+  flutter_bloc: ^8.1.6    # Cubit/Bloc state management (M1-PLAN keputusan stack)
+  go_router: ^14.6.0      # navigasi splash/onboarding/settings/home (M1-PLAN)
+  get_it: ^7.7.0          # DI ringan (AppDatabase, dsb.)
 
 dev_dependencies:
   flutter_test:
@@ -36,3 +42,4 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true         # aktifkan gen_l10n (lihat l10n.yaml)
