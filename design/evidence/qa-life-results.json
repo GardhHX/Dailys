@@ -1,0 +1,896 @@
+{
+  "results": [
+    {
+      "theme": "terang",
+      "width": 1440,
+      "view": "home",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1440,
+      "view": "history",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1440,
+      "view": "insights",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1440,
+      "view": "accounts",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1440,
+      "view": "categories",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1440,
+      "view": "account",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1440,
+      "view": "habit-active",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1440,
+      "view": "habit-paused",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1440,
+      "view": "habit-detail",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1056,
+      "view": "home",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1056,
+      "view": "history",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1056,
+      "view": "insights",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1056,
+      "view": "accounts",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1056,
+      "view": "categories",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1056,
+      "view": "account",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1056,
+      "view": "habit-active",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1056,
+      "view": "habit-paused",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 1056,
+      "view": "habit-detail",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 860,
+      "view": "home",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 860,
+      "view": "history",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 860,
+      "view": "insights",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 860,
+      "view": "accounts",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 860,
+      "view": "categories",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 860,
+      "view": "account",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 860,
+      "view": "habit-active",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 860,
+      "view": "habit-paused",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 860,
+      "view": "habit-detail",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 736,
+      "view": "home",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 736,
+      "view": "history",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 736,
+      "view": "insights",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 736,
+      "view": "accounts",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 736,
+      "view": "categories",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 736,
+      "view": "account",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 736,
+      "view": "habit-active",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 736,
+      "view": "habit-paused",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 736,
+      "view": "habit-detail",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 680,
+      "view": "home",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 680,
+      "view": "history",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 680,
+      "view": "insights",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 680,
+      "view": "accounts",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 680,
+      "view": "categories",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 680,
+      "view": "account",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 680,
+      "view": "habit-active",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 680,
+      "view": "habit-paused",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 680,
+      "view": "habit-detail",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 440,
+      "view": "home",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 440,
+      "view": "history",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 440,
+      "view": "insights",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 440,
+      "view": "accounts",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 440,
+      "view": "categories",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 440,
+      "view": "account",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 440,
+      "view": "habit-active",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 440,
+      "view": "habit-paused",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 440,
+      "view": "habit-detail",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 392,
+      "view": "home",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 392,
+      "view": "history",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 392,
+      "view": "insights",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 392,
+      "view": "accounts",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 392,
+      "view": "categories",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 392,
+      "view": "account",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 392,
+      "view": "habit-active",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 392,
+      "view": "habit-paused",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 392,
+      "view": "habit-detail",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 352,
+      "view": "home",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 352,
+      "view": "history",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 352,
+      "view": "insights",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 352,
+      "view": "accounts",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 352,
+      "view": "categories",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 352,
+      "view": "account",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 352,
+      "view": "habit-active",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 352,
+      "view": "habit-paused",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "width": 352,
+      "view": "habit-detail",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1440,
+      "view": "home",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1440,
+      "view": "history",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1440,
+      "view": "insights",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1440,
+      "view": "accounts",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1440,
+      "view": "categories",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1440,
+      "view": "account",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1440,
+      "view": "habit-active",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1440,
+      "view": "habit-paused",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1440,
+      "view": "habit-detail",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1056,
+      "view": "home",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1056,
+      "view": "history",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1056,
+      "view": "insights",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1056,
+      "view": "accounts",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1056,
+      "view": "categories",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1056,
+      "view": "account",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1056,
+      "view": "habit-active",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1056,
+      "view": "habit-paused",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 1056,
+      "view": "habit-detail",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 860,
+      "view": "home",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 860,
+      "view": "history",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 860,
+      "view": "insights",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 860,
+      "view": "accounts",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 860,
+      "view": "categories",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 860,
+      "view": "account",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 860,
+      "view": "habit-active",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 860,
+      "view": "habit-paused",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 860,
+      "view": "habit-detail",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 736,
+      "view": "home",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 736,
+      "view": "history",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 736,
+      "view": "insights",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 736,
+      "view": "accounts",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 736,
+      "view": "categories",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 736,
+      "view": "account",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 736,
+      "view": "habit-active",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 736,
+      "view": "habit-paused",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 736,
+      "view": "habit-detail",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 680,
+      "view": "home",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 680,
+      "view": "history",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 680,
+      "view": "insights",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 680,
+      "view": "accounts",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 680,
+      "view": "categories",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 680,
+      "view": "account",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 680,
+      "view": "habit-active",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 680,
+      "view": "habit-paused",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 680,
+      "view": "habit-detail",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 440,
+      "view": "home",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 440,
+      "view": "history",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 440,
+      "view": "insights",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 440,
+      "view": "accounts",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 440,
+      "view": "categories",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 440,
+      "view": "account",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 440,
+      "view": "habit-active",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 440,
+      "view": "habit-paused",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 440,
+      "view": "habit-detail",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 392,
+      "view": "home",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 392,
+      "view": "history",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 392,
+      "view": "insights",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 392,
+      "view": "accounts",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 392,
+      "view": "categories",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 392,
+      "view": "account",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 392,
+      "view": "habit-active",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 392,
+      "view": "habit-paused",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 392,
+      "view": "habit-detail",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 352,
+      "view": "home",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 352,
+      "view": "history",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 352,
+      "view": "insights",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 352,
+      "view": "accounts",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 352,
+      "view": "categories",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 352,
+      "view": "account",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 352,
+      "view": "habit-active",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 352,
+      "view": "habit-paused",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "width": 352,
+      "view": "habit-detail",
+      "overflow": []
+    }
+  ],
+  "contrast": [
+    {
+      "theme": "terang",
+      "screen": "finance",
+      "failures": []
+    },
+    {
+      "theme": "terang",
+      "screen": "habit",
+      "failures": []
+    },
+    {
+      "theme": "gelap",
+      "screen": "finance",
+      "failures": []
+    },
+    {
+      "theme": "gelap",
+      "screen": "habit",
+      "failures": []
+    }
+  ],
+  "errors": [],
+  "interactions": "PASS",
+  "golden": {
+    "current": 2,
+    "longest": 2
+  }
+}

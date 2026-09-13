@@ -1,0 +1,55 @@
+name: dailys
+description: >
+  Dailys - aplikasi produktivitas dan keuangan mahasiswa, offline-first (Flutter).
+  Scaffold milestone M1 (Windows lokal: Activity + Tugas). Kontrak di ../schema.md,
+  ../API-SPEC.md, ../PRD-Aplikasi-Produktivitas-Mahasiswa.md; desain di ../design.
+publish_to: "none"
+version: 0.1.0+1
+
+environment:
+  sdk: ">=3.4.0 <4.0.0"
+  flutter: ">=3.22.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+
+  # State management (dipilih untuk M1: Bloc/Cubit)
+  flutter_bloc: ^8.1.6
+  bloc: ^8.1.4
+  equatable: ^2.0.5
+
+  # Persistence lokal = source of truth (NFR-2)
+  drift: ^2.20.0
+  sqlite3_flutter_libs: ^0.5.24
+  path_provider: ^2.1.4
+  path: ^1.9.0
+
+  # Routing (PRD Section 7)
+  go_router: ^14.2.0
+
+  # Kontrak lintas-platform
+  uuid: ^4.4.0            # UUIDv4 + UUIDv5 deterministik (schema "Deterministic IDs")
+  timezone: ^0.9.4        # tzdb; clamp DST diterapkan manual (schema 2 dan 23.1), bukan default resolver
+  intl: ^0.19.0           # format tanggal/angka
+
+  # Reminder lokal (FR-1.10, FR-6.4)
+  flutter_local_notifications: ^17.2.2
+
+  # Dependency injection ringan
+  get_it: ^7.7.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  bloc_test: ^9.1.7
+  mocktail: ^1.0.4
+  build_runner: ^2.4.11
+  drift_dev: ^2.20.0
+  flutter_lints: ^4.0.0
+
+flutter:
+  generate: true          # gen_l10n untuk resource id/en (NFR-7)
+  uses-material-design: true

@@ -1,0 +1,297 @@
+{
+  "status": "PASS",
+  "responsiveChecks": 40,
+  "checks": [
+    {
+      "screen": "home",
+      "width": 1440,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "home",
+      "width": 1440,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "home",
+      "width": 860,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "home",
+      "width": 860,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "home",
+      "width": 680,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "home",
+      "width": 680,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "home",
+      "width": 352,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "home",
+      "width": 352,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "tugas",
+      "width": 1440,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "tugas",
+      "width": 1440,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "tugas",
+      "width": 860,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "tugas",
+      "width": 860,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "tugas",
+      "width": 680,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "tugas",
+      "width": 680,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "tugas",
+      "width": 352,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "tugas",
+      "width": 352,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "pomodoro",
+      "width": 1440,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "pomodoro",
+      "width": 1440,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "pomodoro",
+      "width": 860,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "pomodoro",
+      "width": 860,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "pomodoro",
+      "width": 680,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "pomodoro",
+      "width": 680,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "pomodoro",
+      "width": 352,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "pomodoro",
+      "width": 352,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "keuangan",
+      "width": 1440,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "keuangan",
+      "width": 1440,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "keuangan",
+      "width": 860,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "keuangan",
+      "width": 860,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "keuangan",
+      "width": 680,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "keuangan",
+      "width": 680,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "keuangan",
+      "width": 352,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "keuangan",
+      "width": 352,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "habit",
+      "width": 1440,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "habit",
+      "width": 1440,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "habit",
+      "width": 860,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "habit",
+      "width": 860,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "habit",
+      "width": 680,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "habit",
+      "width": 680,
+      "theme": "gelap",
+      "overflow": []
+    },
+    {
+      "screen": "habit",
+      "width": 352,
+      "theme": "terang",
+      "overflow": []
+    },
+    {
+      "screen": "habit",
+      "width": 352,
+      "theme": "gelap",
+      "overflow": []
+    }
+  ],
+  "conditionChecks": 20,
+  "mobileDialogs": 4,
+  "settingsShortcut": 1,
+  "navigationChecks": [
+    {
+      "width": 1440,
+      "destination": "tugas"
+    },
+    {
+      "width": 1440,
+      "destination": "pomodoro"
+    },
+    {
+      "width": 1440,
+      "destination": "keuangan"
+    },
+    {
+      "width": 1440,
+      "destination": "habit"
+    },
+    {
+      "width": 1440,
+      "destination": "home"
+    },
+    {
+      "width": 352,
+      "destination": "tugas"
+    },
+    {
+      "width": 352,
+      "destination": "pomodoro"
+    },
+    {
+      "width": 352,
+      "destination": "keuangan"
+    },
+    {
+      "width": 352,
+      "destination": "habit"
+    },
+    {
+      "width": 352,
+      "destination": "home"
+    }
+  ],
+  "galleryWidths": [
+    1440,
+    352
+  ],
+  "pageErrors": [],
+  "remoteRequests": []
+}

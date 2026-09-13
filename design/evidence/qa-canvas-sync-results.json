@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "width": 1056,
+      "screen": "sync"
+    },
+    {
+      "width": 1056,
+      "screen": "conflicts"
+    },
+    {
+      "width": 1056,
+      "screen": "onboarding"
+    },
+    {
+      "width": 352,
+      "screen": "sync"
+    },
+    {
+      "width": 352,
+      "screen": "conflicts"
+    },
+    {
+      "width": 352,
+      "screen": "onboarding"
+    }
+  ],
+  "errors": [],
+  "interaction": "Group selection and modal open/Escape"
+}

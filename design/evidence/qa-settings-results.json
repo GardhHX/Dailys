@@ -1,0 +1,1090 @@
+{
+  "status": "PASS",
+  "responsiveChecks": 160,
+  "checks": [
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "terang",
+      "scenario": "normal"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "terang",
+      "scenario": "save-failed"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "terang",
+      "scenario": "permission-denied"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "terang",
+      "scenario": "unregistered"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "terang",
+      "scenario": "registration-failed"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "terang",
+      "scenario": "recovery"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "terang",
+      "scenario": "empty"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "terang",
+      "condition": "kosong"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "terang",
+      "condition": "memuat"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "terang",
+      "condition": "gagal"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "gelap",
+      "scenario": "normal"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "gelap",
+      "scenario": "save-failed"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "gelap",
+      "scenario": "permission-denied"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "gelap",
+      "scenario": "unregistered"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "gelap",
+      "scenario": "registration-failed"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "gelap",
+      "scenario": "recovery"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "gelap",
+      "scenario": "empty"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "gelap",
+      "condition": "kosong"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "gelap",
+      "condition": "memuat"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "theme": "gelap",
+      "condition": "gagal"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "terang",
+      "scenario": "normal"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "terang",
+      "scenario": "save-failed"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "terang",
+      "scenario": "permission-denied"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "terang",
+      "scenario": "unregistered"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "terang",
+      "scenario": "registration-failed"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "terang",
+      "scenario": "recovery"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "terang",
+      "scenario": "empty"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "terang",
+      "condition": "kosong"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "terang",
+      "condition": "memuat"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "terang",
+      "condition": "gagal"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "gelap",
+      "scenario": "normal"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "gelap",
+      "scenario": "save-failed"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "gelap",
+      "scenario": "permission-denied"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "gelap",
+      "scenario": "unregistered"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "gelap",
+      "scenario": "registration-failed"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "gelap",
+      "scenario": "recovery"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "gelap",
+      "scenario": "empty"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "gelap",
+      "condition": "kosong"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "gelap",
+      "condition": "memuat"
+    },
+    {
+      "width": 1200,
+      "contentWidth": 1200,
+      "theme": "gelap",
+      "condition": "gagal"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "terang",
+      "scenario": "normal"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "terang",
+      "scenario": "save-failed"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "terang",
+      "scenario": "permission-denied"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "terang",
+      "scenario": "unregistered"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "terang",
+      "scenario": "registration-failed"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "terang",
+      "scenario": "recovery"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "terang",
+      "scenario": "empty"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "terang",
+      "condition": "kosong"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "terang",
+      "condition": "memuat"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "terang",
+      "condition": "gagal"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "gelap",
+      "scenario": "normal"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "gelap",
+      "scenario": "save-failed"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "gelap",
+      "scenario": "permission-denied"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "gelap",
+      "scenario": "unregistered"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "gelap",
+      "scenario": "registration-failed"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "gelap",
+      "scenario": "recovery"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "gelap",
+      "scenario": "empty"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "gelap",
+      "condition": "kosong"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "gelap",
+      "condition": "memuat"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "theme": "gelap",
+      "condition": "gagal"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "terang",
+      "scenario": "normal"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "terang",
+      "scenario": "save-failed"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "terang",
+      "scenario": "permission-denied"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "terang",
+      "scenario": "unregistered"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "terang",
+      "scenario": "registration-failed"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "terang",
+      "scenario": "recovery"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "terang",
+      "scenario": "empty"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "terang",
+      "condition": "kosong"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "terang",
+      "condition": "memuat"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "terang",
+      "condition": "gagal"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "gelap",
+      "scenario": "normal"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "gelap",
+      "scenario": "save-failed"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "gelap",
+      "scenario": "permission-denied"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "gelap",
+      "scenario": "unregistered"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "gelap",
+      "scenario": "registration-failed"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "gelap",
+      "scenario": "recovery"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "gelap",
+      "scenario": "empty"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "gelap",
+      "condition": "kosong"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "gelap",
+      "condition": "memuat"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "theme": "gelap",
+      "condition": "gagal"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "terang",
+      "scenario": "normal"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "terang",
+      "scenario": "save-failed"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "terang",
+      "scenario": "permission-denied"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "terang",
+      "scenario": "unregistered"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "terang",
+      "scenario": "registration-failed"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "terang",
+      "scenario": "recovery"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "terang",
+      "scenario": "empty"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "terang",
+      "condition": "kosong"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "terang",
+      "condition": "memuat"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "terang",
+      "condition": "gagal"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "gelap",
+      "scenario": "normal"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "gelap",
+      "scenario": "save-failed"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "gelap",
+      "scenario": "permission-denied"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "gelap",
+      "scenario": "unregistered"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "gelap",
+      "scenario": "registration-failed"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "gelap",
+      "scenario": "recovery"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "gelap",
+      "scenario": "empty"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "gelap",
+      "condition": "kosong"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "gelap",
+      "condition": "memuat"
+    },
+    {
+      "width": 736,
+      "contentWidth": 736,
+      "theme": "gelap",
+      "condition": "gagal"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "terang",
+      "scenario": "normal"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "terang",
+      "scenario": "save-failed"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "terang",
+      "scenario": "permission-denied"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "terang",
+      "scenario": "unregistered"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "terang",
+      "scenario": "registration-failed"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "terang",
+      "scenario": "recovery"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "terang",
+      "scenario": "empty"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "terang",
+      "condition": "kosong"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "terang",
+      "condition": "memuat"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "terang",
+      "condition": "gagal"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "gelap",
+      "scenario": "normal"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "gelap",
+      "scenario": "save-failed"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "gelap",
+      "scenario": "permission-denied"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "gelap",
+      "scenario": "unregistered"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "gelap",
+      "scenario": "registration-failed"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "gelap",
+      "scenario": "recovery"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "gelap",
+      "scenario": "empty"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "gelap",
+      "condition": "kosong"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "gelap",
+      "condition": "memuat"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "theme": "gelap",
+      "condition": "gagal"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "terang",
+      "scenario": "normal"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "terang",
+      "scenario": "save-failed"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "terang",
+      "scenario": "permission-denied"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "terang",
+      "scenario": "unregistered"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "terang",
+      "scenario": "registration-failed"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "terang",
+      "scenario": "recovery"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "terang",
+      "scenario": "empty"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "terang",
+      "condition": "kosong"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "terang",
+      "condition": "memuat"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "terang",
+      "condition": "gagal"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "gelap",
+      "scenario": "normal"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "gelap",
+      "scenario": "save-failed"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "gelap",
+      "scenario": "permission-denied"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "gelap",
+      "scenario": "unregistered"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "gelap",
+      "scenario": "registration-failed"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "gelap",
+      "scenario": "recovery"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "gelap",
+      "scenario": "empty"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "gelap",
+      "condition": "kosong"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "gelap",
+      "condition": "memuat"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "theme": "gelap",
+      "condition": "gagal"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "terang",
+      "scenario": "normal"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "terang",
+      "scenario": "save-failed"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "terang",
+      "scenario": "permission-denied"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "terang",
+      "scenario": "unregistered"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "terang",
+      "scenario": "registration-failed"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "terang",
+      "scenario": "recovery"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "terang",
+      "scenario": "empty"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "terang",
+      "condition": "kosong"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "terang",
+      "condition": "memuat"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "terang",
+      "condition": "gagal"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "gelap",
+      "scenario": "normal"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "gelap",
+      "scenario": "save-failed"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "gelap",
+      "scenario": "permission-denied"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "gelap",
+      "scenario": "unregistered"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "gelap",
+      "scenario": "registration-failed"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "gelap",
+      "scenario": "recovery"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "gelap",
+      "scenario": "empty"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "gelap",
+      "condition": "kosong"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "gelap",
+      "condition": "memuat"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "theme": "gelap",
+      "condition": "gagal"
+    }
+  ],
+  "textMagnificationChecks": [
+    {
+      "width": 1024,
+      "theme": "terang"
+    },
+    {
+      "width": 1024,
+      "theme": "gelap"
+    },
+    {
+      "width": 352,
+      "theme": "terang"
+    },
+    {
+      "width": 352,
+      "theme": "gelap"
+    }
+  ],
+  "pickerCases": [
+    {
+      "width": 1024,
+      "theme": "terang"
+    },
+    {
+      "width": 1024,
+      "theme": "gelap"
+    },
+    {
+      "width": 352,
+      "theme": "terang"
+    },
+    {
+      "width": 352,
+      "theme": "gelap"
+    }
+  ],
+  "contrast": [
+    {
+      "selector": ".dg-muted",
+      "foreground": "rgb(89, 90, 104)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 6.80243375401749
+    },
+    {
+      "selector": ".dg-primary",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(53, 56, 160)",
+      "ratio": 9.439648045213922
+    },
+    {
+      "selector": ".dg-danger",
+      "foreground": "rgb(158, 44, 48)",
+      "background": "rgb(255, 241, 239)",
+      "ratio": 6.6790457236559115
+    },
+    {
+      "selector": ".dg-success",
+      "foreground": "rgb(38, 96, 68)",
+      "background": "rgb(255, 255, 255)",
+      "ratio": 7.396884076721745
+    },
+    {
+      "selector": ".dg-source",
+      "foreground": "rgb(89, 90, 104)",
+      "background": "rgb(245, 244, 240)",
+      "ratio": 6.180828337786537
+    },
+    {
+      "selector": ".dg-localnotice",
+      "foreground": "rgb(53, 56, 160)",
+      "background": "rgb(238, 238, 250)",
+      "ratio": 8.201556554924727
+    },
+    {
+      "selector": ".dg-muted",
+      "foreground": "rgb(185, 187, 201)",
+      "background": "rgb(34, 35, 44)",
+      "ratio": 8.190367665711321
+    },
+    {
+      "selector": ".dg-primary",
+      "foreground": "rgb(25, 26, 76)",
+      "background": "rgb(183, 185, 255)",
+      "ratio": 8.811329860968316
+    },
+    {
+      "selector": ".dg-danger",
+      "foreground": "rgb(255, 179, 182)",
+      "background": "rgb(58, 37, 41)",
+      "ratio": 8.381350531630101
+    },
+    {
+      "selector": ".dg-success",
+      "foreground": "rgb(162, 223, 187)",
+      "background": "rgb(34, 35, 44)",
+      "ratio": 10.268389958194478
+    },
+    {
+      "selector": ".dg-source",
+      "foreground": "rgb(185, 187, 201)",
+      "background": "rgb(23, 24, 30)",
+      "ratio": 9.288321977047381
+    },
+    {
+      "selector": ".dg-localnotice",
+      "foreground": "rgb(183, 185, 255)",
+      "background": "rgb(50, 51, 71)",
+      "ratio": 6.703593532040414
+    }
+  ],
+  "actions": [
+    "ID/EN resource switch",
+    "4 Pomodoro fields: both bounds, outside bounds, fractional invalid",
+    "partial preference patch/full record; volume device-only; no theme contract invented",
+    "muted visual preserved; disabled cancels sample triggers; review local time saved",
+    "IANA search, empty invalid, timezone recompute; stored dates/session/review/offsets invariant; Escape focus",
+    "save failed/retry and read failed/retry retain input",
+    "failed timezone retains and displays chosen zone; picker reopens that input",
+    "Windows/Android permission guide; recheck does not alter user preference",
+    "registration pending/failed; recovery blocks sync; sync keeps conflicts; new change exits empty queue",
+    "22 global routes and 2 Pomodoro shortcuts"
+  ],
+  "pageErrors": [],
+  "remoteRequests": []
+}

@@ -1,0 +1,944 @@
+{
+  "status": "PASS",
+  "responsiveChecks": 128,
+  "checks": [
+    {
+      "width": 1440,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "terisi"
+    },
+    {
+      "width": 1440,
+      "theme": "terang",
+      "scenario": "before",
+      "condition": "terisi"
+    },
+    {
+      "width": 1440,
+      "theme": "terang",
+      "scenario": "completed",
+      "condition": "terisi"
+    },
+    {
+      "width": 1440,
+      "theme": "terang",
+      "scenario": "empty",
+      "condition": "terisi"
+    },
+    {
+      "width": 1440,
+      "theme": "terang",
+      "scenario": "fresh",
+      "condition": "terisi"
+    },
+    {
+      "width": 1440,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "kosong"
+    },
+    {
+      "width": 1440,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "memuat"
+    },
+    {
+      "width": 1440,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "gagal"
+    },
+    {
+      "width": 1440,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "terisi"
+    },
+    {
+      "width": 1440,
+      "theme": "gelap",
+      "scenario": "before",
+      "condition": "terisi"
+    },
+    {
+      "width": 1440,
+      "theme": "gelap",
+      "scenario": "completed",
+      "condition": "terisi"
+    },
+    {
+      "width": 1440,
+      "theme": "gelap",
+      "scenario": "empty",
+      "condition": "terisi"
+    },
+    {
+      "width": 1440,
+      "theme": "gelap",
+      "scenario": "fresh",
+      "condition": "terisi"
+    },
+    {
+      "width": 1440,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "kosong"
+    },
+    {
+      "width": 1440,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "memuat"
+    },
+    {
+      "width": 1440,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "gagal"
+    },
+    {
+      "width": 1056,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "terisi"
+    },
+    {
+      "width": 1056,
+      "theme": "terang",
+      "scenario": "before",
+      "condition": "terisi"
+    },
+    {
+      "width": 1056,
+      "theme": "terang",
+      "scenario": "completed",
+      "condition": "terisi"
+    },
+    {
+      "width": 1056,
+      "theme": "terang",
+      "scenario": "empty",
+      "condition": "terisi"
+    },
+    {
+      "width": 1056,
+      "theme": "terang",
+      "scenario": "fresh",
+      "condition": "terisi"
+    },
+    {
+      "width": 1056,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "kosong"
+    },
+    {
+      "width": 1056,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "memuat"
+    },
+    {
+      "width": 1056,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "gagal"
+    },
+    {
+      "width": 1056,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "terisi"
+    },
+    {
+      "width": 1056,
+      "theme": "gelap",
+      "scenario": "before",
+      "condition": "terisi"
+    },
+    {
+      "width": 1056,
+      "theme": "gelap",
+      "scenario": "completed",
+      "condition": "terisi"
+    },
+    {
+      "width": 1056,
+      "theme": "gelap",
+      "scenario": "empty",
+      "condition": "terisi"
+    },
+    {
+      "width": 1056,
+      "theme": "gelap",
+      "scenario": "fresh",
+      "condition": "terisi"
+    },
+    {
+      "width": 1056,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "kosong"
+    },
+    {
+      "width": 1056,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "memuat"
+    },
+    {
+      "width": 1056,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "gagal"
+    },
+    {
+      "width": 860,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "terisi"
+    },
+    {
+      "width": 860,
+      "theme": "terang",
+      "scenario": "before",
+      "condition": "terisi"
+    },
+    {
+      "width": 860,
+      "theme": "terang",
+      "scenario": "completed",
+      "condition": "terisi"
+    },
+    {
+      "width": 860,
+      "theme": "terang",
+      "scenario": "empty",
+      "condition": "terisi"
+    },
+    {
+      "width": 860,
+      "theme": "terang",
+      "scenario": "fresh",
+      "condition": "terisi"
+    },
+    {
+      "width": 860,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "kosong"
+    },
+    {
+      "width": 860,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "memuat"
+    },
+    {
+      "width": 860,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "gagal"
+    },
+    {
+      "width": 860,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "terisi"
+    },
+    {
+      "width": 860,
+      "theme": "gelap",
+      "scenario": "before",
+      "condition": "terisi"
+    },
+    {
+      "width": 860,
+      "theme": "gelap",
+      "scenario": "completed",
+      "condition": "terisi"
+    },
+    {
+      "width": 860,
+      "theme": "gelap",
+      "scenario": "empty",
+      "condition": "terisi"
+    },
+    {
+      "width": 860,
+      "theme": "gelap",
+      "scenario": "fresh",
+      "condition": "terisi"
+    },
+    {
+      "width": 860,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "kosong"
+    },
+    {
+      "width": 860,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "memuat"
+    },
+    {
+      "width": 860,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "gagal"
+    },
+    {
+      "width": 736,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "terisi"
+    },
+    {
+      "width": 736,
+      "theme": "terang",
+      "scenario": "before",
+      "condition": "terisi"
+    },
+    {
+      "width": 736,
+      "theme": "terang",
+      "scenario": "completed",
+      "condition": "terisi"
+    },
+    {
+      "width": 736,
+      "theme": "terang",
+      "scenario": "empty",
+      "condition": "terisi"
+    },
+    {
+      "width": 736,
+      "theme": "terang",
+      "scenario": "fresh",
+      "condition": "terisi"
+    },
+    {
+      "width": 736,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "kosong"
+    },
+    {
+      "width": 736,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "memuat"
+    },
+    {
+      "width": 736,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "gagal"
+    },
+    {
+      "width": 736,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "terisi"
+    },
+    {
+      "width": 736,
+      "theme": "gelap",
+      "scenario": "before",
+      "condition": "terisi"
+    },
+    {
+      "width": 736,
+      "theme": "gelap",
+      "scenario": "completed",
+      "condition": "terisi"
+    },
+    {
+      "width": 736,
+      "theme": "gelap",
+      "scenario": "empty",
+      "condition": "terisi"
+    },
+    {
+      "width": 736,
+      "theme": "gelap",
+      "scenario": "fresh",
+      "condition": "terisi"
+    },
+    {
+      "width": 736,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "kosong"
+    },
+    {
+      "width": 736,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "memuat"
+    },
+    {
+      "width": 736,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "gagal"
+    },
+    {
+      "width": 680,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "terisi"
+    },
+    {
+      "width": 680,
+      "theme": "terang",
+      "scenario": "before",
+      "condition": "terisi"
+    },
+    {
+      "width": 680,
+      "theme": "terang",
+      "scenario": "completed",
+      "condition": "terisi"
+    },
+    {
+      "width": 680,
+      "theme": "terang",
+      "scenario": "empty",
+      "condition": "terisi"
+    },
+    {
+      "width": 680,
+      "theme": "terang",
+      "scenario": "fresh",
+      "condition": "terisi"
+    },
+    {
+      "width": 680,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "kosong"
+    },
+    {
+      "width": 680,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "memuat"
+    },
+    {
+      "width": 680,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "gagal"
+    },
+    {
+      "width": 680,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "terisi"
+    },
+    {
+      "width": 680,
+      "theme": "gelap",
+      "scenario": "before",
+      "condition": "terisi"
+    },
+    {
+      "width": 680,
+      "theme": "gelap",
+      "scenario": "completed",
+      "condition": "terisi"
+    },
+    {
+      "width": 680,
+      "theme": "gelap",
+      "scenario": "empty",
+      "condition": "terisi"
+    },
+    {
+      "width": 680,
+      "theme": "gelap",
+      "scenario": "fresh",
+      "condition": "terisi"
+    },
+    {
+      "width": 680,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "kosong"
+    },
+    {
+      "width": 680,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "memuat"
+    },
+    {
+      "width": 680,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "gagal"
+    },
+    {
+      "width": 440,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "terisi"
+    },
+    {
+      "width": 440,
+      "theme": "terang",
+      "scenario": "before",
+      "condition": "terisi"
+    },
+    {
+      "width": 440,
+      "theme": "terang",
+      "scenario": "completed",
+      "condition": "terisi"
+    },
+    {
+      "width": 440,
+      "theme": "terang",
+      "scenario": "empty",
+      "condition": "terisi"
+    },
+    {
+      "width": 440,
+      "theme": "terang",
+      "scenario": "fresh",
+      "condition": "terisi"
+    },
+    {
+      "width": 440,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "kosong"
+    },
+    {
+      "width": 440,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "memuat"
+    },
+    {
+      "width": 440,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "gagal"
+    },
+    {
+      "width": 440,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "terisi"
+    },
+    {
+      "width": 440,
+      "theme": "gelap",
+      "scenario": "before",
+      "condition": "terisi"
+    },
+    {
+      "width": 440,
+      "theme": "gelap",
+      "scenario": "completed",
+      "condition": "terisi"
+    },
+    {
+      "width": 440,
+      "theme": "gelap",
+      "scenario": "empty",
+      "condition": "terisi"
+    },
+    {
+      "width": 440,
+      "theme": "gelap",
+      "scenario": "fresh",
+      "condition": "terisi"
+    },
+    {
+      "width": 440,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "kosong"
+    },
+    {
+      "width": 440,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "memuat"
+    },
+    {
+      "width": 440,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "gagal"
+    },
+    {
+      "width": 392,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "terisi"
+    },
+    {
+      "width": 392,
+      "theme": "terang",
+      "scenario": "before",
+      "condition": "terisi"
+    },
+    {
+      "width": 392,
+      "theme": "terang",
+      "scenario": "completed",
+      "condition": "terisi"
+    },
+    {
+      "width": 392,
+      "theme": "terang",
+      "scenario": "empty",
+      "condition": "terisi"
+    },
+    {
+      "width": 392,
+      "theme": "terang",
+      "scenario": "fresh",
+      "condition": "terisi"
+    },
+    {
+      "width": 392,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "kosong"
+    },
+    {
+      "width": 392,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "memuat"
+    },
+    {
+      "width": 392,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "gagal"
+    },
+    {
+      "width": 392,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "terisi"
+    },
+    {
+      "width": 392,
+      "theme": "gelap",
+      "scenario": "before",
+      "condition": "terisi"
+    },
+    {
+      "width": 392,
+      "theme": "gelap",
+      "scenario": "completed",
+      "condition": "terisi"
+    },
+    {
+      "width": 392,
+      "theme": "gelap",
+      "scenario": "empty",
+      "condition": "terisi"
+    },
+    {
+      "width": 392,
+      "theme": "gelap",
+      "scenario": "fresh",
+      "condition": "terisi"
+    },
+    {
+      "width": 392,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "kosong"
+    },
+    {
+      "width": 392,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "memuat"
+    },
+    {
+      "width": 392,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "gagal"
+    },
+    {
+      "width": 352,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "terisi"
+    },
+    {
+      "width": 352,
+      "theme": "terang",
+      "scenario": "before",
+      "condition": "terisi"
+    },
+    {
+      "width": 352,
+      "theme": "terang",
+      "scenario": "completed",
+      "condition": "terisi"
+    },
+    {
+      "width": 352,
+      "theme": "terang",
+      "scenario": "empty",
+      "condition": "terisi"
+    },
+    {
+      "width": 352,
+      "theme": "terang",
+      "scenario": "fresh",
+      "condition": "terisi"
+    },
+    {
+      "width": 352,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "kosong"
+    },
+    {
+      "width": 352,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "memuat"
+    },
+    {
+      "width": 352,
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "gagal"
+    },
+    {
+      "width": 352,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "terisi"
+    },
+    {
+      "width": 352,
+      "theme": "gelap",
+      "scenario": "before",
+      "condition": "terisi"
+    },
+    {
+      "width": 352,
+      "theme": "gelap",
+      "scenario": "completed",
+      "condition": "terisi"
+    },
+    {
+      "width": 352,
+      "theme": "gelap",
+      "scenario": "empty",
+      "condition": "terisi"
+    },
+    {
+      "width": 352,
+      "theme": "gelap",
+      "scenario": "fresh",
+      "condition": "terisi"
+    },
+    {
+      "width": 352,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "kosong"
+    },
+    {
+      "width": 352,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "memuat"
+    },
+    {
+      "width": 352,
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "gagal"
+    }
+  ],
+  "contrasts": [
+    {
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "terisi",
+      "failures": []
+    },
+    {
+      "theme": "terang",
+      "scenario": "before",
+      "condition": "terisi",
+      "failures": []
+    },
+    {
+      "theme": "terang",
+      "scenario": "completed",
+      "condition": "terisi",
+      "failures": []
+    },
+    {
+      "theme": "terang",
+      "scenario": "empty",
+      "condition": "terisi",
+      "failures": []
+    },
+    {
+      "theme": "terang",
+      "scenario": "fresh",
+      "condition": "terisi",
+      "failures": []
+    },
+    {
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "kosong",
+      "failures": []
+    },
+    {
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "memuat",
+      "failures": []
+    },
+    {
+      "theme": "terang",
+      "scenario": "gate",
+      "condition": "gagal",
+      "failures": []
+    },
+    {
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "terisi",
+      "failures": []
+    },
+    {
+      "theme": "gelap",
+      "scenario": "before",
+      "condition": "terisi",
+      "failures": []
+    },
+    {
+      "theme": "gelap",
+      "scenario": "completed",
+      "condition": "terisi",
+      "failures": []
+    },
+    {
+      "theme": "gelap",
+      "scenario": "empty",
+      "condition": "terisi",
+      "failures": []
+    },
+    {
+      "theme": "gelap",
+      "scenario": "fresh",
+      "condition": "terisi",
+      "failures": []
+    },
+    {
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "kosong",
+      "failures": []
+    },
+    {
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "memuat",
+      "failures": []
+    },
+    {
+      "theme": "gelap",
+      "scenario": "gate",
+      "condition": "gagal",
+      "failures": []
+    }
+  ],
+  "modalCases": [
+    {
+      "width": 1440,
+      "theme": "terang",
+      "type": "tugas"
+    },
+    {
+      "width": 1440,
+      "theme": "terang",
+      "type": "activity"
+    },
+    {
+      "width": 1440,
+      "theme": "terang",
+      "type": "timebox"
+    },
+    {
+      "width": 1440,
+      "theme": "gelap",
+      "type": "tugas"
+    },
+    {
+      "width": 1440,
+      "theme": "gelap",
+      "type": "activity"
+    },
+    {
+      "width": 1440,
+      "theme": "gelap",
+      "type": "timebox"
+    },
+    {
+      "width": 352,
+      "theme": "terang",
+      "type": "tugas"
+    },
+    {
+      "width": 352,
+      "theme": "terang",
+      "type": "activity"
+    },
+    {
+      "width": 352,
+      "theme": "terang",
+      "type": "timebox"
+    },
+    {
+      "width": 352,
+      "theme": "gelap",
+      "type": "tugas"
+    },
+    {
+      "width": 352,
+      "theme": "gelap",
+      "type": "activity"
+    },
+    {
+      "width": 352,
+      "theme": "gelap",
+      "type": "timebox"
+    }
+  ],
+  "flows": [
+    "empty draft save; mandatory journals; invalid draft blocks completion; offline completion opens gate with drafts remaining; frozen summary after source/text edit",
+    "Task promotion updates workload; same-command retry reuses target; second promotion rejected; promoted/discarded history immutable; Timebox times validated",
+    "manual review before trigger; free Activity draft and all-day promotion",
+    "read failure/retry preserves journals/drafts; deletion leaves source; zero rate and seven zero days; fresh install has no partial review",
+    "candidate source route to Tasks; Home shortcut and return route"
+  ],
+  "jsErrors": [],
+  "consoleErrors": [],
+  "remoteRequests": []
+}

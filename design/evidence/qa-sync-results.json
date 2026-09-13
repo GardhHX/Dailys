@@ -1,0 +1,1049 @@
+{
+  "status": "PASS",
+  "responsiveChecks": 192,
+  "checks": [
+    {
+      "view": "sync",
+      "width": 1440,
+      "theme": "terang"
+    },
+    {
+      "view": "devices",
+      "width": 1440,
+      "theme": "terang"
+    },
+    {
+      "view": "history",
+      "width": 1440,
+      "theme": "terang"
+    },
+    {
+      "view": "conflicts",
+      "width": 1440,
+      "theme": "terang"
+    },
+    {
+      "view": "task",
+      "width": 1440,
+      "theme": "terang"
+    },
+    {
+      "view": "ledger",
+      "width": 1440,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard0",
+      "width": 1440,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard1",
+      "width": 1440,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard2",
+      "width": 1440,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard3",
+      "width": 1440,
+      "theme": "terang"
+    },
+    {
+      "view": "recovery-pre",
+      "width": 1440,
+      "theme": "terang"
+    },
+    {
+      "view": "recovery-post",
+      "width": 1440,
+      "theme": "terang"
+    },
+    {
+      "view": "sync",
+      "width": 1440,
+      "theme": "gelap"
+    },
+    {
+      "view": "devices",
+      "width": 1440,
+      "theme": "gelap"
+    },
+    {
+      "view": "history",
+      "width": 1440,
+      "theme": "gelap"
+    },
+    {
+      "view": "conflicts",
+      "width": 1440,
+      "theme": "gelap"
+    },
+    {
+      "view": "task",
+      "width": 1440,
+      "theme": "gelap"
+    },
+    {
+      "view": "ledger",
+      "width": 1440,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard0",
+      "width": 1440,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard1",
+      "width": 1440,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard2",
+      "width": 1440,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard3",
+      "width": 1440,
+      "theme": "gelap"
+    },
+    {
+      "view": "recovery-pre",
+      "width": 1440,
+      "theme": "gelap"
+    },
+    {
+      "view": "recovery-post",
+      "width": 1440,
+      "theme": "gelap"
+    },
+    {
+      "view": "sync",
+      "width": 1056,
+      "theme": "terang"
+    },
+    {
+      "view": "devices",
+      "width": 1056,
+      "theme": "terang"
+    },
+    {
+      "view": "history",
+      "width": 1056,
+      "theme": "terang"
+    },
+    {
+      "view": "conflicts",
+      "width": 1056,
+      "theme": "terang"
+    },
+    {
+      "view": "task",
+      "width": 1056,
+      "theme": "terang"
+    },
+    {
+      "view": "ledger",
+      "width": 1056,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard0",
+      "width": 1056,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard1",
+      "width": 1056,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard2",
+      "width": 1056,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard3",
+      "width": 1056,
+      "theme": "terang"
+    },
+    {
+      "view": "recovery-pre",
+      "width": 1056,
+      "theme": "terang"
+    },
+    {
+      "view": "recovery-post",
+      "width": 1056,
+      "theme": "terang"
+    },
+    {
+      "view": "sync",
+      "width": 1056,
+      "theme": "gelap"
+    },
+    {
+      "view": "devices",
+      "width": 1056,
+      "theme": "gelap"
+    },
+    {
+      "view": "history",
+      "width": 1056,
+      "theme": "gelap"
+    },
+    {
+      "view": "conflicts",
+      "width": 1056,
+      "theme": "gelap"
+    },
+    {
+      "view": "task",
+      "width": 1056,
+      "theme": "gelap"
+    },
+    {
+      "view": "ledger",
+      "width": 1056,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard0",
+      "width": 1056,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard1",
+      "width": 1056,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard2",
+      "width": 1056,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard3",
+      "width": 1056,
+      "theme": "gelap"
+    },
+    {
+      "view": "recovery-pre",
+      "width": 1056,
+      "theme": "gelap"
+    },
+    {
+      "view": "recovery-post",
+      "width": 1056,
+      "theme": "gelap"
+    },
+    {
+      "view": "sync",
+      "width": 860,
+      "theme": "terang"
+    },
+    {
+      "view": "devices",
+      "width": 860,
+      "theme": "terang"
+    },
+    {
+      "view": "history",
+      "width": 860,
+      "theme": "terang"
+    },
+    {
+      "view": "conflicts",
+      "width": 860,
+      "theme": "terang"
+    },
+    {
+      "view": "task",
+      "width": 860,
+      "theme": "terang"
+    },
+    {
+      "view": "ledger",
+      "width": 860,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard0",
+      "width": 860,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard1",
+      "width": 860,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard2",
+      "width": 860,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard3",
+      "width": 860,
+      "theme": "terang"
+    },
+    {
+      "view": "recovery-pre",
+      "width": 860,
+      "theme": "terang"
+    },
+    {
+      "view": "recovery-post",
+      "width": 860,
+      "theme": "terang"
+    },
+    {
+      "view": "sync",
+      "width": 860,
+      "theme": "gelap"
+    },
+    {
+      "view": "devices",
+      "width": 860,
+      "theme": "gelap"
+    },
+    {
+      "view": "history",
+      "width": 860,
+      "theme": "gelap"
+    },
+    {
+      "view": "conflicts",
+      "width": 860,
+      "theme": "gelap"
+    },
+    {
+      "view": "task",
+      "width": 860,
+      "theme": "gelap"
+    },
+    {
+      "view": "ledger",
+      "width": 860,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard0",
+      "width": 860,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard1",
+      "width": 860,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard2",
+      "width": 860,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard3",
+      "width": 860,
+      "theme": "gelap"
+    },
+    {
+      "view": "recovery-pre",
+      "width": 860,
+      "theme": "gelap"
+    },
+    {
+      "view": "recovery-post",
+      "width": 860,
+      "theme": "gelap"
+    },
+    {
+      "view": "sync",
+      "width": 736,
+      "theme": "terang"
+    },
+    {
+      "view": "devices",
+      "width": 736,
+      "theme": "terang"
+    },
+    {
+      "view": "history",
+      "width": 736,
+      "theme": "terang"
+    },
+    {
+      "view": "conflicts",
+      "width": 736,
+      "theme": "terang"
+    },
+    {
+      "view": "task",
+      "width": 736,
+      "theme": "terang"
+    },
+    {
+      "view": "ledger",
+      "width": 736,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard0",
+      "width": 736,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard1",
+      "width": 736,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard2",
+      "width": 736,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard3",
+      "width": 736,
+      "theme": "terang"
+    },
+    {
+      "view": "recovery-pre",
+      "width": 736,
+      "theme": "terang"
+    },
+    {
+      "view": "recovery-post",
+      "width": 736,
+      "theme": "terang"
+    },
+    {
+      "view": "sync",
+      "width": 736,
+      "theme": "gelap"
+    },
+    {
+      "view": "devices",
+      "width": 736,
+      "theme": "gelap"
+    },
+    {
+      "view": "history",
+      "width": 736,
+      "theme": "gelap"
+    },
+    {
+      "view": "conflicts",
+      "width": 736,
+      "theme": "gelap"
+    },
+    {
+      "view": "task",
+      "width": 736,
+      "theme": "gelap"
+    },
+    {
+      "view": "ledger",
+      "width": 736,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard0",
+      "width": 736,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard1",
+      "width": 736,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard2",
+      "width": 736,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard3",
+      "width": 736,
+      "theme": "gelap"
+    },
+    {
+      "view": "recovery-pre",
+      "width": 736,
+      "theme": "gelap"
+    },
+    {
+      "view": "recovery-post",
+      "width": 736,
+      "theme": "gelap"
+    },
+    {
+      "view": "sync",
+      "width": 680,
+      "theme": "terang"
+    },
+    {
+      "view": "devices",
+      "width": 680,
+      "theme": "terang"
+    },
+    {
+      "view": "history",
+      "width": 680,
+      "theme": "terang"
+    },
+    {
+      "view": "conflicts",
+      "width": 680,
+      "theme": "terang"
+    },
+    {
+      "view": "task",
+      "width": 680,
+      "theme": "terang"
+    },
+    {
+      "view": "ledger",
+      "width": 680,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard0",
+      "width": 680,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard1",
+      "width": 680,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard2",
+      "width": 680,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard3",
+      "width": 680,
+      "theme": "terang"
+    },
+    {
+      "view": "recovery-pre",
+      "width": 680,
+      "theme": "terang"
+    },
+    {
+      "view": "recovery-post",
+      "width": 680,
+      "theme": "terang"
+    },
+    {
+      "view": "sync",
+      "width": 680,
+      "theme": "gelap"
+    },
+    {
+      "view": "devices",
+      "width": 680,
+      "theme": "gelap"
+    },
+    {
+      "view": "history",
+      "width": 680,
+      "theme": "gelap"
+    },
+    {
+      "view": "conflicts",
+      "width": 680,
+      "theme": "gelap"
+    },
+    {
+      "view": "task",
+      "width": 680,
+      "theme": "gelap"
+    },
+    {
+      "view": "ledger",
+      "width": 680,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard0",
+      "width": 680,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard1",
+      "width": 680,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard2",
+      "width": 680,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard3",
+      "width": 680,
+      "theme": "gelap"
+    },
+    {
+      "view": "recovery-pre",
+      "width": 680,
+      "theme": "gelap"
+    },
+    {
+      "view": "recovery-post",
+      "width": 680,
+      "theme": "gelap"
+    },
+    {
+      "view": "sync",
+      "width": 440,
+      "theme": "terang"
+    },
+    {
+      "view": "devices",
+      "width": 440,
+      "theme": "terang"
+    },
+    {
+      "view": "history",
+      "width": 440,
+      "theme": "terang"
+    },
+    {
+      "view": "conflicts",
+      "width": 440,
+      "theme": "terang"
+    },
+    {
+      "view": "task",
+      "width": 440,
+      "theme": "terang"
+    },
+    {
+      "view": "ledger",
+      "width": 440,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard0",
+      "width": 440,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard1",
+      "width": 440,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard2",
+      "width": 440,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard3",
+      "width": 440,
+      "theme": "terang"
+    },
+    {
+      "view": "recovery-pre",
+      "width": 440,
+      "theme": "terang"
+    },
+    {
+      "view": "recovery-post",
+      "width": 440,
+      "theme": "terang"
+    },
+    {
+      "view": "sync",
+      "width": 440,
+      "theme": "gelap"
+    },
+    {
+      "view": "devices",
+      "width": 440,
+      "theme": "gelap"
+    },
+    {
+      "view": "history",
+      "width": 440,
+      "theme": "gelap"
+    },
+    {
+      "view": "conflicts",
+      "width": 440,
+      "theme": "gelap"
+    },
+    {
+      "view": "task",
+      "width": 440,
+      "theme": "gelap"
+    },
+    {
+      "view": "ledger",
+      "width": 440,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard0",
+      "width": 440,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard1",
+      "width": 440,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard2",
+      "width": 440,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard3",
+      "width": 440,
+      "theme": "gelap"
+    },
+    {
+      "view": "recovery-pre",
+      "width": 440,
+      "theme": "gelap"
+    },
+    {
+      "view": "recovery-post",
+      "width": 440,
+      "theme": "gelap"
+    },
+    {
+      "view": "sync",
+      "width": 392,
+      "theme": "terang"
+    },
+    {
+      "view": "devices",
+      "width": 392,
+      "theme": "terang"
+    },
+    {
+      "view": "history",
+      "width": 392,
+      "theme": "terang"
+    },
+    {
+      "view": "conflicts",
+      "width": 392,
+      "theme": "terang"
+    },
+    {
+      "view": "task",
+      "width": 392,
+      "theme": "terang"
+    },
+    {
+      "view": "ledger",
+      "width": 392,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard0",
+      "width": 392,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard1",
+      "width": 392,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard2",
+      "width": 392,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard3",
+      "width": 392,
+      "theme": "terang"
+    },
+    {
+      "view": "recovery-pre",
+      "width": 392,
+      "theme": "terang"
+    },
+    {
+      "view": "recovery-post",
+      "width": 392,
+      "theme": "terang"
+    },
+    {
+      "view": "sync",
+      "width": 392,
+      "theme": "gelap"
+    },
+    {
+      "view": "devices",
+      "width": 392,
+      "theme": "gelap"
+    },
+    {
+      "view": "history",
+      "width": 392,
+      "theme": "gelap"
+    },
+    {
+      "view": "conflicts",
+      "width": 392,
+      "theme": "gelap"
+    },
+    {
+      "view": "task",
+      "width": 392,
+      "theme": "gelap"
+    },
+    {
+      "view": "ledger",
+      "width": 392,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard0",
+      "width": 392,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard1",
+      "width": 392,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard2",
+      "width": 392,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard3",
+      "width": 392,
+      "theme": "gelap"
+    },
+    {
+      "view": "recovery-pre",
+      "width": 392,
+      "theme": "gelap"
+    },
+    {
+      "view": "recovery-post",
+      "width": 392,
+      "theme": "gelap"
+    },
+    {
+      "view": "sync",
+      "width": 352,
+      "theme": "terang"
+    },
+    {
+      "view": "devices",
+      "width": 352,
+      "theme": "terang"
+    },
+    {
+      "view": "history",
+      "width": 352,
+      "theme": "terang"
+    },
+    {
+      "view": "conflicts",
+      "width": 352,
+      "theme": "terang"
+    },
+    {
+      "view": "task",
+      "width": 352,
+      "theme": "terang"
+    },
+    {
+      "view": "ledger",
+      "width": 352,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard0",
+      "width": 352,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard1",
+      "width": 352,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard2",
+      "width": 352,
+      "theme": "terang"
+    },
+    {
+      "view": "onboard3",
+      "width": 352,
+      "theme": "terang"
+    },
+    {
+      "view": "recovery-pre",
+      "width": 352,
+      "theme": "terang"
+    },
+    {
+      "view": "recovery-post",
+      "width": 352,
+      "theme": "terang"
+    },
+    {
+      "view": "sync",
+      "width": 352,
+      "theme": "gelap"
+    },
+    {
+      "view": "devices",
+      "width": 352,
+      "theme": "gelap"
+    },
+    {
+      "view": "history",
+      "width": 352,
+      "theme": "gelap"
+    },
+    {
+      "view": "conflicts",
+      "width": 352,
+      "theme": "gelap"
+    },
+    {
+      "view": "task",
+      "width": 352,
+      "theme": "gelap"
+    },
+    {
+      "view": "ledger",
+      "width": 352,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard0",
+      "width": 352,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard1",
+      "width": 352,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard2",
+      "width": 352,
+      "theme": "gelap"
+    },
+    {
+      "view": "onboard3",
+      "width": 352,
+      "theme": "gelap"
+    },
+    {
+      "view": "recovery-pre",
+      "width": 352,
+      "theme": "gelap"
+    },
+    {
+      "view": "recovery-post",
+      "width": 352,
+      "theme": "gelap"
+    }
+  ],
+  "contrast": [
+    {
+      "view": "sync",
+      "theme": "terang",
+      "failures": []
+    },
+    {
+      "view": "conflicts",
+      "theme": "terang",
+      "failures": []
+    },
+    {
+      "view": "task",
+      "theme": "terang",
+      "failures": []
+    },
+    {
+      "view": "ledger",
+      "theme": "terang",
+      "failures": []
+    },
+    {
+      "view": "onboard0",
+      "theme": "terang",
+      "failures": []
+    },
+    {
+      "view": "recovery-pre",
+      "theme": "terang",
+      "failures": []
+    },
+    {
+      "view": "sync",
+      "theme": "gelap",
+      "failures": []
+    },
+    {
+      "view": "conflicts",
+      "theme": "gelap",
+      "failures": []
+    },
+    {
+      "view": "task",
+      "theme": "gelap",
+      "failures": []
+    },
+    {
+      "view": "ledger",
+      "theme": "gelap",
+      "failures": []
+    },
+    {
+      "view": "onboard0",
+      "theme": "gelap",
+      "failures": []
+    },
+    {
+      "view": "recovery-pre",
+      "theme": "gelap",
+      "failures": []
+    }
+  ],
+  "jsErrors": [],
+  "remoteRequests": [],
+  "flows": [
+    "group resolution accepted",
+    "server_changed new review",
+    "rejected review retained",
+    "entire server discard without request",
+    "offline resolution queued",
+    "ledger impact",
+    "rejection correction new identity",
+    "copy before replacement",
+    "snapshot failure and expiry preserve copy",
+    "explicit replay consent and money impact",
+    "superseded no replay",
+    "ambiguous tombstone manual review",
+    "onboarding English/timezone",
+    "registration failure offline completion",
+    "optional account skip",
+    "account validation and registered completion",
+    "onboarding to Home offline route"
+  ]
+}

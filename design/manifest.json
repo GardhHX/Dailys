@@ -1,0 +1,123 @@
+{
+  "version": "1.3",
+  "created": "2026-09-13",
+  "entry": "preview/index.html",
+  "authority": "../DESIGN.md",
+  "screens": [
+    {
+      "id": "home",
+      "label": "Home",
+      "kind": "primary",
+      "preview": "preview/home.html",
+      "spec": "screens/home.md",
+      "desktop": "mockups/home-desktop.png",
+      "mobile": "mockups/home-mobile.png",
+      "source": "source/dailys-home.html"
+    },
+    {
+      "id": "tugas",
+      "label": "Tugas",
+      "kind": "primary",
+      "preview": "preview/tugas.html",
+      "spec": "screens/tugas.md",
+      "desktop": "mockups/tugas-desktop.png",
+      "mobile": "mockups/tugas-mobile.png",
+      "source": "source/dailys-tugas-pomodoro.html"
+    },
+    {
+      "id": "pomodoro",
+      "label": "Pomodoro",
+      "kind": "primary",
+      "preview": "preview/pomodoro.html",
+      "spec": "screens/pomodoro.md",
+      "desktop": "mockups/pomodoro-desktop.png",
+      "mobile": "mockups/pomodoro-mobile.png",
+      "source": "source/dailys-tugas-pomodoro.html"
+    },
+    {
+      "id": "keuangan",
+      "label": "Keuangan",
+      "kind": "primary",
+      "preview": "preview/keuangan.html",
+      "spec": "screens/keuangan.md",
+      "desktop": "mockups/keuangan-desktop.png",
+      "mobile": "mockups/keuangan-mobile.png",
+      "source": "source/dailys-keuangan-habit.html"
+    },
+    {
+      "id": "habit",
+      "label": "Habit",
+      "kind": "primary",
+      "preview": "preview/habit.html",
+      "spec": "screens/habit.md",
+      "desktop": "mockups/habit-desktop.png",
+      "mobile": "mockups/habit-mobile.png",
+      "source": "source/dailys-keuangan-habit.html"
+    },
+    {
+      "id": "pusat-sync",
+      "label": "Pusat Sync",
+      "kind": "global",
+      "preview": "preview/pusat-sync.html",
+      "spec": "screens/pusat-sync.md",
+      "desktop": "mockups/pusat-sync-desktop.png",
+      "mobile": "mockups/pusat-sync-mobile.png",
+      "source": "source/dailys-sync-onboarding.html"
+    },
+    {
+      "id": "review-konflik",
+      "label": "Review konflik",
+      "kind": "global",
+      "preview": "preview/review-konflik.html",
+      "spec": "screens/review-konflik.md",
+      "desktop": "mockups/review-konflik-desktop.png",
+      "mobile": "mockups/review-konflik-mobile.png",
+      "source": "source/dailys-sync-onboarding.html"
+    },
+    {
+      "id": "onboarding",
+      "label": "Onboarding",
+      "kind": "global",
+      "preview": "preview/onboarding.html",
+      "spec": "screens/onboarding.md",
+      "desktop": "mockups/onboarding-desktop.png",
+      "mobile": "mockups/onboarding-mobile.png",
+      "source": "source/dailys-sync-onboarding.html"
+    },
+    {
+      "id": "weekly-review",
+      "label": "Weekly Review",
+      "kind": "global",
+      "preview": "preview/weekly-review.html",
+      "spec": "screens/weekly-review.md",
+      "desktop": "mockups/weekly-review-desktop.png",
+      "mobile": "mockups/weekly-review-mobile.png",
+      "source": "source/dailys-weekly-review.html"
+    },
+    {
+      "id": "settings",
+      "label": "Global Settings",
+      "kind": "global",
+      "preview": "preview/settings.html",
+      "spec": "screens/settings.md",
+      "desktop": "mockups/settings-desktop.png",
+      "mobile": "mockups/settings-mobile.png",
+      "source": "source/dailys-settings.html"
+    }
+  ],
+  "sourceSha256": {
+    "dailys-home.html": "497784daa3389fe66f1cdf606922d07d348a1298eeeb953cba81aad7af2d5ca9",
+    "dailys-keuangan-habit.html": "ad275f6378926077297e9ac056bb01f7c0fd517007f0db640901de8059b9ca78",
+    "dailys-settings.html": "d6871236b7a21b441093574f3b64e5704699d2c178099005275df464ffe1329b",
+    "dailys-sync-onboarding.html": "ac01df67a595a57659663e0a563999bc15f1364a1dfed1e07212f30990ae4b37",
+    "dailys-tugas-pomodoro.html": "6ce0e0410435bfc333c23298bc912cf2dc52cd467defb49f91170432862649fa",
+    "dailys-weekly-review.html": "40477e52b292852189a46ad610b69ea2b0011a3efa2f0902409609ccda59d618"
+  },
+  "qaCanvasResponsiveChecks": {
+    "home": 54,
+    "tugasPomodoro": 96,
+    "keuanganHabit": 144
+  },
+  "statePersistence": "none",
+  "externalDependencies": []
+}

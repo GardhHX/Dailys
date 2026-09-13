@@ -1,0 +1,340 @@
+{
+  "results": [
+    {
+      "theme": "terang",
+      "w": 1440,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 1440,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 1440,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 1056,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 1056,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 1056,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 860,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 860,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 860,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 736,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 736,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 736,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 680,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 680,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 680,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 440,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 440,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 440,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 392,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 392,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 392,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 360,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 360,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 360,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 352,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 352,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "terang",
+      "w": 352,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 1440,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 1440,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 1440,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 1056,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 1056,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 1056,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 860,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 860,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 860,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 736,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 736,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 736,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 680,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 680,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 680,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 440,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 440,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 440,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 392,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 392,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 392,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 360,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 360,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 360,
+      "mode": "week",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 352,
+      "mode": "list",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 352,
+      "mode": "timeline",
+      "overflow": []
+    },
+    {
+      "theme": "gelap",
+      "w": 352,
+      "mode": "week",
+      "overflow": []
+    }
+  ],
+  "contrast": [
+    {
+      "theme": "terang",
+      "failures": []
+    },
+    {
+      "theme": "gelap",
+      "failures": []
+    }
+  ],
+  "errors": [],
+  "interactions": "PASS"
+}
