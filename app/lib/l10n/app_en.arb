@@ -52,12 +52,8 @@
   "settingsAlarmModeSound": "Sound",
   "settingsAlarmModeMuted": "Muted",
   "settingsWeeklyReviewTimeLabel": "Weekly Review time (Sunday)",
-  "settingsSaved": "Saved",
   "settingsSaveFailed": "Save failed",
   "settingsValueOutOfRange": "Value is out of the allowed range",
-
-  "homePlaceholderTitle": "Today",
-  "homePlaceholderBody": "Home is not implemented yet at this step.",
 
   "activityToday": "Today",
   "activityCompletionRate": "{completed}/{planned} done ({rate}%)",
@@ -161,7 +157,6 @@
   "tugasChecklistAllDone": "All items are done. Mark the task complete?",
   "tugasChecklistMarkComplete": "Mark complete",
 
-  "coursesTitle": "Courses & notes",
   "coursesEmpty": "No courses yet",
   "courseAddTitle": "Add course",
   "courseEditTitle": "Edit course",
@@ -179,5 +174,8 @@
   "courseNoteHint": "Note",
   "courseNoteDate": "Date",
   "courseNotesEmpty": "No notes yet",
-  "courseNoteRequired": "Note text is required"
+  "courseNoteRequired": "Note text is required",
+
+  "reminderActivityBody": "Starts at {time}",
+  "reminderTugasBody": "Due {date} {time}"
 }

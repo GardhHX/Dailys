@@ -267,20 +267,35 @@ class _ActivityTile extends StatelessWidget {
               : null,
         ),
         subtitle: Text('$subtitle · ${_statusLabel(activity.status, l10n)}'),
-        trailing: PopupMenuButton<ActivityStatus>(
-          onSelected: (s) => cubit.setStatus(activity.id, s),
+        trailing: PopupMenuButton<_ActivityTileAction>(
+          onSelected: (a) => _onAction(context, a),
           itemBuilder: (context) => [
             if (activity.status != ActivityStatus.selesai)
-              PopupMenuItem(value: ActivityStatus.selesai, child: Text(l10n.activityMarkDone)),
+              PopupMenuItem(
+                  value: _ActivityTileAction.markDone, child: Text(l10n.activityMarkDone)),
             if (activity.status != ActivityStatus.dilewati)
-              PopupMenuItem(value: ActivityStatus.dilewati, child: Text(l10n.activityMarkSkipped)),
+              PopupMenuItem(
+                  value: _ActivityTileAction.markSkipped, child: Text(l10n.activityMarkSkipped)),
             if (activity.status != ActivityStatus.belum_mulai)
-              PopupMenuItem(value: ActivityStatus.belum_mulai, child: Text(l10n.activityReopen)),
+              PopupMenuItem(value: _ActivityTileAction.reopen, child: Text(l10n.activityReopen)),
+            PopupMenuItem(value: _ActivityTileAction.delete, child: Text(l10n.activityDelete)),
           ],
         ),
-        onLongPress: () => cubit.deleteActivity(activity.id),
       ),
     );
+  }
+
+  void _onAction(BuildContext context, _ActivityTileAction action) {
+    switch (action) {
+      case _ActivityTileAction.markDone:
+        cubit.setStatus(activity.id, ActivityStatus.selesai);
+      case _ActivityTileAction.markSkipped:
+        cubit.setStatus(activity.id, ActivityStatus.dilewati);
+      case _ActivityTileAction.reopen:
+        cubit.setStatus(activity.id, ActivityStatus.belum_mulai);
+      case _ActivityTileAction.delete:
+        cubit.deleteActivity(activity.id);
+    }
   }
 
   String _statusLabel(ActivityStatus status, AppLocalizations l10n) {
@@ -299,6 +314,8 @@ class _ActivityTile extends StatelessWidget {
     return Color(int.parse('FF$clean', radix: 16));
   }
 }
+
+enum _ActivityTileAction { markDone, markSkipped, reopen, delete }
 
 extension _FirstOrNull<T> on Iterable<T> {
   T? get firstOrNull => isEmpty ? null : first;

@@ -89,6 +89,7 @@ class _TugasDetailScreenState extends State<TugasDetailScreen> {
               ),
               IconButton(
                 icon: const Icon(Icons.delete_outline),
+                tooltip: l10n.tugasDelete,
                 onPressed: () => _confirmDelete(context, l10n),
               ),
             ],
@@ -97,7 +98,8 @@ class _TugasDetailScreenState extends State<TugasDetailScreen> {
             padding: const EdgeInsets.all(AppSpacing.lg),
             children: [
               Text(
-                DateFormat.yMMMEd(locale).add_jm().format(t.deadline.toLocal()),
+                '${l10n.tugasDeadlineLabel}: '
+                '${DateFormat.yMMMEd(locale).add_jm().format(t.deadline.toLocal())}',
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: AppSpacing.sm),
@@ -249,7 +251,11 @@ class _ChecklistSectionState extends State<_ChecklistSection> {
                 onSubmitted: (_) => _add(),
               ),
             ),
-            IconButton(icon: const Icon(Icons.add), onPressed: _add),
+            IconButton(
+              icon: const Icon(Icons.add),
+              tooltip: l10n.tugasChecklistAdd,
+              onPressed: _add,
+            ),
           ],
         ),
       ],

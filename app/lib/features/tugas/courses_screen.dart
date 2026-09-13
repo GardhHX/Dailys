@@ -295,9 +295,16 @@ class CourseDetailScreen extends StatelessWidget {
               }
               return ListView.builder(
                 padding: const EdgeInsets.all(AppSpacing.md),
-                itemCount: notes.length,
+                itemCount: notes.length + 1,
                 itemBuilder: (context, i) {
-                  final n = notes[i];
+                  if (i == 0) {
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                      child: Text(l10n.courseNotesTitle,
+                          style: Theme.of(context).textTheme.titleMedium),
+                    );
+                  }
+                  final n = notes[i - 1];
                   final dateLabel = DateFormat.yMMMEd(locale)
                       .format(DateTime.parse(n.tanggal));
                   return Card(
@@ -347,6 +354,7 @@ class CourseDetailScreen extends StatelessWidget {
   Future<void> _addNote(BuildContext context, AppLocalizations l10n) async {
     final controller = TextEditingController();
     var date = DateTime.now();
+    String? error;
     final saved = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
@@ -386,9 +394,19 @@ class CourseDetailScreen extends StatelessWidget {
                   maxLines: 5,
                   decoration: InputDecoration(hintText: l10n.courseNoteHint),
                 ),
+                if (error != null) ...[
+                  const SizedBox(height: AppSpacing.sm),
+                  Text(error!, style: TextStyle(color: Theme.of(ctx).colorScheme.error)),
+                ],
                 const SizedBox(height: AppSpacing.lg),
                 ElevatedButton(
-                  onPressed: () => Navigator.of(ctx).pop(controller.text.trim().isNotEmpty),
+                  onPressed: () {
+                    if (controller.text.trim().isEmpty) {
+                      setModal(() => error = l10n.courseNoteRequired);
+                      return;
+                    }
+                    Navigator.of(ctx).pop(true);
+                  },
                   child: Text(l10n.tugasSave),
                 ),
               ],

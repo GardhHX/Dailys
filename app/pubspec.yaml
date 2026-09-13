@@ -32,6 +32,13 @@ dependencies:
   flutter_bloc: ^8.1.6    # Cubit/Bloc state management (M1-PLAN keputusan stack)
   go_router: ^14.6.0      # navigasi splash/onboarding/settings/home (M1-PLAN)
   get_it: ^7.7.0          # DI ringan (AppDatabase, dsb.)
+  # flutter_local_notifications has no Windows platform implementation
+  # (pubspec declares android/ios/macos/linux only; zonedSchedule() throws
+  # UnimplementedError elsewhere) so it cannot back M1's Windows target.
+  # local_notifier delivers real native toasts on Windows/macOS/Linux; Android
+  # support (M2) plugs flutter_local_notifications back in behind the same
+  # NotificationGateway interface without touching call sites.
+  local_notifier: ^0.1.6  # reminder lokal Activity/Tugas (FR-1.10, FR-6.4)
 
 dev_dependencies:
   flutter_test:

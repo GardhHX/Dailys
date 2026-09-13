@@ -66,7 +66,7 @@ void main() {
       ));
     }
 
-    final classifier = () => TugasClassifier(jakarta);
+    TugasClassifier classifier() => TugasClassifier(jakarta);
     const today = LocalDate(2026, 9, 14);
     final now = DateTime.utc(2026, 9, 14, 3); // 10:00 WIB
 

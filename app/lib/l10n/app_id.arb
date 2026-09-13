@@ -55,12 +55,8 @@
   "settingsAlarmModeSound": "Suara",
   "settingsAlarmModeMuted": "Senyap",
   "settingsWeeklyReviewTimeLabel": "Waktu Weekly Review (Minggu)",
-  "settingsSaved": "Tersimpan",
   "settingsSaveFailed": "Gagal menyimpan",
   "settingsValueOutOfRange": "Nilai di luar rentang yang diizinkan",
-
-  "homePlaceholderTitle": "Today",
-  "homePlaceholderBody": "Home belum diimplementasikan pada langkah ini.",
 
   "activityToday": "Hari ini",
   "activityCompletionRate": "{completed}/{planned} selesai ({rate}%)",
@@ -171,7 +167,6 @@
   "tugasChecklistAllDone": "Semua item selesai. Tandai tugas selesai?",
   "tugasChecklistMarkComplete": "Tandai selesai",
 
-  "coursesTitle": "Mata kuliah & catatan",
   "coursesEmpty": "Belum ada mata kuliah",
   "courseAddTitle": "Tambah mata kuliah",
   "courseEditTitle": "Ubah mata kuliah",
@@ -189,5 +184,10 @@
   "courseNoteHint": "Catatan",
   "courseNoteDate": "Tanggal",
   "courseNotesEmpty": "Belum ada catatan",
-  "courseNoteRequired": "Isi catatan wajib diisi"
+  "courseNoteRequired": "Isi catatan wajib diisi",
+
+  "reminderActivityBody": "Mulai jam {time}",
+  "@reminderActivityBody": {"placeholders": {"time": {"type": "String"}}},
+  "reminderTugasBody": "Tenggat {date} {time}",
+  "@reminderTugasBody": {"placeholders": {"date": {"type": "String"}, "time": {"type": "String"}}}
 }
