@@ -1,8 +1,6 @@
 {
   "@@locale": "en",
-
   "appWordmark": "dailys.",
-
   "splashStatusOpening": "Opening local data…",
   "splashStatusNewInstall": "Preparing local data…",
   "splashStatusBackup": "Creating a copy before updating…",
@@ -18,7 +16,6 @@
   "actionRetry": "Try again",
   "splashRecoveryGuide": "Recovery guide",
   "splashCloseGuide": "Close guide",
-
   "onboardingTitleLanguageTime": "Language & time",
   "onboardingLanguageLabel": "Language",
   "onboardingTimezoneLabel": "Timezone",
@@ -30,7 +27,6 @@
   "onboardingSummaryLanguage": "Language: {language}",
   "onboardingSummaryTimezone": "Timezone: {timezone}",
   "actionFinish": "Start",
-
   "settingsTitle": "Settings",
   "settingsSectionAppearanceLanguage": "Appearance & language",
   "settingsSectionTimezone": "Time & timezone",
@@ -55,10 +51,8 @@
   "settingsSaved": "Saved",
   "settingsSaveFailed": "Save failed",
   "settingsValueOutOfRange": "Value is out of the allowed range",
-
   "homePlaceholderTitle": "Today",
   "homePlaceholderBody": "Home is not implemented yet at this step.",
-
   "activityToday": "Today",
   "activityCompletionRate": "{completed}/{planned} done ({rate}%)",
   "activityOverlapWarning": "{count} overlapping schedules",
@@ -86,5 +80,201 @@
   "activityTitleRequired": "Title is required",
   "activityCategoryRequired": "Choose a category",
   "activityEndAfterStart": "End time must be after start",
-  "activityRecurringDaysRequired": "Choose at least one day"
+  "activityRecurringDaysRequired": "Choose at least one day",
+  "homeTitle": "Home",
+  "navTasks": "Tasks",
+  "navFinance": "Finance",
+  "navHabit": "Habits",
+  "featureUnavailable": "This feature is not available in this build",
+  "homeAdd": "Add activity",
+  "homeSchedule": "Today's schedule",
+  "homeList": "List",
+  "homeTimeline": "Timeline",
+  "homeWeek": "Week",
+  "previousDay": "Previous day",
+  "nextDay": "Next day",
+  "chooseDate": "Choose date",
+  "homeReadFailed": "The schedule could not be loaded",
+  "homeEmptyHint": "Add an activity for this date.",
+  "activityTypeActivity": "Activity",
+  "activityTypeTimebox": "Timebox",
+  "activityTypeHabit": "Habit",
+  "activityTypePomodoro": "Pomodoro",
+  "activityRecurringWeekly": "Repeats weekly",
+  "activityOpenBlock": "Open block ›",
+  "activityPlannedRange": "Planned {range}",
+  "@activityPlannedRange": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDeadlineOverlay": "Deadline · {title}",
+  "@homeDeadlineOverlay": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "homeWeeklyReview": "Weekly review",
+  "homeWeeklyReviewBody": "Review this week and plan the next.",
+  "homeWeeklyReviewOpen": "Open this week's review",
+  "onboardingIntro": "First time using Dailys",
+  "onboardingHeading": "Set language & time",
+  "onboardingLocalTitle": "Your data stay on your device",
+  "onboardingLocalBody": "Your records are read and saved locally. You can start without an internet connection.",
+  "onboardingZoneHint": "Dates and times are displayed in this timezone.",
+  "settingsIntro": "App preferences and settings for this device.",
+  "settingsSections": "Settings sections",
+  "activityOptions": "Activity options",
+  "closeDialog": "Close",
+  "homeDeadlines": "Next deadline",
+  "homeNoDeadlines": "No active deadlines",
+  "homeDeadlineFailed": "Deadlines could not be loaded",
+  "taskStatusNotStarted": "Not started",
+  "taskStatusProgress": "In progress",
+  "taskPriorityLow": "Low priority",
+  "taskPriorityMedium": "Medium priority",
+  "taskPriorityHigh": "High priority",
+  "taskOverdue": "Overdue",
+  "navHome": "Home",
+  "navTugas": "Tasks",
+  "tugasTitle": "Tasks",
+  "tugasTabActive": "Active tasks",
+  "tugasTabHistory": "History",
+  "tugasTabCourses": "Courses & notes",
+  "tugasEmpty": "No active tasks",
+  "tugasEmptyFiltered": "No tasks match the filters",
+  "tugasHistoryEmpty": "No history in this week",
+  "tugasWeekRange": "{start} – {end}",
+  "tugasStatusBelum": "Not started",
+  "tugasStatusProgress": "In progress",
+  "tugasStatusSelesai": "Done",
+  "tugasPriorityLow": "Low",
+  "tugasPriorityMedium": "Medium",
+  "tugasPriorityHigh": "High",
+  "tugasOverdue": "Overdue",
+  "tugasNoCourse": "No course",
+  "tugasEstimate": "{minutes} min",
+  "tugasDeadlineLabel": "Deadline",
+  "tugasArchivedBadge": "Archived",
+  "tugasFilters": "Filters",
+  "tugasSort": "Sort",
+  "tugasSortDeadline": "Nearest deadline",
+  "tugasSortPriority": "Priority",
+  "tugasSortCourse": "Course",
+  "tugasFilterStatus": "Status",
+  "tugasFilterPriority": "Priority",
+  "tugasFilterCourse": "Course",
+  "tugasFilterAll": "All",
+  "tugasClearFilters": "Clear filters",
+  "tugasMarkDone": "Mark done",
+  "tugasMarkProgress": "Mark in progress",
+  "tugasReopen": "Reopen",
+  "tugasArchive": "Archive",
+  "tugasUnarchive": "Unarchive",
+  "tugasDelete": "Delete",
+  "tugasDeleteConfirmTitle": "Delete task?",
+  "tugasDeleteConfirmBody": "This task and its checklist will be removed.",
+  "actionCancel": "Cancel",
+  "tugasAddTitle": "Add task",
+  "tugasEditTitle": "Edit task",
+  "tugasFieldJudul": "Title",
+  "tugasFieldDescription": "Description",
+  "tugasFieldCourse": "Course",
+  "tugasFieldPriority": "Priority",
+  "tugasFieldDeadlineDate": "Deadline date",
+  "tugasFieldDeadlineTime": "Deadline time",
+  "tugasFieldEstimate": "Estimate (minutes)",
+  "tugasSave": "Save",
+  "tugasTitleRequired": "Title is required",
+  "tugasEstimatePositive": "Estimate must be greater than 0",
+  "tugasChecklistTitle": "Checklist",
+  "tugasChecklistAdd": "Add item",
+  "tugasChecklistHint": "Checklist item",
+  "tugasChecklistAllDone": "All items are done. Mark the task complete?",
+  "tugasChecklistMarkComplete": "Mark complete",
+  "coursesTitle": "Courses & notes",
+  "coursesEmpty": "No courses yet",
+  "courseAddTitle": "Add course",
+  "courseEditTitle": "Edit course",
+  "courseFieldNama": "Name",
+  "courseFieldDosen": "Lecturer",
+  "courseFieldSks": "Credits (SKS)",
+  "courseFieldSemester": "Semester",
+  "courseNameRequired": "Name is required",
+  "courseSksPositive": "Credits must be greater than 0",
+  "courseDelete": "Delete course",
+  "courseDeleteConfirmTitle": "Delete course?",
+  "courseDeleteConfirmBody": "Its notes are removed and tasks are detached.",
+  "courseNotesTitle": "Notes",
+  "courseNoteAdd": "Add note",
+  "courseNoteHint": "Note",
+  "courseNoteDate": "Date",
+  "courseNotesEmpty": "No notes yet",
+  "courseNoteRequired": "Note text is required",
+  "tugasIntro": "Deadlines, progress, and course notes.",
+  "tugasActiveCount": "{count} active tasks",
+  "@tugasActiveCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tugasLoadFailed": "Tasks could not be loaded",
+  "tugasDaysRemaining": "In {count} days",
+  "tugasDaysOverdue": "{count} days overdue",
+  "tugasDueToday": "Today",
+  "tugasDueTomorrow": "Tomorrow",
+  "tugasChecklistSummary": "{done}/{total} checklist done",
+  "@tugasDaysRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@tugasDaysOverdue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@tugasChecklistSummary": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "tugasRemindersTitle": "Reminders",
+  "tugasRemindersEmpty": "No reminders",
+  "tugasReminderCalendar": "{days} days before at {time}",
+  "@tugasReminderCalendar": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "tugasReminderRelative": "{minutes} minutes before deadline",
+  "@tugasReminderRelative": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "tugasPreviousWeek": "Previous week",
+  "tugasNextWeek": "Next week"
 }

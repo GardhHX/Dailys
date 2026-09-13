@@ -26,18 +26,31 @@ class ActivityHomeCubit extends Cubit<ActivityHomeState> {
         _userId = userId,
         _location = location,
         super(ActivityHomeState(
-          date: initialDate ?? LocalDate.fromInstant(DateTime.now().toUtc(), location),
+          date: initialDate ??
+              LocalDate.fromInstant(DateTime.now().toUtc(), location),
         )) {
-    _categoriesSub = _db.activityDao.watchPickableCategories(_userId).listen((cats) {
+    _categoriesSub =
+        _db.activityDao.watchPickableCategories(_userId).listen((cats) {
       _categories = cats;
       _emit();
-    });
+    }, onError: (_) => emit(state.copyWith(loading: false, error: "load")));
     _watchDate(state.date);
   }
 
   final AppDatabase _db;
   final String _userId;
   final tz.Location _location;
+
+  String get timezone => _location.name;
+  String formatTime(DateTime instant) {
+    final local = tz.TZDateTime.from(instant, _location);
+    return "${local.hour.toString().padLeft(2, '0')}:${local.minute.toString().padLeft(2, '0')}";
+  }
+
+  void retry() {
+    emit(state.copyWith(loading: true));
+    _watchDate(state.date);
+  }
 
   StreamSubscription<List<ActivityRow>>? _activitiesSub;
   StreamSubscription<List<ActivityCategoryRow>>? _categoriesSub;
@@ -46,15 +59,19 @@ class ActivityHomeCubit extends Cubit<ActivityHomeState> {
 
   void _watchDate(LocalDate date) {
     _activitiesSub?.cancel();
-    _activitiesSub = _db.activityDao.watchActivitiesForDate(_userId, date.toYmd()).listen((rows) {
+    _activitiesSub = _db.activityDao
+        .watchActivitiesForDate(_userId, date.toYmd())
+        .listen((rows) {
       _activities = rows;
       _emit();
-    });
+    }, onError: (_) => emit(state.copyWith(loading: false, error: "load")));
   }
 
   void _emit() {
-    final completed = _activities.where((a) => a.status == ActivityStatus.selesai).length;
-    final rate = completionRatePercent(completed: completed, planned: _activities.length);
+    final completed =
+        _activities.where((a) => a.status == ActivityStatus.selesai).length;
+    final rate = completionRatePercent(
+        completed: completed, planned: _activities.length);
 
     // Overlap candidates (schema 14.1): active, non-`dilewati`, both
     // start/end set (excludes all-day/flexible).
@@ -120,7 +137,8 @@ class ActivityHomeCubit extends Cubit<ActivityHomeState> {
       isAllDay: Value(isAllDay),
       status: ActivityStatus.belum_mulai,
       source: ActivitySource.manual,
-      reminderOffsetsMinutes: Value(isAllDay || startTime == null ? const [] : reminderOffsetsMinutes),
+      reminderOffsetsMinutes: Value(
+          isAllDay || startTime == null ? const [] : reminderOffsetsMinutes),
     ));
   }
 
@@ -152,7 +170,8 @@ class ActivityHomeCubit extends Cubit<ActivityHomeState> {
       recurringDays: recurringDays,
       startsOn: startsOn.toYmd(),
       endsOn: Value(endsOn?.toYmd()),
-      reminderOffsetsMinutes: Value(isAllDay || startTime == null ? const [] : reminderOffsetsMinutes),
+      reminderOffsetsMinutes: Value(
+          isAllDay || startTime == null ? const [] : reminderOffsetsMinutes),
     ));
     await MaterializationRunner(_db).run(userId: _userId, location: _location);
   }

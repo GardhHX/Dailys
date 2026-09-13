@@ -10,14 +10,12 @@ import '../../l10n/app_localizations.dart';
 import 'settings_cubit.dart';
 import 'settings_state.dart';
 
-/// Settings screen (design/screens/settings.md), scoped to what M1 actually
-/// has: UserSettings sections through Weekly Review, plus DeviceSettings
-/// "Perangkat ini" (theme + alarm volume). "Pusat Sync" and device
-/// registration need sync (M2) and are intentionally absent rather than
-/// faked; see GAPS in the PR description for the deferred two-column desktop
-/// layout from the design spec (this build uses one responsive column).
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({super.key, required this.db, required this.userId, required this.deviceId});
+  const SettingsScreen(
+      {super.key,
+      required this.db,
+      required this.userId,
+      required this.deviceId});
 
   final AppDatabase db;
   final String userId;
@@ -29,12 +27,16 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   late final SettingsCubit _cubit;
+  final _sectionKeys = List.generate(6, (_) => GlobalKey());
+  int _activeSection = 0;
 
   @override
   void initState() {
     super.initState();
     ensureTimeZoneDatabaseLoaded();
-    _cubit = SettingsCubit(db: widget.db, userId: widget.userId, deviceId: widget.deviceId)..load();
+    _cubit = SettingsCubit(
+        db: widget.db, userId: widget.userId, deviceId: widget.deviceId)
+      ..load();
   }
 
   @override
@@ -49,91 +51,237 @@ class _SettingsScreenState extends State<SettingsScreen> {
     return BlocBuilder<SettingsCubit, SettingsState>(
       bloc: _cubit,
       builder: (context, state) {
-        if (state.loading || state.userSettings == null || state.deviceSettings == null) {
+        if (state.loading ||
+            state.userSettings == null ||
+            state.deviceSettings == null) {
           return Scaffold(
             appBar: AppBar(title: Text(l10n.settingsTitle)),
-            body: const Center(child: CircularProgressIndicator()),
+            body: Center(
+                child: state.loading
+                    ? const CircularProgressIndicator()
+                    : Column(mainAxisSize: MainAxisSize.min, children: [
+                        Text(l10n.settingsSaveFailed),
+                        TextButton(
+                            onPressed: _cubit.load,
+                            child: Text(l10n.actionRetry))
+                      ])),
           );
         }
         final us = state.userSettings!;
         final ds = state.deviceSettings!;
-        return Scaffold(
-          appBar: AppBar(title: Text(l10n.settingsTitle)),
-          body: ListView(
-            padding: const EdgeInsets.all(AppSpacing.lg),
+        final sections = <Widget>[
+          if (state.error != null)
+            _ErrorBanner(messageKey: state.error!, l10n: l10n),
+          _Section(
+            key: _sectionKeys[0],
+            title: l10n.settingsSectionAppearanceLanguage,
             children: [
-              if (state.error != null) _ErrorBanner(messageKey: state.error!, l10n: l10n),
-              _Section(
-                title: l10n.settingsSectionAppearanceLanguage,
-                children: [
-                  _LanguagePicker(value: us.language, onChanged: _cubit.setLanguage, l10n: l10n),
-                ],
+              _PreferenceRow(
+                  label: l10n.onboardingLanguageLabel,
+                  child: _LanguagePicker(
+                      value: us.language,
+                      onChanged: _cubit.setLanguage,
+                      l10n: l10n)),
+            ],
+          ),
+          _Section(
+            key: _sectionKeys[1],
+            title: l10n.settingsSectionTimezone,
+            children: [
+              _PreferenceRow(
+                  label: l10n.onboardingTimezoneLabel,
+                  child: _TimezonePicker(
+                      value: us.timezone, onChanged: _cubit.setTimezone)),
+            ],
+          ),
+          _Section(
+            key: _sectionKeys[2],
+            title: l10n.settingsSectionPomodoro,
+            children: [
+              _FieldGrid(children: [
+                _BoundedIntField(
+                  label: l10n.settingsPomodoroFocusLabel,
+                  value: us.pomodoroFocusMinutes,
+                  onChanged: _cubit.setPomodoroFocusMinutes,
+                ),
+                _BoundedIntField(
+                  label: l10n.settingsPomodoroShortBreakLabel,
+                  value: us.pomodoroShortBreakMinutes,
+                  onChanged: _cubit.setPomodoroShortBreakMinutes,
+                ),
+                _BoundedIntField(
+                  label: l10n.settingsPomodoroLongBreakLabel,
+                  value: us.pomodoroLongBreakMinutes,
+                  onChanged: _cubit.setPomodoroLongBreakMinutes,
+                ),
+                _BoundedIntField(
+                  label: l10n.settingsPomodoroLongBreakIntervalLabel,
+                  value: us.pomodoroLongBreakInterval,
+                  onChanged: _cubit.setPomodoroLongBreakInterval,
+                ),
+              ]),
+            ],
+          ),
+          _Section(
+            key: _sectionKeys[3],
+            title: l10n.settingsSectionNotifications,
+            children: [
+              SwitchListTile(
+                title: Text(l10n.settingsNotificationsEnabledLabel),
+                value: us.notificationsEnabled,
+                onChanged: _cubit.setNotificationsEnabled,
               ),
-              _Section(
-                title: l10n.settingsSectionTimezone,
-                children: [
-                  _TimezonePicker(value: us.timezone, onChanged: _cubit.setTimezone),
-                ],
-              ),
-              _Section(
-                title: l10n.settingsSectionPomodoro,
-                children: [
-                  _BoundedIntField(
-                    label: l10n.settingsPomodoroFocusLabel,
-                    value: us.pomodoroFocusMinutes,
-                    onChanged: _cubit.setPomodoroFocusMinutes,
-                  ),
-                  _BoundedIntField(
-                    label: l10n.settingsPomodoroShortBreakLabel,
-                    value: us.pomodoroShortBreakMinutes,
-                    onChanged: _cubit.setPomodoroShortBreakMinutes,
-                  ),
-                  _BoundedIntField(
-                    label: l10n.settingsPomodoroLongBreakLabel,
-                    value: us.pomodoroLongBreakMinutes,
-                    onChanged: _cubit.setPomodoroLongBreakMinutes,
-                  ),
-                  _BoundedIntField(
-                    label: l10n.settingsPomodoroLongBreakIntervalLabel,
-                    value: us.pomodoroLongBreakInterval,
-                    onChanged: _cubit.setPomodoroLongBreakInterval,
-                  ),
-                ],
-              ),
-              _Section(
-                title: l10n.settingsSectionNotifications,
-                children: [
-                  SwitchListTile(
-                    title: Text(l10n.settingsNotificationsEnabledLabel),
-                    value: us.notificationsEnabled,
-                    onChanged: _cubit.setNotificationsEnabled,
-                  ),
-                  _AlarmModePicker(value: us.alarmMode, onChanged: _cubit.setAlarmMode, l10n: l10n),
-                ],
-              ),
-              _Section(
-                title: l10n.settingsSectionWeeklyReview,
-                children: [
-                  _WeeklyReviewTimePicker(
-                    value: us.weeklyReviewTime,
-                    onChanged: _cubit.setWeeklyReviewTime,
-                    l10n: l10n,
-                  ),
-                ],
-              ),
-              _Section(
-                title: l10n.settingsSectionThisDevice,
-                children: [
-                  _ThemePicker(value: ds.theme, onChanged: _cubit.setTheme, l10n: l10n),
-                  _AlarmVolumeSlider(
-                    value: ds.alarmVolumePercent,
-                    onChanged: _cubit.setAlarmVolumePercent,
-                    l10n: l10n,
-                  ),
-                ],
+              _AlarmModePicker(
+                  value: us.alarmMode,
+                  onChanged: _cubit.setAlarmMode,
+                  l10n: l10n),
+            ],
+          ),
+          _Section(
+            key: _sectionKeys[4],
+            title: l10n.settingsSectionWeeklyReview,
+            children: [
+              _WeeklyReviewTimePicker(
+                value: us.weeklyReviewTime,
+                onChanged: _cubit.setWeeklyReviewTime,
+                l10n: l10n,
               ),
             ],
           ),
+          _Section(
+            key: _sectionKeys[5],
+            title: l10n.settingsSectionThisDevice,
+            children: [
+              _ThemePicker(
+                  value: ds.theme, onChanged: _cubit.setTheme, l10n: l10n),
+              _AlarmVolumeSlider(
+                value: ds.alarmVolumePercent,
+                onChanged: _cubit.setAlarmVolumePercent,
+                l10n: l10n,
+              ),
+            ],
+          ),
+        ];
+        final labels = [
+          l10n.settingsSectionAppearanceLanguage,
+          l10n.settingsSectionTimezone,
+          l10n.settingsSectionPomodoro,
+          l10n.settingsSectionNotifications,
+          l10n.settingsSectionWeeklyReview,
+          l10n.settingsSectionThisDevice
+        ];
+        return Scaffold(
+          appBar: AppBar(
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              toolbarHeight: 68,
+              shape: Border(
+                  bottom: BorderSide(
+                      color: Theme.of(context).colorScheme.outlineVariant)),
+              title: Text(l10n.appWordmark,
+                  style: const TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: -1))),
+          body: LayoutBuilder(builder: (context, constraints) {
+            final mobile = constraints.maxWidth <= 680;
+            final content = Container(
+                decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    border: Border.all(
+                        color: Theme.of(context).colorScheme.outlineVariant),
+                    borderRadius: BorderRadius.circular(9)),
+                padding: EdgeInsets.all(mobile ? 16 : 24),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: sections));
+            return SingleChildScrollView(
+                padding: EdgeInsets.symmetric(
+                    horizontal: mobile ? 16 : 32, vertical: 28),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Align(
+                          alignment: Alignment.centerLeft,
+                          child: TextButton.icon(
+                              onPressed: () => Navigator.of(context).pop(),
+                              icon: const Icon(Icons.chevron_left),
+                              label: Text(l10n.homeTitle))),
+                      const SizedBox(height: 16),
+                      Text(l10n.settingsTitle,
+                          style: Theme.of(context).textTheme.headlineMedium),
+                      const SizedBox(height: 6),
+                      Text(l10n.settingsIntro,
+                          style: Theme.of(context).textTheme.bodySmall),
+                      const SizedBox(height: 28),
+                      if (mobile)
+                        content
+                      else
+                        Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                  width: 208,
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(right: 22),
+                                      child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.stretch,
+                                          children: [
+                                            Text(l10n.settingsSections,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodySmall),
+                                            const SizedBox(height: 12),
+                                            for (var i = 0;
+                                                i < labels.length;
+                                                i++)
+                                              Padding(
+                                                  padding: const EdgeInsets.only(
+                                                      bottom: 6),
+                                                  child: TextButton(
+                                                      style: TextButton.styleFrom(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          backgroundColor:
+                                                              _activeSection == i
+                                                                  ? Theme.of(
+                                                                          context)
+                                                                      .colorScheme
+                                                                      .primary
+                                                                  : Colors
+                                                                      .transparent,
+                                                          foregroundColor: _activeSection ==
+                                                                  i
+                                                              ? Theme.of(context)
+                                                                  .colorScheme
+                                                                  .onPrimary
+                                                              : Theme.of(context)
+                                                                  .colorScheme
+                                                                  .onSurfaceVariant),
+                                                      onPressed: () {
+                                                        setState(() =>
+                                                            _activeSection = i);
+                                                        final target =
+                                                            _sectionKeys[i]
+                                                                .currentContext;
+                                                        if (target != null) {
+                                                          Scrollable.ensureVisible(
+                                                              target,
+                                                              duration:
+                                                                  const Duration(
+                                                                      milliseconds:
+                                                                          150));
+                                                        }
+                                                      },
+                                                      child: Text(labels[i],
+                                                          style: const TextStyle(
+                                                              fontSize: 12)))),
+                                          ]))),
+                              const SizedBox(width: 32),
+                              Expanded(child: content),
+                            ]),
+                    ]));
+          }),
         );
       },
     );
@@ -141,16 +289,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
 }
 
 class _Section extends StatelessWidget {
-  const _Section({required this.title, required this.children});
+  const _Section({super.key, required this.title, required this.children});
   final String title;
   final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: AppSpacing.lg),
+    return Container(
+      decoration: BoxDecoration(
+          border: Border(
+              bottom: BorderSide(
+                  color: Theme.of(context).colorScheme.outlineVariant))),
+      margin: const EdgeInsets.only(bottom: 24),
       child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.lg),
+        padding: const EdgeInsets.only(bottom: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -187,7 +339,8 @@ class _ErrorBanner extends StatelessWidget {
 }
 
 class _LanguagePicker extends StatelessWidget {
-  const _LanguagePicker({required this.value, required this.onChanged, required this.l10n});
+  const _LanguagePicker(
+      {required this.value, required this.onChanged, required this.l10n});
   final Language value;
   final ValueChanged<Language> onChanged;
   final AppLocalizations l10n;
@@ -196,8 +349,10 @@ class _LanguagePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return SegmentedButton<Language>(
       segments: [
-        ButtonSegment(value: Language.id, label: Text(l10n.onboardingLanguageId)),
-        ButtonSegment(value: Language.en, label: Text(l10n.onboardingLanguageEn)),
+        ButtonSegment(
+            value: Language.id, label: Text(l10n.onboardingLanguageId)),
+        ButtonSegment(
+            value: Language.en, label: Text(l10n.onboardingLanguageEn)),
       ],
       selected: {value},
       onSelectionChanged: (s) => onChanged(s.first),
@@ -213,19 +368,25 @@ class _TimezonePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final names = tz.timeZoneDatabase.locations.keys.toList()..sort();
-    return DropdownMenu<String>(
-      initialSelection: value,
-      width: double.infinity,
-      dropdownMenuEntries: names.map((n) => DropdownMenuEntry(value: n, label: n)).toList(),
-      onSelected: (v) {
-        if (v != null) onChanged(v);
-      },
-    );
+    return LayoutBuilder(
+        builder: (context, constraints) => DropdownMenu<String>(
+              initialSelection: value,
+              width: constraints.maxWidth,
+              enableFilter: true,
+              requestFocusOnTap: true,
+              dropdownMenuEntries: names
+                  .map((n) => DropdownMenuEntry(value: n, label: n))
+                  .toList(),
+              onSelected: (v) {
+                if (v != null) onChanged(v);
+              },
+            ));
   }
 }
 
 class _BoundedIntField extends StatefulWidget {
-  const _BoundedIntField({required this.label, required this.value, required this.onChanged});
+  const _BoundedIntField(
+      {required this.label, required this.value, required this.onChanged});
   final String label;
   final int value;
   final ValueChanged<int> onChanged;
@@ -241,9 +402,16 @@ class _BoundedIntFieldState extends State<_BoundedIntField> {
   @override
   void didUpdateWidget(covariant _BoundedIntField oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.value != widget.value && _controller.text != widget.value.toString()) {
+    if (oldWidget.value != widget.value &&
+        _controller.text != widget.value.toString()) {
       _controller.text = widget.value.toString();
     }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -264,7 +432,8 @@ class _BoundedIntFieldState extends State<_BoundedIntField> {
 }
 
 class _AlarmModePicker extends StatelessWidget {
-  const _AlarmModePicker({required this.value, required this.onChanged, required this.l10n});
+  const _AlarmModePicker(
+      {required this.value, required this.onChanged, required this.l10n});
   final AlarmMode value;
   final ValueChanged<AlarmMode> onChanged;
   final AppLocalizations l10n;
@@ -275,8 +444,10 @@ class _AlarmModePicker extends StatelessWidget {
       padding: const EdgeInsets.only(top: AppSpacing.sm),
       child: SegmentedButton<AlarmMode>(
         segments: [
-          ButtonSegment(value: AlarmMode.sound, label: Text(l10n.settingsAlarmModeSound)),
-          ButtonSegment(value: AlarmMode.muted, label: Text(l10n.settingsAlarmModeMuted)),
+          ButtonSegment(
+              value: AlarmMode.sound, label: Text(l10n.settingsAlarmModeSound)),
+          ButtonSegment(
+              value: AlarmMode.muted, label: Text(l10n.settingsAlarmModeMuted)),
         ],
         selected: {value},
         onSelectionChanged: (s) => onChanged(s.first),
@@ -298,7 +469,8 @@ class _WeeklyReviewTimePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final parts = value.split(':');
-    final tod = TimeOfDay(hour: int.parse(parts[0]), minute: int.parse(parts[1]));
+    final tod =
+        TimeOfDay(hour: int.parse(parts[0]), minute: int.parse(parts[1]));
     return ListTile(
       contentPadding: EdgeInsets.zero,
       title: Text(l10n.settingsWeeklyReviewTimeLabel),
@@ -316,7 +488,8 @@ class _WeeklyReviewTimePicker extends StatelessWidget {
 }
 
 class _ThemePicker extends StatelessWidget {
-  const _ThemePicker({required this.value, required this.onChanged, required this.l10n});
+  const _ThemePicker(
+      {required this.value, required this.onChanged, required this.l10n});
   final ThemePreference value;
   final ValueChanged<ThemePreference> onChanged;
   final AppLocalizations l10n;
@@ -325,9 +498,13 @@ class _ThemePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return SegmentedButton<ThemePreference>(
       segments: [
-        ButtonSegment(value: ThemePreference.system, label: Text(l10n.settingsThemeSystem)),
-        ButtonSegment(value: ThemePreference.light, label: Text(l10n.settingsThemeLight)),
-        ButtonSegment(value: ThemePreference.dark, label: Text(l10n.settingsThemeDark)),
+        ButtonSegment(
+            value: ThemePreference.system,
+            label: Text(l10n.settingsThemeSystem)),
+        ButtonSegment(
+            value: ThemePreference.light, label: Text(l10n.settingsThemeLight)),
+        ButtonSegment(
+            value: ThemePreference.dark, label: Text(l10n.settingsThemeDark)),
       ],
       selected: {value},
       onSelectionChanged: (s) => onChanged(s.first),
@@ -336,7 +513,8 @@ class _ThemePicker extends StatelessWidget {
 }
 
 class _AlarmVolumeSlider extends StatelessWidget {
-  const _AlarmVolumeSlider({required this.value, required this.onChanged, required this.l10n});
+  const _AlarmVolumeSlider(
+      {required this.value, required this.onChanged, required this.l10n});
   final int value;
   final ValueChanged<int> onChanged;
   final AppLocalizations l10n;
@@ -363,4 +541,43 @@ class _AlarmVolumeSlider extends StatelessWidget {
       ),
     );
   }
+}
+
+class _FieldGrid extends StatelessWidget {
+  const _FieldGrid({required this.children});
+  final List<Widget> children;
+  @override
+  Widget build(BuildContext context) =>
+      LayoutBuilder(builder: (context, constraints) {
+        final columns = constraints.maxWidth >= 440 ? 2 : 1;
+        return Wrap(spacing: 16, runSpacing: 12, children: [
+          for (final child in children)
+            SizedBox(
+                width: (constraints.maxWidth - (columns - 1) * 16) / columns,
+                child: child)
+        ]);
+      });
+}
+
+class _PreferenceRow extends StatelessWidget {
+  const _PreferenceRow({required this.label, required this.child});
+  final String label;
+  final Widget child;
+  @override
+  Widget build(BuildContext context) =>
+      LayoutBuilder(builder: (context, constraints) {
+        final title =
+            Text(label, style: Theme.of(context).textTheme.labelLarge);
+        return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 18),
+            child: constraints.maxWidth >= 600
+                ? Row(children: [
+                    Expanded(child: title),
+                    const SizedBox(width: 24),
+                    SizedBox(width: 290, child: child)
+                  ])
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [title, const SizedBox(height: 12), child]));
+      });
 }

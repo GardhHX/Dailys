@@ -33,9 +33,13 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   Future<void> load() async {
     emit(state.copyWith(loading: true));
-    final us = await _db.settingsDao.getUserSettings(_userId);
-    final ds = await _db.settingsDao.getLocalDeviceSettings();
-    emit(SettingsState(loading: false, userSettings: us, deviceSettings: ds));
+    try {
+      final us = await _db.settingsDao.getUserSettings(_userId);
+      final ds = await _db.settingsDao.getLocalDeviceSettings();
+      emit(SettingsState(loading: false, userSettings: us, deviceSettings: ds));
+    } catch (_) {
+      emit(state.copyWith(loading: false, error: 'settingsSaveFailed'));
+    }
   }
 
   Future<void> _updateUser(UserSettingsCompanion patch) async {
@@ -69,13 +73,14 @@ class SettingsCubit extends Cubit<SettingsState> {
     }
   }
 
-  void setTimezone(String v) => _updateUser(UserSettingsCompanion(timezone: Value(v)));
+  void setTimezone(String v) =>
+      _updateUser(UserSettingsCompanion(timezone: Value(v)));
 
   /// `1..180` (schema 3.1). Running sessions keep their snapshot duration —
   /// no PomodoroSession table exists yet in M1, so there is nothing to leave
   /// untouched here beyond the setting itself.
-  void setPomodoroFocusMinutes(int v) => _setBounded(v, 1, 180,
-      (v) => UserSettingsCompanion(pomodoroFocusMinutes: Value(v)));
+  void setPomodoroFocusMinutes(int v) => _setBounded(
+      v, 1, 180, (v) => UserSettingsCompanion(pomodoroFocusMinutes: Value(v)));
 
   void setPomodoroShortBreakMinutes(int v) => _setBounded(v, 1, 60,
       (v) => UserSettingsCompanion(pomodoroShortBreakMinutes: Value(v)));
@@ -89,7 +94,8 @@ class SettingsCubit extends Cubit<SettingsState> {
   void setNotificationsEnabled(bool v) =>
       _updateUser(UserSettingsCompanion(notificationsEnabled: Value(v)));
 
-  void setAlarmMode(AlarmMode v) => _updateUser(UserSettingsCompanion(alarmMode: Value(v)));
+  void setAlarmMode(AlarmMode v) =>
+      _updateUser(UserSettingsCompanion(alarmMode: Value(v)));
 
   /// `HH:mm:ss` local time; day stays fixed Sunday in v1.0 (schema 3.1).
   void setWeeklyReviewTime(String hms) =>
@@ -102,10 +108,11 @@ class SettingsCubit extends Cubit<SettingsState> {
     }
   }
 
-  void setAlarmVolumePercent(int v) => _setBoundedDevice(v, 0, 100,
-      (v) => DeviceSettingsCompanion(alarmVolumePercent: Value(v)));
+  void setAlarmVolumePercent(int v) => _setBoundedDevice(
+      v, 0, 100, (v) => DeviceSettingsCompanion(alarmVolumePercent: Value(v)));
 
-  void _setBounded(int v, int min, int max, UserSettingsCompanion Function(int) build) {
+  void _setBounded(
+      int v, int min, int max, UserSettingsCompanion Function(int) build) {
     if (v < min || v > max) {
       emit(state.copyWith(error: 'settingsValueOutOfRange'));
       return;
@@ -113,7 +120,8 @@ class SettingsCubit extends Cubit<SettingsState> {
     _updateUser(build(v));
   }
 
-  void _setBoundedDevice(int v, int min, int max, DeviceSettingsCompanion Function(int) build) {
+  void _setBoundedDevice(
+      int v, int min, int max, DeviceSettingsCompanion Function(int) build) {
     if (v < min || v > max) {
       emit(state.copyWith(error: 'settingsValueOutOfRange'));
       return;

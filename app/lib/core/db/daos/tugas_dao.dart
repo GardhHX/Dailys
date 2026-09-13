@@ -25,6 +25,11 @@ class TugasDao extends DatabaseAccessor<AppDatabase> with _$TugasDaoMixin {
             ]))
           .watch();
 
+  /// Watches one task by id (detail screen). Emits null once soft-deleted.
+  Stream<TugasRow?> watchTugasById(String id) =>
+      (select(tugas)..where((t) => t.id.equals(id) & t.isDeleted.equals(false)))
+          .watchSingleOrNull();
+
   /// Sets status and keeps the `completed_at` invariant (required iff `selesai`,
   /// schema 5). Reopening from `selesai` clears `completed_at`.
   Future<void> setStatus(
@@ -39,6 +44,28 @@ class TugasDao extends DatabaseAccessor<AppDatabase> with _$TugasDaoMixin {
       TugasCompanion(
         status: Value(status),
         completedAt: Value(done ? (completedAt ?? ts) : null),
+        updatedAt: Value(ts),
+      ),
+    );
+  }
+
+  /// Edits mutable Tugas fields (judul, deskripsi, deadline, prioritas,
+  /// estimasi, course, reminders). The caller supplies a [patch]; this always
+  /// bumps `updated_at`. Status/completed_at go through [setStatus] and the
+  /// archive flag through [setArchived] to preserve their invariants.
+  Future<void> updateTugas(String id, TugasCompanion patch, {DateTime? now}) async {
+    final ts = now ?? DateTime.now().toUtc();
+    await (update(tugas)..where((t) => t.id.equals(id)))
+        .write(patch.copyWith(updatedAt: Value(ts)));
+  }
+
+  /// Manual archive/unarchive (schema 5). Archiving stamps `archived_at`;
+  /// unarchiving clears it. Independent of the completed-at auto-archive path.
+  Future<void> setArchived(String id, bool archived, {DateTime? now}) async {
+    final ts = now ?? DateTime.now().toUtc();
+    await (update(tugas)..where((t) => t.id.equals(id))).write(
+      TugasCompanion(
+        archivedAt: Value(archived ? ts : null),
         updatedAt: Value(ts),
       ),
     );
@@ -70,6 +97,34 @@ class TugasDao extends DatabaseAccessor<AppDatabase> with _$TugasDaoMixin {
 
   Future<void> insertChecklistItem(TugasChecklistCompanion row) =>
       into(tugasChecklist).insert(row);
+
+  /// Next free `urutan` for a task's checklist (max active + 1, or 0 when
+  /// empty). Keeps the active `(tugas_id, urutan)` uniqueness (schema 5.1).
+  Future<int> nextChecklistUrutan(String tugasId) async {
+    final rows = await (select(tugasChecklist)
+          ..where((t) => t.tugasId.equals(tugasId) & t.isDeleted.equals(false)))
+        .get();
+    if (rows.isEmpty) return 0;
+    return rows.map((r) => r.urutan).reduce((a, b) => a > b ? a : b) + 1;
+  }
+
+  Future<void> editChecklistItem(String id, String judul, {DateTime? now}) async {
+    final ts = now ?? DateTime.now().toUtc();
+    await (update(tugasChecklist)..where((t) => t.id.equals(id))).write(
+      TugasChecklistCompanion(judul: Value(judul), updatedAt: Value(ts)),
+    );
+  }
+
+  Future<void> softDeleteChecklistItem(String id, {DateTime? now}) async {
+    final ts = now ?? DateTime.now().toUtc();
+    await (update(tugasChecklist)..where((t) => t.id.equals(id))).write(
+      TugasChecklistCompanion(
+        isDeleted: const Value(true),
+        deletedAt: Value(ts),
+        updatedAt: Value(ts),
+      ),
+    );
+  }
 
   Stream<List<TugasChecklistRow>> watchChecklist(String tugasId) =>
       (select(tugasChecklist)
