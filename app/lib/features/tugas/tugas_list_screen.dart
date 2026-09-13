@@ -188,9 +188,12 @@ class _HistoryTab extends StatelessWidget {
                   icon: const Icon(Icons.chevron_left),
                   onPressed: cubit.historyPreviousWeek,
                 ),
-                TextButton(
-                  onPressed: cubit.historyThisWeek,
-                  child: Text(l10n.tugasWeekRange(fmt(week.monday), fmt(week.sunday))),
+                Tooltip(
+                  message: l10n.tugasThisWeek,
+                  child: TextButton(
+                    onPressed: cubit.historyThisWeek,
+                    child: Text(l10n.tugasWeekRange(fmt(week.monday), fmt(week.sunday))),
+                  ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.chevron_right),
@@ -245,6 +248,10 @@ class _FilterSortBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
       child: Row(
         children: [
+          Padding(
+            padding: const EdgeInsets.only(right: AppSpacing.sm),
+            child: Text(l10n.tugasFilters, style: Theme.of(context).textTheme.labelLarge),
+          ),
           PopupMenuButton<TugasSort>(
             initialValue: state.sort,
             onSelected: cubit.setSort,

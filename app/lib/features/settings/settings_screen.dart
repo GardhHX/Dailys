@@ -273,13 +273,20 @@ class _AlarmModePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: AppSpacing.sm),
-      child: SegmentedButton<AlarmMode>(
-        segments: [
-          ButtonSegment(value: AlarmMode.sound, label: Text(l10n.settingsAlarmModeSound)),
-          ButtonSegment(value: AlarmMode.muted, label: Text(l10n.settingsAlarmModeMuted)),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l10n.settingsAlarmModeLabel, style: Theme.of(context).textTheme.bodyMedium),
+          const SizedBox(height: AppSpacing.xs),
+          SegmentedButton<AlarmMode>(
+            segments: [
+              ButtonSegment(value: AlarmMode.sound, label: Text(l10n.settingsAlarmModeSound)),
+              ButtonSegment(value: AlarmMode.muted, label: Text(l10n.settingsAlarmModeMuted)),
+            ],
+            selected: {value},
+            onSelectionChanged: (s) => onChanged(s.first),
+          ),
         ],
-        selected: {value},
-        onSelectionChanged: (s) => onChanged(s.first),
       ),
     );
   }
@@ -323,14 +330,21 @@ class _ThemePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SegmentedButton<ThemePreference>(
-      segments: [
-        ButtonSegment(value: ThemePreference.system, label: Text(l10n.settingsThemeSystem)),
-        ButtonSegment(value: ThemePreference.light, label: Text(l10n.settingsThemeLight)),
-        ButtonSegment(value: ThemePreference.dark, label: Text(l10n.settingsThemeDark)),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(l10n.settingsThemeLabel, style: Theme.of(context).textTheme.bodyMedium),
+        const SizedBox(height: AppSpacing.xs),
+        SegmentedButton<ThemePreference>(
+          segments: [
+            ButtonSegment(value: ThemePreference.system, label: Text(l10n.settingsThemeSystem)),
+            ButtonSegment(value: ThemePreference.light, label: Text(l10n.settingsThemeLight)),
+            ButtonSegment(value: ThemePreference.dark, label: Text(l10n.settingsThemeDark)),
+          ],
+          selected: {value},
+          onSelectionChanged: (s) => onChanged(s.first),
+        ),
       ],
-      selected: {value},
-      onSelectionChanged: (s) => onChanged(s.first),
     );
   }
 }

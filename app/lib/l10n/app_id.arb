@@ -55,12 +55,8 @@
   "settingsAlarmModeSound": "Suara",
   "settingsAlarmModeMuted": "Senyap",
   "settingsWeeklyReviewTimeLabel": "Waktu Weekly Review (Minggu)",
-  "settingsSaved": "Tersimpan",
   "settingsSaveFailed": "Gagal menyimpan",
   "settingsValueOutOfRange": "Nilai di luar rentang yang diizinkan",
-
-  "homePlaceholderTitle": "Today",
-  "homePlaceholderBody": "Home belum diimplementasikan pada langkah ini.",
 
   "activityToday": "Hari ini",
   "activityCompletionRate": "{completed}/{planned} selesai ({rate}%)",
@@ -171,7 +167,6 @@
   "tugasChecklistAllDone": "Semua item selesai. Tandai tugas selesai?",
   "tugasChecklistMarkComplete": "Tandai selesai",
 
-  "coursesTitle": "Mata kuliah & catatan",
   "coursesEmpty": "Belum ada mata kuliah",
   "courseAddTitle": "Tambah mata kuliah",
   "courseEditTitle": "Ubah mata kuliah",
