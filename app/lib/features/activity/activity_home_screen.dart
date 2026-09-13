@@ -13,10 +13,12 @@ import '../settings/settings_screen.dart';
 import 'activity_home_cubit.dart';
 import 'activity_home_state.dart';
 import 'add_activity_sheet.dart';
+import 'next_deadline_panel.dart';
 
 /// Home Today (design/screens/home.md, M1 subset): active-date occurrence
 /// list split into scheduled/no-time sections, completion rate, overlap
-/// warnings, date navigation, and add/status/delete actions. Timebox grid,
+/// warnings, date navigation, add/status/delete actions, and the Next
+/// Deadline companion panel (FR-6.6, FR-6.8–FR-6.10, FR-6.17). Timebox grid,
 /// Weekly Grid, Habits panel, and the Weekly Review shortcut are M3–M5 and
 /// intentionally absent rather than faked (M1-PLAN Section 4).
 class ActivityHomeScreen extends StatefulWidget {
@@ -37,6 +39,7 @@ class ActivityHomeScreen extends StatefulWidget {
 
 class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
   ActivityHomeCubit? _cubit;
+  tz.Location? _location;
 
   @override
   void initState() {
@@ -50,6 +53,7 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
     final location = tz.getLocation(settings?.timezone ?? 'Asia/Jakarta');
     if (!mounted) return;
     setState(() {
+      _location = location;
       _cubit = ActivityHomeCubit(db: widget.db, userId: widget.userId, location: location);
     });
   }
@@ -142,6 +146,12 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
                       for (final a in state.untimed)
                         _ActivityTile(activity: a, state: state, cubit: cubit, l10n: l10n),
                     ],
+                    const SizedBox(height: AppSpacing.lg),
+                    NextDeadlinePanel(
+                      db: widget.db,
+                      userId: widget.userId,
+                      location: _location!,
+                    ),
                   ],
                 ),
         );

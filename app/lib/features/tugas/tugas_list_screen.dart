@@ -39,6 +39,7 @@ class _TugasListScreenState extends State<TugasListScreen>
     with SingleTickerProviderStateMixin {
   late final TabController _tabController = TabController(length: 3, vsync: this);
   TugasListCubit? _cubit;
+  tz.Location? _location;
 
   @override
   void initState() {
@@ -53,6 +54,7 @@ class _TugasListScreenState extends State<TugasListScreen>
     final location = tz.getLocation(settings?.timezone ?? 'Asia/Jakarta');
     if (!mounted) return;
     setState(() {
+      _location = location;
       _cubit = TugasListCubit(db: widget.db, userId: widget.userId, location: location);
     });
   }
@@ -109,8 +111,9 @@ class _TugasListScreenState extends State<TugasListScreen>
     Navigator.of(context).push(MaterialPageRoute(
       builder: (_) => TugasDetailScreen(
         db: widget.db,
+        userId: widget.userId,
+        location: _location!,
         tugasId: tugasId,
-        listCubit: _cubit!,
       ),
     ));
   }
