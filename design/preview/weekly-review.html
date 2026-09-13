@@ -137,7 +137,7 @@ a{color:#3538a0;text-underline-offset:3px}a:focus-visible,select:focus-visible{o
   if (config.state) state.screen = config.state;
   api.render();
 
-  if (config.id !== 'settings' && config.id !== 'onboarding') {
+  if (!['settings','onboarding','splash'].includes(config.id)) {
     const header = root.querySelector('header');
     const button = document.createElement('button');
     button.type='button'; button.textContent='Settings'; button.dataset.globalSettings='';
@@ -156,6 +156,19 @@ a{color:#3538a0;text-underline-offset:3px}a:focus-visible,select:focus-visible{o
     event.preventDefault();event.stopImmediatePropagation();location.href=destination;
   },true);
   if(config.id==='settings' && location.hash.startsWith('#dg-')) api.setSection(location.hash.slice(4));
+  if(config.id==='splash'){
+    root.addEventListener('dailys:startup-ready',event=>{location.href=event.detail.destination+'.html'});
+    const options=document.createElement('div');options.className='reference-links';
+    const labels={onboarded:'Onboarding selesai · contoh',measuredProgress:'Progress terukur · contoh'};
+    Object.entries(labels).forEach(([key,label])=>{
+      const container=document.createElement('label'),input=document.createElement('input');
+      input.type='checkbox';input.checked=state[key];input.id='reference-'+key;
+      input.addEventListener('change',()=>{state[key]=input.checked;api.render()});
+      container.style.minHeight='44px';input.style.width='20px';input.style.height='20px';
+      container.append(input,document.createTextNode(label));options.append(container);
+    });
+    document.querySelector('.reference-bar').append(options);
+  }
 
   const icons = {
     house: '<path d="m3 10 9-7 9 7v11h-6v-7H9v7H3z"/>',

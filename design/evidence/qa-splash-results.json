@@ -1,0 +1,2105 @@
+{
+  "status": "PASS",
+  "responsiveChecks": 288,
+  "checks": [
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "opening"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "fresh"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "backup"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "verify"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "migration"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "timer"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "restore"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "locked"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "opening"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "fresh"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "backup"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "verify"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "migration"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "timer"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "restore"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "locked"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "opening"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "fresh"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "backup"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "verify"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "migration"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "timer"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "restore"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "locked"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "opening"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "fresh"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "backup"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "verify"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "migration"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "timer"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "restore"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "locked"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 1440,
+      "contentWidth": 1440,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "opening"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "fresh"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "backup"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "verify"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "migration"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "timer"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "restore"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "locked"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "opening"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "fresh"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "backup"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "verify"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "migration"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "timer"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "restore"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "locked"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "opening"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "fresh"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "backup"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "verify"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "migration"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "timer"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "restore"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "locked"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "opening"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "fresh"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "backup"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "verify"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "migration"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "timer"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "restore"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "locked"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 1024,
+      "contentWidth": 1024,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "opening"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "fresh"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "backup"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "verify"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "migration"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "timer"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "restore"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "locked"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "opening"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "fresh"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "backup"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "verify"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "migration"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "timer"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "restore"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "locked"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "opening"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "fresh"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "backup"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "verify"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "migration"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "timer"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "restore"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "locked"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "opening"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "fresh"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "backup"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "verify"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "migration"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "timer"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "restore"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "locked"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 860,
+      "contentWidth": 860,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "opening"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "fresh"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "backup"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "verify"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "migration"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "timer"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "restore"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "locked"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "opening"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "fresh"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "backup"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "verify"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "migration"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "timer"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "restore"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "locked"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "opening"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "fresh"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "backup"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "verify"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "migration"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "timer"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "restore"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "locked"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "opening"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "fresh"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "backup"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "verify"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "migration"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "timer"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "restore"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "locked"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 680,
+      "contentWidth": 680,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "opening"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "fresh"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "backup"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "verify"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "migration"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "timer"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "restore"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "locked"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "opening"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "fresh"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "backup"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "verify"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "migration"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "timer"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "restore"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "locked"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "opening"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "fresh"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "backup"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "verify"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "migration"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "timer"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "restore"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "locked"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "opening"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "fresh"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "backup"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "verify"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "migration"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "timer"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "restore"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "locked"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 392,
+      "contentWidth": 392,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "opening"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "fresh"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "backup"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "verify"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "migration"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "timer"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "restore"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "locked"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "terang",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "opening"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "fresh"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "backup"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "verify"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "migration"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "timer"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "restore"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "locked"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "id",
+      "theme": "gelap",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "opening"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "fresh"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "backup"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "verify"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "migration"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "timer"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "restore"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "locked"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "terang",
+      "scenario": "incompatible"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "opening"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "fresh"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "backup"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "verify"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "migration"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "timer"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "restore"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "locked"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "backupFailed"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "migrationFailed"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "integrityFailed"
+    },
+    {
+      "width": 352,
+      "contentWidth": 352,
+      "language": "en",
+      "theme": "gelap",
+      "scenario": "incompatible"
+    }
+  ],
+  "contrast": [
+    {
+      "selector": ".dspl-status",
+      "foreground": "rgb(89, 90, 104)",
+      "background": "rgb(245, 244, 240)",
+      "ratio": 6.180828337786537
+    },
+    {
+      "selector": ".dspl-error h2",
+      "foreground": "rgb(158, 44, 48)",
+      "background": "rgb(245, 244, 240)",
+      "ratio": 6.679222582202488
+    },
+    {
+      "selector": ".dspl-error p",
+      "foreground": "rgb(89, 90, 104)",
+      "background": "rgb(245, 244, 240)",
+      "ratio": 6.180828337786537
+    },
+    {
+      "selector": ".dspl-primary",
+      "foreground": "rgb(255, 255, 255)",
+      "background": "rgb(53, 56, 160)",
+      "ratio": 9.439648045213922
+    },
+    {
+      "selector": ".dspl-status",
+      "foreground": "rgb(185, 187, 201)",
+      "background": "rgb(23, 24, 30)",
+      "ratio": 9.288321977047381
+    },
+    {
+      "selector": ".dspl-error h2",
+      "foreground": "rgb(255, 179, 182)",
+      "background": "rgb(23, 24, 30)",
+      "ratio": 10.43614261508027
+    },
+    {
+      "selector": ".dspl-error p",
+      "foreground": "rgb(185, 187, 201)",
+      "background": "rgb(23, 24, 30)",
+      "ratio": 9.288321977047381
+    },
+    {
+      "selector": ".dspl-primary",
+      "foreground": "rgb(25, 26, 76)",
+      "background": "rgb(183, 185, 255)",
+      "ratio": 8.811329860968316
+    }
+  ],
+  "textChecks": [
+    {
+      "width": 1024,
+      "theme": "terang"
+    },
+    {
+      "width": 1024,
+      "theme": "gelap"
+    },
+    {
+      "width": 352,
+      "theme": "terang"
+    },
+    {
+      "width": 352,
+      "theme": "gelap"
+    }
+  ],
+  "destinations": [
+    "home",
+    "onboarding"
+  ],
+  "actions": [
+    "12 scenarios",
+    "ID/EN/theme controls",
+    "guide click/close/Escape focus",
+    "3 retry Enter flows",
+    "4 conditions",
+    "optional labeled fixture progress",
+    "2 readiness routes"
+  ],
+  "pageErrors": [],
+  "remoteRequests": []
+}

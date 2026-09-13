@@ -16,6 +16,7 @@ SCREENS = [
     {"id": "onboarding", "label": "Onboarding", "source": "dailys-sync-onboarding.html", "root": "dailys-sync", "state": "onboarding", "kind": "global", "description": "Bahasa, timezone, perangkat, registrasi/offline dan akun keuangan pertama opsional."},
     {"id": "weekly-review", "label": "Weekly Review", "source": "dailys-weekly-review.html", "root": "dailys-review", "state": "review", "kind": "global", "description": "Dua jurnal, ringkasan live/snapshot, kandidat, draft/promotion dan beban tujuh hari."},
     {"id": "settings", "label": "Global Settings", "source": "dailys-settings.html", "root": "dailys-settings", "state": "settings", "kind": "global", "description": "Bahasa, timezone, Pomodoro, notifikasi, preferensi perangkat dan akses alur global."},
+    {"id": "splash", "label": "Splash", "source": "dailys-splash.html", "root": "dailys-splash", "state": "splash", "kind": "global", "description": "Startup lokal, backup/migration, recovery timer, retry dan rute onboarding/Home."},
 ]
 
 HOST_STYLE = """
@@ -39,7 +40,7 @@ ADAPTER = r"""
   if (config.state) state.screen = config.state;
   api.render();
 
-  if (config.id !== 'settings' && config.id !== 'onboarding') {
+  if (!['settings','onboarding','splash'].includes(config.id)) {
     const header = root.querySelector('header');
     const button = document.createElement('button');
     button.type='button'; button.textContent='Settings'; button.dataset.globalSettings='';
@@ -58,6 +59,19 @@ ADAPTER = r"""
     event.preventDefault();event.stopImmediatePropagation();location.href=destination;
   },true);
   if(config.id==='settings' && location.hash.startsWith('#dg-')) api.setSection(location.hash.slice(4));
+  if(config.id==='splash'){
+    root.addEventListener('dailys:startup-ready',event=>{location.href=event.detail.destination+'.html'});
+    const options=document.createElement('div');options.className='reference-links';
+    const labels={onboarded:'Onboarding selesai · contoh',measuredProgress:'Progress terukur · contoh'};
+    Object.entries(labels).forEach(([key,label])=>{
+      const container=document.createElement('label'),input=document.createElement('input');
+      input.type='checkbox';input.checked=state[key];input.id='reference-'+key;
+      input.addEventListener('change',()=>{state[key]=input.checked;api.render()});
+      container.style.minHeight='44px';input.style.width='20px';input.style.height='20px';
+      container.append(input,document.createTextNode(label));options.append(container);
+    });
+    document.querySelector('.reference-bar').append(options);
+  }
 
   const icons = {
     house: '<path d="m3 10 9-7 9 7v11h-6v-7H9v7H3z"/>',
@@ -146,12 +160,12 @@ def main():
         ident, label = screen['id'], screen['label']
         cards.append('<article><a class="gallery-image" href="' + ident + '.html" aria-label="Buka preview ' + label + '"><img src="../mockups/' + ident + '-desktop.png" alt="Desain ' + label + ' desktop" loading="lazy"></a><div class="gallery-copy"><h2>' + label + '</h2><p>' + screen['description'] + '</p><div class="gallery-actions"><a class="gallery-primary" href="' + ident + '.html">Buka preview</a><a href="../screens/' + ident + '.md">Spesifikasi</a><a href="../mockups/' + ident + '-mobile.png">Gambar ponsel</a></div></div></article>')
     gallery_style = '<style>.gallery{max-width:1408px;margin:auto}.gallery header{padding:16px 0 24px}.gallery h1{font-size:32px;line-height:1.2;letter-spacing:-1px;margin:12px 0}.gallery header p{max-width:760px;color:#595a68}.gallery-nav{display:flex;gap:16px;flex-wrap:wrap}.gallery-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.gallery article{min-width:0;background:#fff;border:1px solid #dcdce2;border-radius:9px;overflow:hidden}.gallery-image{display:block;background:#eeeefa;border-bottom:1px solid #dcdce2}.gallery-image img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top}.gallery-copy{padding:20px}.gallery h2{font-size:22px;margin:0 0 8px}.gallery-copy p{color:#595a68;margin:0 0 16px}.gallery-actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.gallery-actions a{min-height:44px;display:inline-flex;align-items:center}.gallery-primary{background:#3538a0;color:#fff;text-decoration:none;border-radius:6px;padding:10px 14px;font-weight:600}.gallery-primary:hover{background:#2d308a}.gallery footer{margin:24px 0;color:#595a68}@media(max-width:736px){.gallery-grid{grid-template-columns:1fr;gap:20px}.gallery h1{font-size:28px}}</style>'
-    body = gallery_style + '<main class="gallery"><header><strong>dailys. / acuan desain v1.3</strong><h1>Lima menu dan alur global.</h1><p>Home, Tugas, Pomodoro, Keuangan, Habit; ditambah Global Settings, Pusat Sync, review konflik, onboarding, dan Weekly Review. Alur global bukan tab utama tambahan. Buka preview untuk mencoba tema, form, dan keadaan data.</p><nav class="gallery-nav" aria-label="Dokumentasi desain"><a href="../../DESIGN.md">DESIGN.md</a><a href="../VIBECODE-PROMPT.md">Prompt vibecoding</a><a href="../GAPS.md">Coverage dan gap</a><a href="../tokens.json">Token desain</a></nav></header><section class="gallery-grid" aria-label="Preview sepuluh desain">' + ''.join(cards) + '</section><footer>Offline, tanpa instalasi. Seluruh isi preview berlabel data contoh; bukan aplikasi produksi. Gambar kartu memotong screenshot untuk galeri. Buka PNG atau preview untuk melihat seluruh layar.</footer></main>'
+    body = gallery_style + '<main class="gallery"><header><strong>dailys. / acuan desain v1.4</strong><h1>Lima menu dan alur global.</h1><p>Home, Tugas, Pomodoro, Keuangan, Habit; ditambah Global Settings, Pusat Sync, review konflik, onboarding, Weekly Review, dan Splash. Alur global bukan tab utama tambahan. Buka preview untuk mencoba tema, form, dan keadaan data.</p><nav class="gallery-nav" aria-label="Dokumentasi desain"><a href="../../DESIGN.md">DESIGN.md</a><a href="../VIBECODE-PROMPT.md">Prompt vibecoding</a><a href="../GAPS.md">Coverage dan gap</a><a href="../tokens.json">Token desain</a></nav></header><section class="gallery-grid" aria-label="Preview sebelas desain">' + ''.join(cards) + '</section><footer>Offline, tanpa instalasi. Seluruh isi preview berlabel data contoh; bukan aplikasi produksi. Gambar kartu memotong screenshot untuk galeri. Buka PNG atau preview untuk melihat seluruh layar.</footer></main>'
     (output / 'index.html').write_text(page('Dailys — acuan desain', body), encoding='utf-8')
     sources = {name: hashlib.sha256((BASE / 'source' / name).read_bytes()).hexdigest() for name in sorted({s['source'] for s in SCREENS})}
-    manifest = {"version": "1.3", "created": "2026-09-13", "entry": "preview/index.html", "authority": "../DESIGN.md", "screens": [{"id":s['id'], "label":s['label'], "kind":s.get('kind','primary'), "preview":"preview/"+s['id']+".html", "spec":"screens/"+s['id']+".md", "desktop":"mockups/"+s['id']+"-desktop.png", "mobile":"mockups/"+s['id']+"-mobile.png", "source":"source/"+s['source']} for s in SCREENS], "sourceSha256": sources, "qaCanvasResponsiveChecks": {"home":54, "tugasPomodoro":96, "keuanganHabit":144}, "statePersistence": "none", "externalDependencies": []}
+    manifest = {"version": "1.4", "created": "2026-09-13", "entry": "preview/index.html", "authority": "../DESIGN.md", "screens": [{"id":s['id'], "label":s['label'], "kind":s.get('kind','primary'), "preview":"preview/"+s['id']+".html", "spec":"screens/"+s['id']+".md", "desktop":"mockups/"+s['id']+"-desktop.png", "mobile":"mockups/"+s['id']+"-mobile.png", "source":"source/"+s['source']} for s in SCREENS], "sourceSha256": sources, "qaCanvasResponsiveChecks": {"home":54, "tugasPomodoro":96, "keuanganHabit":144}, "statePersistence": "none", "externalDependencies": []}
     (BASE / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2)+'\n', encoding='utf-8')
-    print('Built 10 offline previews, gallery, and manifest.')
+    print('Built 11 offline previews, gallery, and manifest.')
 
 
 if __name__ == '__main__':

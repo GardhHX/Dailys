@@ -23,11 +23,11 @@ tidak mengambil font, script, atau gambar dari internet.
 | [`screens/onboarding.md`](screens/onboarding.md) | Setup bahasa/timezone, registrasi/offline dan akun opsional |
 | [`screens/weekly-review.md`](screens/weekly-review.md) | Jurnal, ringkasan, kandidat, draft/promotion, gate planning dan beban tujuh hari |
 | [`screens/settings.md`](screens/settings.md) | Preferensi tersinkron/perangkat, Pomodoro, notifikasi, Pusat Sync dan Tentang |
-| [`screens/splash.md`](screens/splash.md) | Buka database, migration, recovery timer dan rute keluar (spec; preview/mockup belum ada) |
+| [`screens/splash.md`](screens/splash.md) | Startup lokal, backup/migration/recovery timer, state gagal, retry dan rute keluar |
 | [`GAPS.md`](GAPS.md) | Coverage, penyederhanaan, desain yang belum tersedia |
-| [`preview/index.html`](preview/index.html) | Galeri sepuluh desain; menu utama tetap lima |
-| `mockups/` | Dua puluh PNG pembanding desktop/ponsel; tambahan gelap Settings |
-| `source/` | Enam fragmen HTML dari canvas percakapan |
+| [`preview/index.html`](preview/index.html) | Galeri sebelas desain; menu utama tetap lima |
+| `mockups/` | Dua puluh dua PNG pembanding desktop/ponsel; gambar tambahan di evidence |
+| `source/` | Tujuh fragmen HTML dari canvas percakapan |
 | `evidence/` | Analisis, laporan antislop, hasil dan skrip QA preview asli |
 | [`manifest.json`](manifest.json) | Pemetaan layar/file dan SHA-256 sumber |
 | [`build_preview.py`](build_preview.py) | Generator halaman offline dari sumber |
@@ -35,6 +35,7 @@ tidak mengambil font, script, atau gambar dari internet.
 | [`check_sync.cjs`](check_sync.cjs) | Reflow dan alur sync/konflik/onboarding |
 | [`check_review.cjs`](check_review.cjs) | Reflow, jurnal, freeze, draft/promotion, gate dan workload Weekly Review |
 | [`check_settings.cjs`](check_settings.cjs) | Reflow, preferensi, validasi, izin, registrasi, fokus, kontras dan routing Settings; menerima path renderer canvas opsional |
+| [`check_splash.cjs`](check_splash.cjs) | Reflow dua bahasa/tema, startup/gagal, panduan/retry, kontras dan tujuan lokal; menerima path renderer canvas opsional |
 | [`pack_design.py`](pack_design.py) | Membuat ZIP portable dan memeriksa CRC serta byte semua file |
 | [`PACKAGE-QA.md`](PACKAGE-QA.md) | Hasil verifikasi paket offline |
 
@@ -63,13 +64,14 @@ otomatis berubah; hasilkan ulang setelah perubahan desain lalu perbarui manifest
 dan laporan. Skrip QA asli di `evidence/` masih mencatat environment saat canvas
 dibuat, termasuk path renderer/runtime; skrip itu bukan runner portable paket ini.
 
-Arsip aktif `Dailys-design-v1.3.zip` di workspace berisi dokumentasi kontrak, arahan
+Arsip aktif `Dailys-design-v1.4.zip` di workspace berisi dokumentasi kontrak, arahan
 agent, dan folder desain lengkap. Untuk berbagi, kirim ZIP dan minta penerima
 membuka `design/preview/index.html` setelah ekstraksi.
 
 Pada alur global, selector Layar contoh/Skenario sync/Hasil resolusi/Hasil snapshot
 adalah kontrol prototype. Tidak termasuk Settings produksi. ZIP v1.0 adalah
 snapshot paket lima layar sebelumnya; v1.1 menambah sync/konflik/onboarding.
-v1.2 menambah Weekly Review. Gunakan v1.3 untuk handoff dengan Global Settings.
+v1.2 menambah Weekly Review; v1.3 menambah Global Settings. Gunakan v1.4 untuk
+handoff dengan Splash. Kontrol kesiapan lokal/progress Splash merupakan prototype.
 Selector skenario Settings dan keadaan Weekly Review
 merupakan kontrol prototype; reload/pergantian skenario mengembalikan fixture.

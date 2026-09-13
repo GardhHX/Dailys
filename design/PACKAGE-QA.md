@@ -2,12 +2,40 @@
 
 Tanggal: 13 September 2026. Status: **PASS** untuk paket acuan desain browser.
 
-## Paket aktif v1.3: Global Settings
+## Paket aktif v1.4: Splash
+
+Splash menambahkan preview startup lokal serta retry/panduan inline tanpa navigasi
+produk. Paket kini memuat sebelas preview, tujuh source dan dua puluh dua PNG
+pembanding desktop/ponsel. Arsip aktif `Dailys-design-v1.4.zip`; v1.3 tetap historis.
+
+- [QA Splash offline](evidence/qa-splash-results.json): 288 responsive cases,
+  delapan pasangan kontras, empat simulasi teks 200%, panduan/fokus, tiga retry
+  Enter dan tujuan Home/onboarding.
+- [QA Splash canvas](evidence/qa-canvas-splash-results.json): 192 responsive cases
+  dengan dua bahasa/tema, kontras, teks besar dan interaksi pada iframe minimum 320 px.
+- [Antislop DURING](evidence/antislop-splash.md): empat blok Delivery Gate PASS untuk
+  artefak browser. Semua pekerjaan startup/progress/retry memakai contoh.
+- Regresi paket: 40 layout/theme, 20 states, empat dialog, shortcut Settings,
+  sepuluh route utama dan dua galeri; seluruh gambar galeri berhasil decode.
+- Enam source sebelumnya byte-identik dengan v1.3. Referensi lokal/source hash
+  diperiksa; ZIP diverifikasi entry, CRC dan byte oleh `pack_design.py`.
+- Preview offline tanpa request remote. Canvas hanya memakai URL pinned helper
+  renderer, tanpa API/asset remote dari source buatan.
+- Benchmark, backup/migration/restore, lifecycle dan timer native belum dijalankan.
+
+```powershell
+node design/check_splash.cjs
+node design/check_package.cjs
+python design/check_links.py
+python design/pack_design.py
+```
+
+## Riwayat paket v1.3: Global Settings
 
 Global Settings menambahkan route global dari app bar, delapan bagian dengan
 preferensi user/device terpisah, shortcut Pomodoro ke bagian yang sama, serta
 tujuan Home/Weekly Review/Pusat Sync. Sepuluh preview, enam sumber, dua puluh PNG
-pembanding desktop/ponsel. Arsip aktif: `Dailys-design-v1.3.zip`.
+pembanding desktop/ponsel. Arsip historis: `Dailys-design-v1.3.zip`.
 
 - [QA Settings offline](evidence/qa-settings-results.json): 160 responsive cases,
   empat simulasi teks 200%, empat picker cases, 12 pasangan kontras, preferensi,
@@ -71,7 +99,7 @@ renderer skill. Ia memeriksa child iframe; bukan bukti native Windows/Android.
 Pusat Sync, review konflik dan onboarding ditambahkan sebagai alur global, bukan
 menu utama baru. Pada rilis v1.1, delapan file preview, empat source, delapan
 spesifikasi visual dan enam belas gambar dipetakan manifest. ZIP v1.1 tetap snapshot
-historis; gunakan v1.3 untuk handoff terbaru.
+historis; gunakan v1.4 untuk handoff terbaru.
 
 [`evidence/qa-sync-results.json`](evidence/qa-sync-results.json) mencatat 192
 pemeriksaan responsif tambahan dan alur grouped resolution, recovery consent,

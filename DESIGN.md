@@ -1,8 +1,8 @@
 # Dailys — acuan desain aktif
 
-Versi paket: 1.3, 13 September 2026. Paket ini menyimpan lima layar utama dan lima
+Versi paket: 1.4, 13 September 2026. Paket ini menyimpan lima layar utama dan enam
 alur global: Home, Tugas, Pomodoro, Keuangan, Habit, Pusat Sync, review konflik,
-onboarding, Weekly Review, dan Global Settings. Statusnya acuan untuk
+onboarding, Weekly Review, Global Settings, dan Splash. Statusnya acuan untuk
 implementasi, belum implementasi aplikasi dan belum desain lengkap seluruh PRD.
 
 ## Mulai dari sini
@@ -147,8 +147,9 @@ memerlukan salinan sebelum replacement dan persetujuan setiap replay. Spesifikas
 
 Splash mengikuti [spesifikasi startup](design/screens/splash.md): identitas teks,
 status lokal, progress hanya bila terukur, serta state gagal dengan retry/panduan.
-Tanpa navigasi aplikasi, network gate atau permintaan izin. Spesifikasi tertulis
-tersedia; preview/mockup Splash belum dibuat.
+Tanpa navigasi aplikasi, network gate atau permintaan izin. Preview/mockup Splash
+tersedia mulai v1.4, dengan keadaan startup dan kegagalan contoh; bukan operasi
+database atau benchmark native.
 
 Weekly Review memakai [acuan layar](design/screens/weekly-review.md): dua jurnal,
 snapshot saat complete, kandidat hanya-baca, draft target satu modul, dan form

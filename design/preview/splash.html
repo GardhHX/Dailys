@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dailys — Splash</title><style>
+html{background:#f5f4f0;color:#20212b;font:14px/1.5 'Segoe UI',Arial,sans-serif}
+body{margin:0;padding:16px;min-width:288px}*{box-sizing:border-box}
+a{color:#3538a0;text-underline-offset:3px}a:focus-visible,select:focus-visible{outline:3px solid #3538a0;outline-offset:3px}
+.reference-bar{max-width:1408px;margin:0 auto 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.reference-links{display:flex;gap:16px;align-items:center;flex-wrap:wrap}.reference-bar label{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.reference-bar select{font:inherit;min-height:44px;padding:8px;border:1px solid #777887;border-radius:6px;color:#20212b;background:#fff}
+.reference-note{max-width:1408px;margin:12px auto 0;color:#595a68;font-size:12px}
+.preview-content{max-width:1408px;margin:auto}
+@media(max-width:440px){body{padding:16px}.reference-links{gap:12px}}
+</style></head><body><div class="reference-bar"><div class="reference-links"><a href="index.html">← Semua desain</a><a href="../screens/splash.md">Spesifikasi Splash</a><a href="../../DESIGN.md">Panduan desain</a></div><label for="reference-condition">Keadaan contoh<select id="reference-condition"><option value="terisi">Terisi</option><option value="kosong">Kosong</option><option value="memuat">Memuat</option><option value="gagal">Gagal</option></select></label></div><div class="preview-content"><style>
+#dailys-splash{color-scheme:light dark;--dspl-bg:light-dark(#f5f4f0,#17181e);--dspl-paper:light-dark(#fff,#22232c);--dspl-text:light-dark(#20212b,#f4f4fa);--dspl-muted:light-dark(#595a68,#b9bbc9);--dspl-line:light-dark(#dcdce2,#454651);--dspl-edge:light-dark(#777887,#9092a2);--dspl-accent:light-dark(#3538a0,#b7b9ff);--dspl-on:light-dark(#fff,#191a4c);--dspl-danger:light-dark(#9e2c30,#ffb3b6);font:14px/1.5 'Segoe UI',Arial,sans-serif;color:var(--dspl-text);text-align:left;isolation:isolate}
+#dailys-splash *{box-sizing:border-box}#dailys-splash [hidden]{display:none!important}#dailys-splash :is(p,h1,h2){margin:0}#dailys-splash :is(button,select){font:inherit;color:inherit;min-height:44px;max-width:100%;border-radius:6px;border:1px solid var(--dspl-edge);background:var(--dspl-paper);padding:9px 12px}#dailys-splash button{cursor:pointer;overflow-wrap:anywhere}#dailys-splash button:disabled{color:var(--dspl-muted);cursor:default}#dailys-splash :is(button,select):focus-visible{outline:3px solid var(--dspl-accent);outline-offset:3px}#dailys-splash button:active{transform:translateY(1px)}#dailys-splash .dspl-primary{background:var(--dspl-accent);color:var(--dspl-on);border-color:var(--dspl-accent);font-weight:600}#dailys-splash button:hover:not(:disabled){filter:brightness(.96)}
+#dailys-splash .dspl-controls{display:flex;align-items:end;gap:12px 16px;flex-wrap:wrap;background:var(--dspl-paper);border:1px solid var(--dspl-line);border-radius:9px;padding:16px;margin-bottom:16px}#dailys-splash .dspl-controls label{display:flex;flex-direction:column;gap:6px;font-size:12px;min-width:0}#dailys-splash .dspl-controls select{font-size:14px;width:100%}#dailys-splash .dspl-caption{width:100%;font-size:12px;color:var(--dspl-muted)}#dailys-splash .dspl-demo-result{font-size:12px;color:var(--dspl-muted);min-height:18px;margin-top:12px;overflow-wrap:anywhere}
+#dailys-splash .dspl-product{background:var(--dspl-bg);border:1px solid var(--dspl-line);border-radius:12px;min-height:560px;display:flex;align-items:center;justify-content:center;padding:48px 24px}#dailys-splash .dspl-content{width:100%;max-width:420px;min-width:0;text-align:center}#dailys-splash .dspl-brand{font-size:30px;font-weight:750;letter-spacing:-1px;line-height:1.2}#dailys-splash .dspl-status{color:var(--dspl-muted);margin-top:24px;overflow-wrap:anywhere}#dailys-splash .dspl-progress{height:4px;border-radius:3px;width:min(280px,100%);margin:16px auto 0;background:var(--dspl-edge)}#dailys-splash .dspl-progress-fill{height:100%;border-radius:3px;background:var(--dspl-accent)}#dailys-splash .dspl-stage{margin-top:12px;font-size:12px;color:var(--dspl-muted);overflow-wrap:anywhere}#dailys-splash .dspl-error{max-width:480px;text-align:left}#dailys-splash .dspl-error h2{font-size:19px;font-weight:650;line-height:1.35;color:var(--dspl-danger);margin-top:24px;overflow-wrap:anywhere}#dailys-splash .dspl-error p{margin-top:12px;color:var(--dspl-muted);overflow-wrap:anywhere}#dailys-splash .dspl-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}#dailys-splash .dspl-guide{margin-top:24px;border-top:1px solid var(--dspl-line);padding-top:18px}#dailys-splash .dspl-guide h2{font-size:15px;margin:0;color:var(--dspl-text)}#dailys-splash .dspl-guide button{margin-top:16px}
+#dailys-splash .dspl-progress{background:var(--dspl-bg);outline:1px solid var(--dspl-edge)}
+@media(max-width:680px){#dailys-splash .dspl-product{min-height:520px;padding:40px 24px}#dailys-splash .dspl-brand{font-size:28px}#dailys-splash .dspl-controls label{flex:1 1 140px}#dailys-splash .dspl-controls label:first-of-type{flex-basis:100%}}
+@media(max-width:440px){#dailys-splash .dspl-controls{padding:12px;gap:12px}#dailys-splash .dspl-controls select{font-size:16px}#dailys-splash .dspl-actions button{width:100%}#dailys-splash .dspl-product{min-height:480px}}
+</style>
+<div id="dailys-splash" aria-label="Dailys Splash preview">
+  <div class="dspl-controls" id="dspl-controls"></div>
+  <div class="dspl-product" id="dspl-product"><div class="dspl-content"><h1 class="dspl-brand">dailys.</h1><p class="dspl-status" role="status">Membuka data lokal…</p></div></div>
+  <p class="dspl-demo-result" id="dspl-demo-result" role="status" aria-live="polite"></p>
+</div>
+<script>
+(()=>{
+  const root=document.getElementById('dailys-splash'),q=s=>root.querySelector(s);
+  const design={screen:'splash',theme:'otomatis',condition:'terisi',scenario:'opening',language:'id',onboarded:true,measuredProgress:false};
+  const texts={
+    id:{caption:'Preview · data contoh · kontrol ini bukan UI Splash',scenario:'Keadaan startup',language:'Bahasa',theme:'Tema',system:'Sistem',light:'Terang',dark:'Gelap',opening:'Membuka data lokal…',fresh:'Menyiapkan data lokal…',backup:'Membuat salinan sebelum pembaruan…',verify:'Memeriksa salinan data…',migration:'Memperbarui data lokal…',timer:'Memulihkan timer…',restore:'Mengembalikan salinan data…',locked:'Database terkunci',backupFailed:'Backup belum berhasil',migrationFailed:'Migration gagal · rollback terverifikasi',integrityFailed:'Integrity / restore gagal',incompatible:'Downgrade tidak diperbolehkan',openTitle:'Data lokal belum dapat dibuka',lockedBody:'Tutup aplikasi lain yang memakai data ini, lalu coba kembali.',backupTitle:'Pembaruan data belum dapat dimulai',backupBody:'Salinan sebelum pembaruan belum dapat diverifikasi. Periksa ruang penyimpanan, lalu coba kembali. Migration belum dimulai.',migrationTitle:'Pembaruan data belum berhasil',migrationBody:'Salinan dan versi data sebelumnya telah dipulihkan serta diverifikasi pada skenario contoh ini. Coba pembaruan kembali setelah penyebabnya diperbaiki.',integrityTitle:'Data lokal perlu dipulihkan',integrityBody:'Data belum dapat diverifikasi. Hentikan perubahan dan ikuti pemulihan dari salinan yang terverifikasi.',compatibleTitle:'Data memerlukan aplikasi yang sesuai',compatibleBody:'Data sudah memakai versi yang lebih baru. Gunakan versi aplikasi yang sesuai atau ikuti prosedur pemulihan. Jangan menurunkan versi data otomatis.',retry:'Coba lagi',guide:'Panduan pemulihan',closeGuide:'Tutup panduan',guideLocked:'Tutup aplikasi lain yang membuka data Dailys. Jika tetap gagal, hentikan perubahan dan gunakan prosedur pemulihan lokal.',guideBackup:'Bebaskan ruang penyimpanan. Buat ulang salinan dan verifikasi sebelum memulai pembaruan; jangan menimpa data asal.',guideMigration:'Pertahankan salinan yang terverifikasi. Perbaiki penyebab kegagalan sebelum mencoba migration kembali dari versi asal.',guideIntegrity:'Jangan reset atau menghapus database. Gunakan salinan lokal yang telah diverifikasi melalui prosedur restore. Jalur restore native belum dijalankan dalam preview.',guideCompatible:'Gunakan forward-fix atau prosedur ekspor/pemulihan yang sesuai. Jangan melakukan downgrade otomatis setelah mutation schema baru dikirim.',retrying:'Mencoba membuka data lokal…',complete:'Kesiapan lokal selesai · contoh',destination:'Tujuan contoh: {target}. Canvas tetap menampilkan Splash.',home:'Today / Home',onboarding:'First-run onboarding',onboarded:'Onboarding selesai · contoh',progress:'Progress terukur · contoh',stage:'Tahap contoh: verifikasi hasil migration',progressLabel:'Progress migration contoh',retryDone:'Retry contoh selesai. Belum ada operasi database native.',autoRoute:'Paket offline membuka preview tujuan; pergantian halaman mengembalikan state contoh.'},
+    en:{caption:'Preview · sample data · these controls are outside Splash',scenario:'Startup state',language:'Language',theme:'Theme',system:'System',light:'Light',dark:'Dark',opening:'Opening local data…',fresh:'Preparing local data…',backup:'Creating a copy before updating…',verify:'Checking the data copy…',migration:'Updating local data…',timer:'Restoring the timer…',restore:'Restoring the data copy…',locked:'Database locked',backupFailed:'Backup unsuccessful',migrationFailed:'Migration failed · verified rollback',integrityFailed:'Integrity / restore failed',incompatible:'Downgrade forbidden',openTitle:'Local data could not be opened',lockedBody:'Close other apps using these data, then try again.',backupTitle:'The data update could not start',backupBody:'The copy made before updating could not be verified. Check available storage, then try again. Migration has not started.',migrationTitle:'The data update was unsuccessful',migrationBody:'The previous copy and data version have been restored and verified in this sample scenario. Try updating again after fixing the cause.',integrityTitle:'Local data needs recovery',integrityBody:'The data could not be verified. Stop changes and follow recovery from a verified copy.',compatibleTitle:'These data need a compatible app',compatibleBody:'The data already use a newer version. Use a compatible app version or follow recovery. Do not downgrade the data automatically.',retry:'Try again',guide:'Recovery guide',closeGuide:'Close guide',guideLocked:'Close other apps opening Dailys data. If opening still fails, stop changes and use the local recovery procedure.',guideBackup:'Free storage space. Create and verify a new copy before updating; do not overwrite the source data.',guideMigration:'Keep the verified copy. Fix the cause before retrying migration from the original version.',guideIntegrity:'Do not reset or delete the database. Use a verified local copy through the restore procedure. This preview does not perform a native restore.',guideCompatible:'Use a suitable forward-fix or export/recovery procedure. Do not downgrade automatically after mutations using the new schema have been sent.',retrying:'Trying to open local data…',complete:'Local readiness complete · sample',destination:'Sample destination: {target}. The canvas keeps showing Splash.',home:'Today / Home',onboarding:'First-run onboarding',onboarded:'Onboarding complete · sample',progress:'Measured progress · sample',stage:'Sample stage: verifying migration results',progressLabel:'Sample migration progress',retryDone:'Sample retry complete. No native database operation was performed.',autoRoute:'The offline package opens the destination preview; changing pages resets sample state.'}
+  };
+  const scenarios=['opening','fresh','backup','verify','migration','timer','restore','locked','backupFailed','migrationFailed','integrityFailed','incompatible'];
+  let guideOpen=false,busy=false,retryEpoch=0,lastScenario='',lastCondition='',lastDestination=null;
+  const errors={locked:['openTitle','lockedBody','guideLocked'],backupFailed:['backupTitle','backupBody','guideBackup'],migrationFailed:['migrationTitle','migrationBody','guideMigration'],integrityFailed:['integrityTitle','integrityBody','guideIntegrity'],incompatible:['compatibleTitle','compatibleBody','guideCompatible']};
+  const t=(key,args={})=>{const value=texts[design.language][key];if(value===undefined)throw Error('Missing Splash resource: '+key);return value.replace(/\{(\w+)\}/g,(_,name)=>args[name]||'')};
+  function render(){
+    if(lastCondition!==design.condition){lastCondition=design.condition;if(design.condition==='kosong')design.scenario='fresh';if(design.condition==='gagal')design.scenario='locked';if(design.condition==='memuat'||design.condition==='terisi')design.scenario='opening'}
+    if(lastScenario!==design.scenario){lastScenario=design.scenario;guideOpen=false;busy=false;retryEpoch++;q('#dspl-demo-result').textContent=''}
+    const active=document.activeElement?.id;root.lang=design.language;root.style.colorScheme=design.theme==='gelap'?'dark':design.theme==='terang'?'light':'light dark';
+    q('#dspl-controls').innerHTML=`<p class="dspl-caption">${t('caption')}</p><label for="dspl-scenario">${t('scenario')}<select id="dspl-scenario">${scenarios.map(s=>`<option value="${s}" ${design.scenario===s?'selected':''}>${t(s)}</option>`).join('')}</select></label><label for="dspl-language">${t('language')}<select id="dspl-language"><option value="id" ${design.language==='id'?'selected':''}>Bahasa Indonesia</option><option value="en" ${design.language==='en'?'selected':''}>English</option></select></label><label for="dspl-theme">${t('theme')}<select id="dspl-theme">${[['otomatis','system'],['terang','light'],['gelap','dark']].map(([v,k])=>`<option value="${v}" ${design.theme===v?'selected':''}>${t(k)}</option>`).join('')}</select></label><button type="button" id="dspl-complete" ${errors[design.scenario]||busy?'disabled':''}>${t('complete')}</button>`;
+    const error=errors[design.scenario],canRetry=['locked','backupFailed','migrationFailed'].includes(design.scenario);
+    q('#dspl-product').innerHTML=`<div class="dspl-content ${error?'dspl-error':''}"><h1 class="dspl-brand">dailys.</h1>${error&&!busy?`<div role="alert"><h2>${t(error[0])}</h2><p>${t(error[1])}</p></div><div class="dspl-actions">${canRetry?`<button type="button" id="dspl-retry" class="dspl-primary">${t('retry')}</button>`:''}<button type="button" id="dspl-guide" aria-expanded="${guideOpen}" aria-controls="dspl-guide-content">${t('guide')}</button></div>${guideOpen?`<section class="dspl-guide" id="dspl-guide-content" aria-labelledby="dspl-guide-title"><h2 id="dspl-guide-title">${t('guide')}</h2><p>${t(error[2])}</p><button type="button" id="dspl-close-guide">${t('closeGuide')}</button></section>`:''}`:`<p class="dspl-status" role="status" aria-live="polite">${t(busy?'retrying':design.scenario)}</p>${design.scenario==='migration'&&design.measuredProgress?`<div class="dspl-progress" role="progressbar" aria-label="${t('progressLabel')}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60"><div class="dspl-progress-fill" style="width:60%"></div></div><p class="dspl-stage">${t('stage')} · 60%</p>`:''}`}</div>`;
+    if(active&&q('#'+active))q('#'+active).focus({preventScroll:true});
+  }
+  function complete(){if(errors[design.scenario]||busy)return;lastDestination=design.onboarded?'home':'onboarding';q('#dspl-demo-result').textContent=t('destination',{target:t(design.onboarded?'home':'onboarding')});root.dispatchEvent(new CustomEvent('dailys:startup-ready',{bubbles:true,detail:{destination:lastDestination}}))}
+  root.addEventListener('change',e=>{if(e.target.id==='dspl-scenario')design.scenario=e.target.value;if(e.target.id==='dspl-language')design.language=e.target.value;if(e.target.id==='dspl-theme')design.theme=e.target.value;render()});
+  root.addEventListener('click',e=>{const id=e.target.closest('button')?.id;if(id==='dspl-complete')complete();if(id==='dspl-guide'){guideOpen=true;render()}if(id==='dspl-close-guide'){guideOpen=false;render();q('#dspl-guide').focus()}if(id==='dspl-retry'&&!busy){busy=true;const token=++retryEpoch;render();setTimeout(()=>{if(retryEpoch!==token)return;design.scenario='opening';render();q('#dspl-demo-result').textContent=t('retryDone')},220)}});
+  root.addEventListener('keydown',e=>{if(e.key==='Escape'&&guideOpen){guideOpen=false;render();q('#dspl-guide').focus()}});
+  root.dailysPreview={design,render,complete,getDestination:()=>lastDestination,getPrototypeState:()=>({busy,guideOpen,databaseOperations:0,networkOperations:0,fixtureProgress:design.measuredProgress?60:null})};render();
+  if(globalThis.Tweak){const tweak=new Tweak({container:root,onChange:render});tweak.addToggle(design,'onboarded',{label:t('onboarded')});tweak.addToggle(design,'measuredProgress',{label:t('progress')})}
+})();
+</script>
+</div><p class="reference-note">Toolbar acuan bukan UI produk. Data contoh bersifat sementara; pindah halaman atau reload mengembalikannya. Lihat GAPS.md untuk flow yang belum dirancang.</p><script>
+(() => {
+  const config = {"id": "splash", "label": "Splash", "source": "dailys-splash.html", "root": "dailys-splash", "state": "splash", "kind": "global", "description": "Startup lokal, backup/migration, recovery timer, retry dan rute onboarding/Home."};
+  const root = document.getElementById(config.root);
+  const api = root.dailysPreview;
+  const state = api.design || api.settings;
+  if (config.state) state.screen = config.state;
+  api.render();
+
+  if (!['settings','onboarding','splash'].includes(config.id)) {
+    const header = root.querySelector('header');
+    const button = document.createElement('button');
+    button.type='button'; button.textContent='Settings'; button.dataset.globalSettings='';
+    button.style.cssText='min-height:44px;font:inherit;font-size:12px;padding:8px 12px;flex-shrink:0';
+    header.style.flexWrap='wrap';
+    header.append(button);
+  }
+  root.addEventListener('click', event => {
+    const button = event.target.closest('[data-global-settings],[data-settings],[data-route]');
+    if (!button) return;
+    let destination;
+    if(button.hasAttribute('data-global-settings')) destination='settings.html';
+    else if(button.hasAttribute('data-settings')) destination='settings.html#dg-'+(config.root==='dailys-work'?'pomodoro':'sync');
+    else if(config.id==='settings') destination=button.dataset.route+'.html';
+    if(!destination) return;
+    event.preventDefault();event.stopImmediatePropagation();location.href=destination;
+  },true);
+  if(config.id==='settings' && location.hash.startsWith('#dg-')) api.setSection(location.hash.slice(4));
+  if(config.id==='splash'){
+    root.addEventListener('dailys:startup-ready',event=>{location.href=event.detail.destination+'.html'});
+    const options=document.createElement('div');options.className='reference-links';
+    const labels={onboarded:'Onboarding selesai · contoh',measuredProgress:'Progress terukur · contoh'};
+    Object.entries(labels).forEach(([key,label])=>{
+      const container=document.createElement('label'),input=document.createElement('input');
+      input.type='checkbox';input.checked=state[key];input.id='reference-'+key;
+      input.addEventListener('change',()=>{state[key]=input.checked;api.render()});
+      container.style.minHeight='44px';input.style.width='20px';input.style.height='20px';
+      container.append(input,document.createTextNode(label));options.append(container);
+    });
+    document.querySelector('.reference-bar').append(options);
+  }
+
+  const icons = {
+    house: '<path d="m3 10 9-7 9 7v11h-6v-7H9v7H3z"/>',
+    'clipboard-list': '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2h6v2M9 10h6M9 15h6"/>',
+    timer: '<circle cx="12" cy="14" r="8"/><path d="M9 2h6m-3 0v4m6 1 2-2m-8 5v4l3 2"/>',
+    wallet: '<rect x="3" y="5" width="18" height="15" rx="2"/><path d="M15 10h6v5h-6zM3 8h18"/>',
+    'list-checks': '<path d="m3 6 2 2 3-4m3 2h10M3 13l2 2 3-4m3 2h10M3 20l2 2 3-4m3 2h10"/>'
+  };
+  root.querySelectorAll('[data-lucide]').forEach(node => {
+    const path = icons[node.dataset.lucide];
+    if (!path) return;
+    node.outerHTML = '<svg aria-hidden="true" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + path + '</svg>';
+  });
+
+  const destinations = {Home:'home', Tugas:'tugas', Pomodoro:'pomodoro', Keuangan:'keuangan', Habit:'habit'};
+  root.querySelectorAll('nav button').forEach(button => {
+    const label = Object.keys(destinations).find(key => button.textContent.trim().endsWith(key));
+    if (!label) return;
+    button.disabled = false;
+    button.dataset.referenceDestination = destinations[label];
+    if (destinations[label] === config.id) button.setAttribute('aria-current','page');
+    else button.removeAttribute('aria-current');
+  });
+  root.querySelectorAll('.dh-navcaption,.dw-navnote,.dl-navnote').forEach(node => {
+    node.textContent = 'Acuan lima layar · data contoh';
+  });
+  root.addEventListener('click', event => {
+    const button = event.target.closest('[data-reference-destination]');
+    if (!button) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const destination = button.dataset.referenceDestination;
+    if (destination !== config.id) location.href = destination + '.html';
+  }, true);
+
+  document.getElementById('reference-condition').addEventListener('change', event => {
+    state.condition = event.target.value;
+    api.render();
+  });
+  if (config.root === 'dailys-sync') root.addEventListener('click', event => {
+    const button = event.target.closest('[data-onboardhome]');
+    if (!button) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    location.href = 'home.html';
+  }, true);
+  if (config.root === 'dailys-review') root.addEventListener('click', event => {
+    const button = event.target.closest('[data-home],[data-candidate]');
+    if (!button) return;
+    const candidate = api.getCandidates().find(candidate => candidate.id === button.dataset.candidate);
+    const destination = button.hasAttribute('data-home') ? 'home' : destinations[candidate?.module];
+    if (!destination) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    location.href = destination + '.html';
+  }, true);
+  if (config.root === 'dailys-home') root.addEventListener('click', event => {
+    if (!event.target.closest('#dh-reviewopen')) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    location.href = 'weekly-review.html';
+  }, true);
+  root.addEventListener('click', event => {
+    if (event.target.closest('[data-retry]')) document.getElementById('reference-condition').value='terisi';
+  });
+})();
+</script></body></html>

@@ -1,10 +1,9 @@
 # Splash: design spec
 
-Status: **spesifikasi tertulis**, diperbarui 13 September 2026 untuk paket v1.3.
-Preview, mockup dan implementasi Splash belum tersedia. Spesifikasi ini
-menjadi acuan tertulis untuk membangun `../preview/splash.html` dan
-`../mockups/splash-desktop.png` / `../mockups/splash-mobile.png` berikutnya. Sampai
-artefak itu dibuat, ikuti spesifikasi ini bersama token `../tokens.json`. Lihat
+Status: **acuan visual aktif**, 13 September 2026, paket v1.4.
+[Preview offline](../preview/splash.html), [desktop](../mockups/splash-desktop.png),
+[ponsel](../mockups/splash-mobile.png) dan [sumber canvas](../source/dailys-splash.html).
+Implementasi native belum tersedia. Ikuti spesifikasi ini bersama token. Lihat
 [`GAPS`](../GAPS.md). Otoritas tetap PRD → schema → API-SPEC → OpenAPI → desain.
 Mode antislop **DURING**, mengikuti pilihan pengguna sebelumnya.
 
@@ -225,9 +224,18 @@ PRD FR-7.13; OPERATIONS bagian 3 (backup sebelum migration), 7.1 (startup), 7.3 
 NFR-13 (recovery timer); schema bagian 22 (inisialisasi/migration). Splash tidak
 memiliki endpoint sendiri; ia hanya membuka state lokal.
 
-Belum mempunyai acuan visual: preview dan mockup layar ini, presentasi tahap
-migration nyata, dan tampilan kegagalan integrity/migration. Pengukuran cold/warm
-start dan timer recovery adalah target native, bukan bukti browser.
+Preview memuat dua bahasa/tema dan dua belas keadaan, termasuk kegagalan
+backup/migration/integrity dan downgrade. Panduan inline serta retry memakai state
+sementara. Keadaan startup ditahan untuk inspeksi; tombol kesiapan lokal berada
+di luar produk dan mensimulasikan tujuan Home/onboarding. Ini bukan delay startup
+native. Canvas menampilkan label tujuan; paket offline membuka preview tujuan.
+
+Progress 60% hanya fixture berlabel yang dapat diaktifkan melalui kontrol prototype,
+bukan angka pekerjaan SQLite. Jangan menyalin persentase, timer retry 220 ms atau
+readiness button ke runtime. Tahap/progress native, transaksi, backup, restore dan
+recovery timer masih perlu diimplementasikan. Pengukuran cold/warm start serta
+timer recovery adalah target native, bukan bukti browser.
+[Laporan antislop](../evidence/antislop-splash.md) membatasi PASS pada preview.
 
 ## Periksa saat implementasi
 

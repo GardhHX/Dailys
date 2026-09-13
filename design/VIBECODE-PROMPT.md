@@ -17,7 +17,7 @@ Weekly Review melalui shortcut Home atau Settings, bukan tab keenam. Baca
 design/screens/weekly-review.md dan preview terkait sebelum implementasi M5.
 Kontrol prototype dan toolbar acuan tidak termasuk UI produk.
 
-Splash memiliki design spec di design/screens/splash.md, belum preview/mockup.
+Splash memakai design/screens/splash.md dan design/preview/splash.html.
 Ikuti komposisi identitas/status minimal dan state kegagalan. Jangan menunggu VPS
 atau meminta izin. Backup terverifikasi mendahului migration; rollback bersyarat
 sesuai OPERATIONS. Relaunch timer memakai Instant UTC, monotonic clock saat process
@@ -83,5 +83,5 @@ teks panjang dan overflow root/descendant. Laporkan perubahan, bukti, dan gap te
 Perbarui acuan bersama implementasi bila pengguna meminta perubahan desain.
 ```
 
-Berikan seluruh ZIP v1.3 bila agent hanya menerima unggahan. Satu PNG tidak memuat
+Berikan seluruh ZIP v1.4 bila agent hanya menerima unggahan. Satu PNG tidak memuat
 reflow, form, tema, invariant, atau gap desain.

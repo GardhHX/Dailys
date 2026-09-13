@@ -150,7 +150,7 @@ const {chromium}=require('playwright');
     const manifest=JSON.parse(fs.readFileSync(path.join(base,'manifest.json'))),routes=[];
     for(const width of [1440,352]){
       await page.setViewportSize({width,height:1100});
-      for(const s of manifest.screens.filter(s=>!['settings','onboarding'].includes(s.id))){
+      for(const s of manifest.screens.filter(s=>!['settings','onboarding','splash'].includes(s.id))){
         await page.goto(pathToFileURL(path.join(base,'preview',s.id+'.html')).href);
         await page.locator('[data-global-settings]').click();await page.waitForURL('**/settings.html');routes.push({width,from:s.id,to:'settings'});
       }

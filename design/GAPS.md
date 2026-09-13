@@ -18,6 +18,7 @@ tidak menaikkan status implementasi atau verifikasi native.
 | Onboarding | ID/EN form, timezone preset, registrasi berhasil/gagal, offline lanjut, akun opsional/skip, ringkasan dan Home tujuan | Picker IANA penuh, lokalisasi seluruh copy global, platform detection/secure provisioning nyata, seed/migration idempotent native |
 | Weekly Review | Dua jurnal, draft/completed, ringkasan live/frozen, kandidat readonly, draft bebas/dari sumber, edit/hapus/discard, form aktivasi Tugas/Activity/Timebox, gate, fresh install, tujuh hari workload, shortcut Home/Settings offline | Missed review terkelompok, semua field/picker/reminder modul, gate bersama pada seluruh modul, SQLite/UUIDv5/outbox/snapshot kanonik native |
 | Global Settings | Delapan bagian, resource ID/EN, IANA runtime picker/search, empat durasi/rentang, status simpan/gagal/retry, recompute, notifikasi vs izin OS, tema per-device, volume lokal, registrasi, ringkasan sync, Tentang dan route global | Binding system settings/izin/volume native, tzdb/alias server, build aplikasi nyata, SQLite/REST/outbox bersama dan recompute materializer |
+| Splash | Identitas/status minimal, dua bahasa/tema, startup/backup/migration/timer/restore, lima keadaan gagal, retry/panduan inline dan tujuan Home/onboarding | Tahap/progress pekerjaan SQLite, backup/restore/migration/crash recovery, timer/lifecycle native, ekspor/restore lanjutan dan benchmark |
 
 ## Perbedaan yang harus diselesaikan saat implementasi
 
@@ -55,16 +56,16 @@ tidak menaikkan status implementasi atau verifikasi native.
    routing bersama dan mempertahankan domain/session state yang sesuai. Timer
    tidak boleh hilang saat pengguna membuka tab lain.
 
-## Layar global yang belum dirancang
+## Alur global dan detail tersisa
 
 Pusat Sync, review, onboarding serta alur recovery mempunyai acuan contoh mulai
 paket v1.1; detail yang belum lengkap tercatat di tabel. Weekly Review mempunyai
 preview/mockup mulai v1.2; Global Settings mempunyai preview/mockup mulai v1.3.
-Splash kini mempunyai spesifikasi tertulis di [`screens/splash.md`](screens/splash.md),
-tetapi belum mempunyai preview/mockup; artefak visualnya masih perlu dibuat. Dengan
-begitu seluruh layar global sudah memiliki minimal acuan tertulis. Jangan
+Splash mempunyai [spec](screens/splash.md), [preview](preview/splash.html) dan
+mockup mulai v1.4. Semua layar terdaftar memiliki acuan visual contoh; detail native
+dan flow yang belum lengkap tetap tercatat pada tabel. Jangan
 menganggap gap tidak diperlukan; requirement tetap berada pada PRD/schema/API.
-Tidak ada screenshot aktif untuk Splash di paket ini.
+Keberadaan screenshot tidak membuktikan runtime startup, migration atau recovery.
 
 ## Batas bukti
 

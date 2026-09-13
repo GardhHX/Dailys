@@ -11,12 +11,13 @@ Home, Tugas, Pomodoro, Keuangan, dan Habit, dengan screenshot desktop/ponsel,
 token bersama, spesifikasi layar, dan [prompt vibecoding](design/VIBECODE-PROMPT.md).
 Preview dapat dibuka langsung di browser tanpa instalasi.
 
-Paket desain v1.3 juga memuat [Pusat Sync](design/screens/pusat-sync.md),
+Paket desain v1.4 juga memuat [Pusat Sync](design/screens/pusat-sync.md),
 [review konflik](design/screens/review-konflik.md),
 [onboarding](design/screens/onboarding.md), dan
 [Weekly Review](design/screens/weekly-review.md), serta
-[Global Settings](design/screens/settings.md). Kelimanya adalah alur global;
-jumlah tab utama tetap lima. Arsip handoff aktif: `Dailys-design-v1.3.zip`.
+[Global Settings](design/screens/settings.md), dan [Splash](design/screens/splash.md).
+Keenamnya adalah alur global; jumlah tab utama tetap lima.
+Arsip handoff aktif: `Dailys-design-v1.4.zip`.
 
 ## Urutan otoritas
 
