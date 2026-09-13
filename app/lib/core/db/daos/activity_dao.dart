@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 
+import '../../time/local_date.dart';
 import '../database.dart';
 import '../tables/enums.dart';
 import '../tables/m1_tables.dart';
@@ -44,15 +45,46 @@ class ActivityDao extends DatabaseAccessor<AppDatabase> with _$ActivityDaoMixin 
     );
   }
 
+  /// Active (non-deleted) recurrence templates for [userId], used by the
+  /// materializer's rolling-window run (API-SPEC "Materializer berjalan
+  /// pada...").
+  Future<List<ActivityRecurrenceRow>> getActiveRecurrences(String userId) =>
+      (select(activityRecurrence)
+            ..where((t) => t.userId.equals(userId) & t.isDeleted.equals(false)))
+          .get();
+
+  /// Applies one recurrence's [RecurrenceMaterializationResult] in a single
+  /// transaction: insert-or-ignore each new occurrence (an occurrence already
+  /// materialized for that date is an immutable snapshot and is never
+  /// overwritten — schema Section 2), then advance the template's
+  /// `materialized_through_date` watermark. No-op if there is nothing new and
+  /// the watermark is unchanged.
+  Future<void> applyMaterialization({
+    required String recurrenceId,
+    required List<ActivityCompanion> occurrences,
+    required LocalDate? materializedThroughDate,
+    DateTime? now,
+  }) async {
+    if (occurrences.isEmpty && materializedThroughDate == null) return;
+    await transaction(() async {
+      for (final occ in occurrences) {
+        await into(activity).insert(occ, mode: InsertMode.insertOrIgnore);
+      }
+      if (materializedThroughDate != null) {
+        final ts = now ?? DateTime.now().toUtc();
+        await (update(activityRecurrence)..where((t) => t.id.equals(recurrenceId))).write(
+          ActivityRecurrenceCompanion(
+            materializedThroughDate: Value(materializedThroughDate.toYmd()),
+            updatedAt: Value(ts),
+          ),
+        );
+      }
+    });
+  }
+
   // --- Activity (occurrences) ---
 
   Future<void> insertActivity(ActivityCompanion row) => into(activity).insert(row);
-
-  /// Idempotent upsert of a materialized occurrence keyed by its deterministic
-  /// id (UUIDv5). Used by the recurrence materializer's rolling window
-  /// (schema Section 2); re-running does not duplicate rows.
-  Future<void> upsertOccurrence(ActivityCompanion row) =>
-      into(activity).insertOnConflictUpdate(row);
 
   /// Active activities on a given local date (`YYYY-MM-DD`), for the Home Today
   /// list (schema 8 index).
