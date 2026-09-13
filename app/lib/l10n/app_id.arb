@@ -93,6 +93,18 @@
   "activityEndAfterStart": "Waktu selesai harus setelah mulai",
   "activityRecurringDaysRequired": "Pilih minimal satu hari",
 
+  "homeNextDeadlineTitle": "Tenggat berikutnya",
+  "homeNextDeadlineEmpty": "Tidak ada tenggat mendatang",
+  "homeNextDeadlineOverdueSection": "Terlambat",
+  "homeNextDeadlineUpcomingSection": "Akan datang",
+  "homeNextDeadlineDueToday": "Jatuh tempo hari ini",
+  "homeNextDeadlineDaysLeft": "{days} hari lagi",
+  "@homeNextDeadlineDaysLeft": {"placeholders": {"days": {"type": "int"}}},
+  "homeNextDeadlineDaysOverdue": "{days} hari terlambat",
+  "@homeNextDeadlineDaysOverdue": {"placeholders": {"days": {"type": "int"}}},
+  "homeNextDeadlineMoreOverdue": "+{count} lagi terlambat",
+  "@homeNextDeadlineMoreOverdue": {"placeholders": {"count": {"type": "int"}}},
+
   "navHome": "Beranda",
   "navTugas": "Tugas",
 

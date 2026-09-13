@@ -88,6 +88,15 @@
   "activityEndAfterStart": "End time must be after start",
   "activityRecurringDaysRequired": "Choose at least one day",
 
+  "homeNextDeadlineTitle": "Next deadline",
+  "homeNextDeadlineEmpty": "No upcoming deadlines",
+  "homeNextDeadlineOverdueSection": "Overdue",
+  "homeNextDeadlineUpcomingSection": "Coming up",
+  "homeNextDeadlineDueToday": "Due today",
+  "homeNextDeadlineDaysLeft": "{days} days left",
+  "homeNextDeadlineDaysOverdue": "{days} days overdue",
+  "homeNextDeadlineMoreOverdue": "+{count} more overdue",
+
   "navHome": "Home",
   "navTugas": "Tasks",
 

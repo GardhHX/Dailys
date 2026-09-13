@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import '../../app/theme/tokens.dart';
 import '../../core/db/database.dart';
@@ -14,17 +15,24 @@ import 'tugas_labels.dart';
 /// Tugas detail route (design/screens/tugas.md: "Detail sebagai route dengan
 /// tombol kembali"): title/deadline, description, checklist, status/priority/
 /// estimate/course, and edit/archive/delete actions.
+///
+/// Opened both from the Tugas tab and from Home's Next Deadline panel
+/// (design/screens/home.md: "Panel deadline membuka detail contoh"), so it
+/// owns a private [TugasListCubit] for the edit sheet's course list rather
+/// than depending on the Tugas tab's instance.
 class TugasDetailScreen extends StatefulWidget {
   const TugasDetailScreen({
     super.key,
     required this.db,
+    required this.userId,
+    required this.location,
     required this.tugasId,
-    required this.listCubit,
   });
 
   final AppDatabase db;
+  final String userId;
+  final tz.Location location;
   final String tugasId;
-  final TugasListCubit listCubit;
 
   @override
   State<TugasDetailScreen> createState() => _TugasDetailScreenState();
@@ -33,10 +41,16 @@ class TugasDetailScreen extends StatefulWidget {
 class _TugasDetailScreenState extends State<TugasDetailScreen> {
   late final TugasDetailCubit _cubit =
       TugasDetailCubit(db: widget.db, tugasId: widget.tugasId);
+  late final TugasListCubit _editCubit = TugasListCubit(
+    db: widget.db,
+    userId: widget.userId,
+    location: widget.location,
+  );
 
   @override
   void dispose() {
     _cubit.close();
+    _editCubit.close();
     super.dispose();
   }
 
@@ -66,7 +80,7 @@ class _TugasDetailScreenState extends State<TugasDetailScreen> {
               IconButton(
                 icon: const Icon(Icons.edit_outlined),
                 onPressed: () =>
-                    showAddEditTugasSheet(context, cubit: widget.listCubit, existing: t),
+                    showAddEditTugasSheet(context, cubit: _editCubit, existing: t),
               ),
               IconButton(
                 icon: Icon(archived ? Icons.unarchive_outlined : Icons.archive_outlined),
