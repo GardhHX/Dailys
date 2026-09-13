@@ -147,6 +147,20 @@ uuid: d4eef7e7-655b-5e0d-9157-89f85d2b78de
 Implementasi Dart dan Node.js wajib menghasilkan UUID tersebut sebelum sync
 diaktifkan.
 
+Seed `ActivityCategory` (bagian 6) memakai slug kanonik tetap berikut pada
+canonical name `urn:dailys:v1.0:activity-category:{user_id}:{slug}`. Slug adalah
+bagian kontrak id; mengubahnya mengubah UUIDv5. Golden vector memakai
+`user_id = 00000000-0000-0000-0000-000000000001`:
+
+| Nama | slug | uuid |
+|---|---|---|
+| Kuliah | `kuliah` | `e4616ca7-51b2-56c3-a4cf-304a4211a24b` |
+| Tugas | `tugas` | `df3b699d-a959-5535-bd27-b2675cf51514` |
+| Personal | `personal` | `53d6bd14-770a-53d3-b219-3099bf07dd42` |
+| Istirahat | `istirahat` | `d50f065b-7fd7-550d-ae86-a0e69fa5ad1c` |
+| Sosial | `sosial` | `d2739764-b2b7-5c93-a16c-c2be726bf2e4` |
+| Olahraga | `olahraga` | `5f0a8a68-4ad5-58e5-b2ed-edf79c21876d` |
+
 ### Materialisasi occurrence dan reminder
 
 `ActivityRecurrence` dan `TimeboxSchedule` memakai rolling materialization

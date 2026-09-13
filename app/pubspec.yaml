@@ -10,18 +10,29 @@ environment:
   sdk: ">=3.4.0 <4.0.0"
 
 # Dependency ditambahkan bertahap per langkah M1-PLAN. Langkah 2 (core determinisme)
-# hanya butuh uuid + timezone. Bloc/Drift/go_router/l10n/notifikasi menyusul di
-# langkah berikutnya agar pub get tetap bersih dan cepat.
+# butuh uuid + timezone. Langkah 3 (lapisan DB) menambah Drift + sqlite3 + path.
+# Bloc/go_router/l10n/notifikasi menyusul di langkah berikutnya agar pub get tetap
+# bersih dan cepat.
 dependencies:
   flutter:
     sdk: flutter
   uuid: ^4.4.0            # UUIDv4 + UUIDv5 deterministik (schema "Deterministic IDs")
   timezone: ^0.9.4        # tzdb; kebijakan DST clamp diterapkan manual (schema 2, 23.1)
+  drift: ^2.20.0         # SQLite source of truth lokal (schema.md kontrak tabel)
+  sqlite3: ^2.4.0        # binding sqlite3; VACUUM INTO utk backup migration (OPERATIONS 3)
+  sqlite3_flutter_libs: ^0.5.24  # bundle sqlite3 native di app release Windows/Android
+  path: ^1.9.0           # join path file DB + backup
+  path_provider: ^2.1.0  # lokasi dokumen aplikasi utk file DB
+  crypto: ^3.0.3         # SHA-256 manifest backup migration (OPERATIONS 3)
+  cryptography: ^2.7.0   # AES-GCM enkripsi copy backup (OPERATIONS 3)
+  flutter_secure_storage: ^9.2.2  # key device-local utk enkripsi backup (OPERATIONS 3)
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  drift_dev: ^2.20.0     # codegen Drift (build_runner)
+  build_runner: ^2.4.0   # jalankan codegen
 
 flutter:
   uses-material-design: true
