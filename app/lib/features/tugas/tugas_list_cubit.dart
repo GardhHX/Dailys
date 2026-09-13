@@ -7,8 +7,8 @@ import 'package:timezone/timezone.dart' as tz;
 import '../../core/db/database.dart';
 import '../../core/db/tables/enums.dart';
 import '../../core/ids/deterministic_id.dart';
+import '../../core/reminders/task_reminder.dart';
 import '../../core/time/local_date.dart';
-import 'domain/task_reminder.dart';
 import 'domain/tugas_history.dart';
 import 'tugas_list_state.dart';
 

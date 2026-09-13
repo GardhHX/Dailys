@@ -184,5 +184,10 @@
   "courseNoteHint": "Catatan",
   "courseNoteDate": "Tanggal",
   "courseNotesEmpty": "Belum ada catatan",
-  "courseNoteRequired": "Isi catatan wajib diisi"
+  "courseNoteRequired": "Isi catatan wajib diisi",
+
+  "reminderActivityBody": "Mulai jam {time}",
+  "@reminderActivityBody": {"placeholders": {"time": {"type": "String"}}},
+  "reminderTugasBody": "Tenggat {date} {time}",
+  "@reminderTugasBody": {"placeholders": {"date": {"type": "String"}, "time": {"type": "String"}}}
 }

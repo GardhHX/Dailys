@@ -1,4 +1,4 @@
-import '../../../core/time/local_date.dart';
+import '../time/local_date.dart';
 
 /// A typed Tugas reminder (schema 5). Two shapes:
 ///
@@ -8,6 +8,9 @@ import '../../../core/time/local_date.dart';
 ///
 /// Serialized as one object inside `Tugas.reminders`. Canonical duplicates are
 /// rejected (schema 5); [canonicalKey] defines that identity.
+///
+/// Lives in `core` (not `features/tugas`) because `core/notifications` plans
+/// fire times off this type too, and core must not depend on a feature.
 sealed class TaskReminder {
   const TaskReminder();
 

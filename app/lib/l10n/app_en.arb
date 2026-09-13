@@ -174,5 +174,8 @@
   "courseNoteHint": "Note",
   "courseNoteDate": "Date",
   "courseNotesEmpty": "No notes yet",
-  "courseNoteRequired": "Note text is required"
+  "courseNoteRequired": "Note text is required",
+
+  "reminderActivityBody": "Starts at {time}",
+  "reminderTugasBody": "Due {date} {time}"
 }

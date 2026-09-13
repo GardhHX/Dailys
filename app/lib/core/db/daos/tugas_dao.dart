@@ -25,6 +25,20 @@ class TugasDao extends DatabaseAccessor<AppDatabase> with _$TugasDaoMixin {
             ]))
           .watch();
 
+  /// Non-deleted, not-yet-completed tasks for [userId] — the candidate set
+  /// for reminder scheduling (FR-6.4). Archive/history classification and
+  /// empty-reminders filtering are the caller's job (needs a `tz.Location`
+  /// this DAO doesn't have).
+  Future<List<TugasRow>> getReminderCandidates(String userId) => (select(
+        tugas,
+      )..where(
+          (t) =>
+              t.userId.equals(userId) &
+              t.isDeleted.equals(false) &
+              t.status.equalsValue(TugasStatus.selesai).not(),
+        ))
+      .get();
+
   /// Watches one task by id (detail screen). Emits null once soft-deleted.
   Stream<TugasRow?> watchTugasById(String id) =>
       (select(tugas)..where((t) => t.id.equals(id) & t.isDeleted.equals(false)))
