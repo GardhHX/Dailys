@@ -43,15 +43,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-# Design handoff archives (derivable via design/pack_design.py; share via GitHub Releases)
-Dailys-design-*.zip
-
-# Flutter app artifacts under app/ (until `flutter create` writes app/.gitignore)
-app/build/
-app/.dart_tool/
-
-# gen_l10n output (regenerated from app/lib/l10n/*.arb via `flutter gen-l10n` /
-# `flutter pub get`, l10n.yaml has synthetic-package disabled so it lands in lib/)
-app/lib/l10n/app_localizations.dart
-app/lib/l10n/app_localizations_*.dart
