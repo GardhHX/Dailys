@@ -89,6 +89,8 @@ setiap peran.
 6. Tim menambahkan keputusan kontrak ke changelog PRD. OPERATIONS menyimpan bukti
    benchmark dan restore drill sebagai artefak rilis, bukan di dalam repository
    dokumentasi ini.
+7. Semua perubahan masuk lewat branch + Pull Request; tidak ada push langsung ke
+   `main`. Konvensi penamaan branch dan langkahnya ada di [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## Status v1.0
 
