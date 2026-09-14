@@ -40,6 +40,19 @@ void main() {
   });
   tearDown(() => db.close());
 
+  test('failed write retains draft, retry applies locale only after persistence', () async {
+    await db.customStatement("CREATE TRIGGER reject_settings BEFORE UPDATE ON user_settings BEGIN SELECT RAISE(ABORT, 'QA write failure'); END");
+    await cubit.setLanguage(Language.en);
+    expect(cubit.state.feedback['language'], 'error');
+    expect(cubit.state.drafts['language'], Language.en);
+    expect(locator<ValueNotifier<Locale?>>().value, isNull);
+    await db.customStatement('DROP TRIGGER reject_settings');
+    await cubit.retry('language');
+    expect(cubit.state.feedback['language'], 'saved');
+    expect(cubit.state.drafts.containsKey('language'), isFalse);
+    expect(locator<ValueNotifier<Locale?>>().value, const Locale('en'));
+  });
+
   test('load() reads the provisioned defaults', () {
     expect(cubit.state.userSettings!.pomodoroFocusMinutes, 25);
     expect(cubit.state.deviceSettings!.theme, ThemePreference.system);

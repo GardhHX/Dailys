@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../core/db/database.dart';
 import '../../l10n/app_localizations.dart';
 import '../settings/settings_screen.dart';
+import '../pomodoro/pomodoro_screen.dart';
+import '../tugas/tugas_list_screen.dart';
 
 class TugasShell extends StatelessWidget {
   const TugasShell(
@@ -9,11 +11,13 @@ class TugasShell extends StatelessWidget {
       required this.db,
       required this.userId,
       required this.deviceId,
+      this.activeIndex = 1,
       required this.child});
   final AppDatabase db;
   final String userId;
   final String deviceId;
   final Widget child;
+  final int activeIndex;
 
   @override
   Widget build(BuildContext context) =>
@@ -25,23 +29,39 @@ class TugasShell extends StatelessWidget {
         final items = [
           (Icons.home_outlined, l10n.homeTitle),
           (Icons.assignment_outlined, l10n.tugasTitle),
-          (Icons.timer_outlined, 'Pomodoro'),
+          (Icons.timer_outlined, l10n.navPomodoro),
           (Icons.account_balance_wallet_outlined, l10n.navFinance),
           (Icons.checklist, l10n.navHabit)
         ];
         Widget item(int i) => Tooltip(
-            message: i > 1 ? l10n.featureUnavailable : items[i].$2,
+            message: i > 2 ? l10n.featureUnavailable : items[i].$2,
             child: TextButton(
               onPressed: i == 0
                   ? () =>
                       Navigator.of(context).popUntil((route) => route.isFirst)
-                  : i == 1
+                  : i == activeIndex
                       ? () {}
-                      : null,
+                      : i == 1
+                          ? () => Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (_) => TugasListScreen(
+                                      db: db,
+                                      userId: userId,
+                                      deviceId: deviceId)))
+                          : i == 2
+                              ? () => Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: (_) => PomodoroScreen(
+                                          db: db,
+                                          userId: userId,
+                                          deviceId: deviceId)))
+                              : null,
               style: TextButton.styleFrom(
-                  backgroundColor:
-                      i == 1 ? colors.primaryContainer : Colors.transparent,
-                  foregroundColor: i == 1 ? colors.primary : colors.onSurface,
+                  backgroundColor: i == activeIndex
+                      ? colors.primaryContainer
+                      : Colors.transparent,
+                  foregroundColor:
+                      i == activeIndex ? colors.primary : colors.onSurface,
                   padding: EdgeInsets.symmetric(
                       horizontal: mobile || compact ? 2 : 12, vertical: 12)),
               child: mobile || compact

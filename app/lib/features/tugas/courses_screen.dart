@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart' show Value;
 import 'package:flutter/material.dart';
+import '../../app/theme/design_form.dart';
 import 'package:intl/intl.dart';
 
 import '../../app/theme/tokens.dart';
@@ -113,6 +114,7 @@ class _CourseSheet extends StatefulWidget {
 }
 
 class _CourseSheetState extends State<_CourseSheet> {
+  bool _saving = false;
   late final TextEditingController _nama;
   late final TextEditingController _dosen;
   late final TextEditingController _sks;
@@ -143,88 +145,93 @@ class _CourseSheetState extends State<_CourseSheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Padding(
-      padding: EdgeInsets.only(
-        left: AppSpacing.lg,
-        right: AppSpacing.lg,
-        top: AppSpacing.lg,
-        bottom: MediaQuery.of(context).viewInsets.bottom + AppSpacing.lg,
-      ),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              widget.existing == null
-                  ? l10n.courseAddTitle
-                  : l10n.courseEditTitle,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: AppSpacing.lg),
-            TextField(
+    return DesignModal(
+      title:
+          widget.existing == null ? l10n.courseAddTitle : l10n.courseEditTitle,
+      saveLabel: l10n.tugasSave,
+      titleSize: 20,
+      busy: _saving,
+      onSave: _submit,
+      children: [
+        DesignField(
+            label: l10n.courseFieldNama,
+            child: TextField(
+              style:
+                  Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 16),
               controller: _nama,
+              onSubmitted: (_) => _submit(),
               autofocus: true,
-              decoration: InputDecoration(labelText: l10n.courseFieldNama),
-            ),
-            const SizedBox(height: AppSpacing.md),
-            TextField(
+              decoration: const InputDecoration(),
+            )),
+        const SizedBox(height: AppSpacing.md),
+        DesignField(
+            label: l10n.courseFieldDosen,
+            child: TextField(
+              style:
+                  Theme.of(context).textTheme.bodyLarge?.copyWith(fontSize: 16),
               controller: _dosen,
-              decoration: InputDecoration(labelText: l10n.courseFieldDosen),
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Row(
-              children: [
-                Expanded(
+              decoration: const InputDecoration(),
+            )),
+        const SizedBox(height: AppSpacing.md),
+        Row(
+          children: [
+            Expanded(
+              child: DesignField(
+                  label: l10n.courseFieldSks,
                   child: TextField(
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(fontSize: 16),
                     controller: _sks,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(labelText: l10n.courseFieldSks),
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.md),
-                Expanded(
+                    decoration: const InputDecoration(),
+                  )),
+            ),
+            const SizedBox(width: AppSpacing.md),
+            Expanded(
+              child: DesignField(
+                  label: l10n.courseFieldSemester,
                   child: TextField(
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(fontSize: 16),
                     controller: _semester,
-                    decoration:
-                        InputDecoration(labelText: l10n.courseFieldSemester),
-                  ),
-                ),
-              ],
+                    decoration: const InputDecoration(),
+                  )),
             ),
-            const SizedBox(height: AppSpacing.md),
-            Wrap(
-              spacing: AppSpacing.sm,
-              children: [
-                for (final hex in _coursePalette)
-                  IconButton(
-                    tooltip: hex,
-                    onPressed: () => setState(() => _warna = hex),
-                    icon: CircleAvatar(
-                      backgroundColor: _hex(hex),
-                      radius: 16,
-                      child: _warna == hex
-                          ? const Icon(Icons.check,
-                              color: Colors.white, size: 18)
-                          : null,
-                    ),
-                  ),
-              ],
-            ),
-            if (_error != null) ...[
-              const SizedBox(height: AppSpacing.md),
-              Text(_error!,
-                  style: TextStyle(color: Theme.of(context).colorScheme.error)),
-            ],
-            const SizedBox(height: AppSpacing.lg),
-            ElevatedButton(onPressed: _submit, child: Text(l10n.tugasSave)),
           ],
         ),
-      ),
+        const SizedBox(height: AppSpacing.md),
+        Wrap(
+          spacing: AppSpacing.sm,
+          children: [
+            for (final hex in _coursePalette)
+              IconButton(
+                tooltip: hex,
+                onPressed: () => setState(() => _warna = hex),
+                icon: CircleAvatar(
+                  backgroundColor: _hex(hex),
+                  radius: 16,
+                  child: _warna == hex
+                      ? const Icon(Icons.check, color: Colors.white, size: 18)
+                      : null,
+                ),
+              ),
+          ],
+        ),
+        if (_error != null) ...[
+          const SizedBox(height: AppSpacing.md),
+          Text(_error!,
+              style: TextStyle(color: Theme.of(context).colorScheme.error)),
+        ],
+      ],
     );
   }
 
   Future<void> _submit() async {
+    if (_saving) return;
     final l10n = AppLocalizations.of(context)!;
     final nama = _nama.text.trim();
     if (nama.isEmpty) {
@@ -245,31 +252,42 @@ class _CourseSheetState extends State<_CourseSheet> {
         _semester.text.trim().isEmpty ? null : _semester.text.trim();
     final ts = DateTime.now().toUtc();
 
-    if (widget.existing == null) {
-      await widget.db.mataKuliahDao.insertMataKuliah(MataKuliahCompanion.insert(
-        id: DeterministicId.v4(),
-        createdAt: ts,
-        updatedAt: ts,
-        userId: widget.userId,
-        nama: nama,
-        dosen: Value(dosen),
-        sks: Value(sks),
-        semester: Value(semester),
-        warna: _warna,
-      ));
-    } else {
-      await widget.db.mataKuliahDao.updateMataKuliah(
-        widget.existing!.id,
-        MataKuliahCompanion(
-          nama: Value(nama),
+    setState(() {
+      _saving = true;
+      _error = null;
+    });
+    try {
+      if (widget.existing == null) {
+        await widget.db.mataKuliahDao
+            .insertMataKuliah(MataKuliahCompanion.insert(
+          id: DeterministicId.v4(),
+          createdAt: ts,
+          updatedAt: ts,
+          userId: widget.userId,
+          nama: nama,
           dosen: Value(dosen),
           sks: Value(sks),
           semester: Value(semester),
-          warna: Value(_warna),
-        ),
-      );
+          warna: _warna,
+        ));
+      } else {
+        await widget.db.mataKuliahDao.updateMataKuliah(
+          widget.existing!.id,
+          MataKuliahCompanion(
+            nama: Value(nama),
+            dosen: Value(dosen),
+            sks: Value(sks),
+            semester: Value(semester),
+            warna: Value(_warna),
+          ),
+        );
+      }
+      if (mounted) Navigator.of(context).pop();
+    } catch (_) {
+      if (mounted) setState(() => _error = l10n.tugasSaveFailed);
+    } finally {
+      if (mounted) setState(() => _saving = false);
     }
-    if (mounted) Navigator.of(context).pop();
   }
 }
 
@@ -295,6 +313,11 @@ class CourseDetailScreen extends StatelessWidget {
     return StreamBuilder<List<MataKuliahRow>>(
       stream: db.mataKuliahDao.watchActiveMataKuliah(userId),
       builder: (context, courseSnap) {
+        if (courseSnap.hasError) {
+          return Scaffold(
+              appBar: AppBar(title: Text(l10n.navTasks)),
+              body: Center(child: Text(l10n.tugasLoadFailed)));
+        }
         if (!courseSnap.hasData) {
           return const Scaffold(
               body: Center(child: CircularProgressIndicator()));
@@ -327,7 +350,13 @@ class CourseDetailScreen extends StatelessWidget {
                           label: Text(l10n.actionBack))),
                   const SizedBox(height: 12),
                   Text(course.nama,
-                      style: Theme.of(context).textTheme.headlineMedium),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineMedium
+                          ?.copyWith(
+                              fontSize: MediaQuery.sizeOf(context).width <= 680
+                                  ? 28
+                                  : 30)),
                   const SizedBox(height: 8),
                   Text([
                     if (course.dosen?.isNotEmpty ?? false) course.dosen!,
@@ -438,85 +467,94 @@ class CourseDetailScreen extends StatelessWidget {
   Future<void> _addNote(BuildContext context, AppLocalizations l10n) async {
     final controller = TextEditingController();
     var date = DateTime.now();
-    final route = DialogRoute<bool>(
-      context: context,
-      builder: (ctx) => StatefulBuilder(
-        builder: (ctx, setModal) {
-          final locale = Localizations.localeOf(ctx).toString();
-          return Dialog(
-              insetPadding: const EdgeInsets.all(16),
-              child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 660),
-                  child: SingleChildScrollView(
-                      child: Padding(
-                    padding: EdgeInsets.only(
-                      left: AppSpacing.lg,
-                      right: AppSpacing.lg,
-                      top: AppSpacing.lg,
-                      bottom:
-                          MediaQuery.of(ctx).viewInsets.bottom + AppSpacing.lg,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(l10n.courseNoteAdd,
-                            style: Theme.of(ctx).textTheme.titleLarge),
-                        const SizedBox(height: AppSpacing.md),
-                        Wrap(
-                            crossAxisAlignment: WrapCrossAlignment.center,
-                            spacing: 12,
-                            children: [
-                              Text(l10n.courseNoteDate),
-                              TextButton(
-                                child: Text(
-                                    DateFormat.yMMMEd(locale).format(date)),
-                                onPressed: () async {
-                                  final picked = await showDatePicker(
-                                    context: ctx,
-                                    initialDate: date,
-                                    firstDate: DateTime(2020),
-                                    lastDate: DateTime(2100),
-                                  );
-                                  if (picked != null) {
-                                    setModal(() => date = picked);
-                                  }
-                                },
-                              )
-                            ]),
-                        TextField(
-                          controller: controller,
-                          autofocus: true,
-                          minLines: 2,
-                          maxLines: 5,
-                          decoration:
-                              InputDecoration(hintText: l10n.courseNoteHint),
-                        ),
-                        const SizedBox(height: AppSpacing.lg),
-                        ElevatedButton(
-                          onPressed: () => Navigator.of(ctx)
-                              .pop(controller.text.trim().isNotEmpty),
-                          child: Text(l10n.tugasSave),
-                        ),
-                      ],
-                    ),
-                  ))));
-        },
-      ),
-    );
-    final saved = await Navigator.of(context).push(route);
-    if (saved == true) {
-      final ts = DateTime.now().toUtc();
-      final ymd = DateFormat('yyyy-MM-dd').format(date);
-      await db.mataKuliahDao.insertCourseNote(CourseNoteCompanion.insert(
-        id: DeterministicId.v4(),
-        createdAt: ts,
-        updatedAt: ts,
-        mataKuliahId: courseId,
-        tanggal: ymd,
-        isi: controller.text.trim(),
-      ));
-    }
+    var saving = false;
+    String? error;
+    final route = DialogRoute<void>(
+        context: context,
+        builder: (ctx) => StatefulBuilder(
+            builder: (ctx, setModal) => Dialog(
+                insetPadding: const EdgeInsets.all(16),
+                child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 660),
+                    child: DesignModal(
+                        title: l10n.courseNoteAdd,
+                        titleSize: 20,
+                        busy: saving,
+                        saveLabel: l10n.tugasSave,
+                        onSave: () async {
+                          if (saving) return;
+                          if (controller.text.trim().isEmpty) {
+                            setModal(() => error = l10n.courseNoteHint);
+                            return;
+                          }
+                          setModal(() {
+                            saving = true;
+                            error = null;
+                          });
+                          try {
+                            final ts = DateTime.now().toUtc();
+                            await db.mataKuliahDao.insertCourseNote(
+                                CourseNoteCompanion.insert(
+                                    id: DeterministicId.v4(),
+                                    createdAt: ts,
+                                    updatedAt: ts,
+                                    mataKuliahId: courseId,
+                                    tanggal:
+                                        DateFormat('yyyy-MM-dd').format(date),
+                                    isi: controller.text.trim()));
+                            if (ctx.mounted) Navigator.of(ctx).pop();
+                          } catch (_) {
+                            if (ctx.mounted) {
+                              setModal(() => error = l10n.tugasSaveFailed);
+                            }
+                          } finally {
+                            if (ctx.mounted) setModal(() => saving = false);
+                          }
+                        },
+                        children: [
+                          DesignField(
+                              label: l10n.courseNoteDate,
+                              child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: TextButton(
+                                      onPressed: saving
+                                          ? null
+                                          : () async {
+                                              final picked =
+                                                  await showDatePicker(
+                                                      context: ctx,
+                                                      initialDate: date,
+                                                      firstDate: DateTime(2020),
+                                                      lastDate: DateTime(2100));
+                                              if (picked != null &&
+                                                  ctx.mounted) {
+                                                setModal(() => date = picked);
+                                              }
+                                            },
+                                      child: Text(DateFormat.yMMMEd(
+                                              Localizations.localeOf(ctx)
+                                                  .toString())
+                                          .format(date))))),
+                          const SizedBox(height: 16),
+                          DesignField(
+                              label: l10n.courseNoteAdd,
+                              child: TextField(
+                                  controller: controller,
+                                  autofocus: true,
+                                  minLines: 2,
+                                  maxLines: 5,
+                                  style: const TextStyle(fontSize: 16),
+                                  decoration: InputDecoration(
+                                      hintText: l10n.courseNoteHint))),
+                          if (error != null)
+                            Padding(
+                                padding: const EdgeInsets.only(top: 12),
+                                child: Text(error!,
+                                    style: TextStyle(
+                                        color:
+                                            Theme.of(ctx).colorScheme.error))),
+                        ])))));
+    await Navigator.of(context).push(route);
     await route.completed;
     controller.dispose();
   }

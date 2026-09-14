@@ -95,7 +95,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                             color: colors.onPrimary)),
                     const SizedBox(height: 16),
                     Text(l10n.onboardingLocalBody,
-                        style: TextStyle(color: colors.onPrimary, height: 1.5)),
+                        style: TextStyle(
+                            color: colors.onPrimary,
+                            fontSize: 12,
+                            height: 1.5)),
                   ]));
           return SingleChildScrollView(
               padding: EdgeInsets.symmetric(
@@ -113,8 +116,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                                 _step == 0
                                     ? l10n.onboardingHeading
                                     : l10n.onboardingSummaryTitle,
-                                style:
-                                    Theme.of(context).textTheme.headlineMedium),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium
+                                    ?.copyWith(fontSize: mobile ? 28 : 30)),
                             const SizedBox(height: 24),
                             Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -183,7 +188,10 @@ class _LanguageTimeStep extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(l10n.onboardingLanguageLabel,
-            style: Theme.of(context).textTheme.labelLarge),
+            style: Theme.of(context)
+                .textTheme
+                .labelMedium
+                ?.copyWith(fontWeight: FontWeight.w600)),
         const SizedBox(height: AppSpacing.sm),
         SegmentedButton<Language>(
           segments: [
@@ -197,11 +205,18 @@ class _LanguageTimeStep extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.lg),
         Text(l10n.onboardingTimezoneLabel,
-            style: Theme.of(context).textTheme.labelLarge),
+            style: Theme.of(context)
+                .textTheme
+                .labelMedium
+                ?.copyWith(fontWeight: FontWeight.w600)),
         const SizedBox(height: AppSpacing.sm),
         LayoutBuilder(
             builder: (context, constraints) => DropdownMenu<String>(
                   initialSelection: state.timezone,
+                  textStyle: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(fontSize: 16),
                   width: constraints.maxWidth,
                   enableFilter: true,
                   requestFocusOnTap: true,

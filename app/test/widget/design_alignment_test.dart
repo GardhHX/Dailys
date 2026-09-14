@@ -52,20 +52,55 @@ Future<void> capture(WidgetTester tester, String name) async {
   image.dispose();
 }
 
-void main() {
-  setUpAll(() async {
-    if (Platform.isWindows) {
-      open.overrideFor(
-          OperatingSystem.windows, () => DynamicLibrary.open('winsqlite3.dll'));
-      final icons = FontLoader('MaterialIcons');
-      icons.addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'));
-      await icons.load();
-      final font = FontLoader('Segoe UI');
-      font.addFont(Future.value(ByteData.sublistView(
-          await File(r'C:\Windows\Fonts\segoeui.ttf').readAsBytes())));
-      await font.load();
+Future<void> initializeQa() async {
+  if (Platform.isWindows) {
+    open.overrideFor(
+        OperatingSystem.windows, () => DynamicLibrary.open('winsqlite3.dll'));
+    final icons = FontLoader('MaterialIcons');
+    icons.addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'));
+    await icons.load();
+    final font = FontLoader('Segoe UI');
+    font.addFont(Future.value(ByteData.sublistView(
+        await File(r'C:\Windows\Fonts\segoeui.ttf').readAsBytes())));
+    await font.load();
+  }
+}
+
+void checkDescendants(WidgetTester tester, Finder root) {
+  final width = tester.view.physicalSize.width / tester.view.devicePixelRatio;
+  void visit(Element element, bool horizontalScroll) {
+    final widget = element.widget;
+    if (widget is Offstage && widget.offstage) return;
+    // Slider's indicator reserves a viewport-sized overlay at the thumb's
+    // offset. Its box is not the bounds of the label painted inside it.
+    if (widget.runtimeType.toString() == '_ValueIndicatorRenderObjectWidget') {
+      return;
     }
-  });
+    final scroll = horizontalScroll ||
+        (widget is Scrollable &&
+            axisDirectionToAxis(widget.axisDirection) == Axis.horizontal);
+    if (!scroll &&
+        element is RenderObjectElement &&
+        element.renderObject is RenderBox) {
+      final box = element.renderObject as RenderBox;
+      if (box.hasSize && box.size.width > 0 && box.attached) {
+        final bounds = MatrixUtils.transformRect(box.getTransformTo(null), Offset.zero & box.size);
+        expect(bounds.left, greaterThanOrEqualTo(-1),
+            reason: '${widget.runtimeType} left');
+        expect(bounds.right, lessThanOrEqualTo(width + 1),
+            reason: '${widget.runtimeType} right');
+      }
+    }
+    element.visitChildren((child) => visit(child, scroll));
+  }
+
+  for (final element in root.evaluate()) {
+    visit(element, false);
+  }
+}
+
+void main() {
+  setUpAll(initializeQa);
 
   for (final width in [320.0, 440.0, 736.0, 860.0, 1408.0]) {
     for (final dark in [false, true]) {
@@ -97,6 +132,7 @@ void main() {
           await tester.pumpAndSettle();
           expect(tester.takeException(), isNull,
               reason: '${entry.key} at $width');
+          checkDescendants(tester, find.byType(MaterialApp));
           await tester.runAsync(() => capture(tester,
               '${entry.key}-${width.toInt()}-${dark ? 'dark' : 'light'}'));
           if (entry.key == 'home') {
@@ -118,6 +154,7 @@ void main() {
           await tester.pumpAndSettle();
           expect(tester.takeException(), isNull,
               reason: '${entry.key} EN text 200% at $width');
+          checkDescendants(tester, find.byType(MaterialApp));
           if (entry.key == 'tasks') {
             await tester.tap(find.text('Add task'));
             await tester.pumpAndSettle();

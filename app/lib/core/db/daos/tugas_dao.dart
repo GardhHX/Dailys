@@ -16,14 +16,13 @@ class TugasDao extends DatabaseAccessor<AppDatabase> with _$TugasDaoMixin {
   /// Active tasks (not soft-deleted), ordered by status then deadline. History
   /// (completed + 7 days, archived) is computed by the caller; the row is not
   /// mutated (schema 5).
-  Stream<List<TugasRow>> watchActiveTugas(String userId) =>
-      (select(tugas)
-            ..where((t) => t.userId.equals(userId) & t.isDeleted.equals(false))
-            ..orderBy([
-              (t) => OrderingTerm(expression: t.status),
-              (t) => OrderingTerm(expression: t.deadline),
-            ]))
-          .watch();
+  Stream<List<TugasRow>> watchActiveTugas(String userId) => (select(tugas)
+        ..where((t) => t.userId.equals(userId) & t.isDeleted.equals(false))
+        ..orderBy([
+          (t) => OrderingTerm(expression: t.status),
+          (t) => OrderingTerm(expression: t.deadline),
+        ]))
+      .watch();
 
   /// Non-deleted, not-yet-completed tasks for [userId] — the candidate set
   /// for reminder scheduling (FR-6.4). Archive/history classification and
@@ -32,12 +31,12 @@ class TugasDao extends DatabaseAccessor<AppDatabase> with _$TugasDaoMixin {
   Future<List<TugasRow>> getReminderCandidates(String userId) => (select(
         tugas,
       )..where(
-          (t) =>
-              t.userId.equals(userId) &
-              t.isDeleted.equals(false) &
-              t.status.equalsValue(TugasStatus.selesai).not(),
-        ))
-      .get();
+              (t) =>
+                  t.userId.equals(userId) &
+                  t.isDeleted.equals(false) &
+                  t.status.equalsValue(TugasStatus.selesai).not(),
+            ))
+          .get();
 
   /// Watches one task by id (detail screen). Emits null once soft-deleted.
   Stream<TugasRow?> watchTugasById(String id) =>
@@ -67,7 +66,8 @@ class TugasDao extends DatabaseAccessor<AppDatabase> with _$TugasDaoMixin {
   /// estimasi, course, reminders). The caller supplies a [patch]; this always
   /// bumps `updated_at`. Status/completed_at go through [setStatus] and the
   /// archive flag through [setArchived] to preserve their invariants.
-  Future<void> updateTugas(String id, TugasCompanion patch, {DateTime? now}) async {
+  Future<void> updateTugas(String id, TugasCompanion patch,
+      {DateTime? now}) async {
     final ts = now ?? DateTime.now().toUtc();
     await (update(tugas)..where((t) => t.id.equals(id)))
         .write(patch.copyWith(updatedAt: Value(ts)));
@@ -122,7 +122,8 @@ class TugasDao extends DatabaseAccessor<AppDatabase> with _$TugasDaoMixin {
     return rows.map((r) => r.urutan).reduce((a, b) => a > b ? a : b) + 1;
   }
 
-  Future<void> editChecklistItem(String id, String judul, {DateTime? now}) async {
+  Future<void> editChecklistItem(String id, String judul,
+      {DateTime? now}) async {
     final ts = now ?? DateTime.now().toUtc();
     await (update(tugasChecklist)..where((t) => t.id.equals(id))).write(
       TugasChecklistCompanion(judul: Value(judul), updatedAt: Value(ts)),
@@ -142,9 +143,17 @@ class TugasDao extends DatabaseAccessor<AppDatabase> with _$TugasDaoMixin {
 
   Stream<List<TugasChecklistRow>> watchChecklist(String tugasId) =>
       (select(tugasChecklist)
-            ..where((t) => t.tugasId.equals(tugasId) & t.isDeleted.equals(false))
+            ..where(
+                (t) => t.tugasId.equals(tugasId) & t.isDeleted.equals(false))
             ..orderBy([(t) => OrderingTerm(expression: t.urutan)]))
           .watch();
+
+  Future<List<TugasChecklistRow>> getChecklist(String tugasId) =>
+      (select(tugasChecklist)
+            ..where(
+                (t) => t.tugasId.equals(tugasId) & t.isDeleted.equals(false))
+            ..orderBy([(t) => OrderingTerm(expression: t.urutan)]))
+          .get();
 
   Future<void> setChecklistDone(String id, bool isDone, {DateTime? now}) async {
     final ts = now ?? DateTime.now().toUtc();

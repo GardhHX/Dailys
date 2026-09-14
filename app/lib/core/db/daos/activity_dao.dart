@@ -9,7 +9,8 @@ part 'activity_dao.g.dart';
 
 /// ActivityCategory + ActivityRecurrence + Activity access (schema 6/7/8).
 @DriftAccessor(tables: [ActivityCategory, ActivityRecurrence, Activity])
-class ActivityDao extends DatabaseAccessor<AppDatabase> with _$ActivityDaoMixin {
+class ActivityDao extends DatabaseAccessor<AppDatabase>
+    with _$ActivityDaoMixin {
   ActivityDao(super.db);
 
   // --- ActivityCategory ---
@@ -72,7 +73,9 @@ class ActivityDao extends DatabaseAccessor<AppDatabase> with _$ActivityDaoMixin 
       }
       if (materializedThroughDate != null) {
         final ts = now ?? DateTime.now().toUtc();
-        await (update(activityRecurrence)..where((t) => t.id.equals(recurrenceId))).write(
+        await (update(activityRecurrence)
+              ..where((t) => t.id.equals(recurrenceId)))
+            .write(
           ActivityRecurrenceCompanion(
             materializedThroughDate: Value(materializedThroughDate.toYmd()),
             updatedAt: Value(ts),
@@ -84,11 +87,13 @@ class ActivityDao extends DatabaseAccessor<AppDatabase> with _$ActivityDaoMixin 
 
   // --- Activity (occurrences) ---
 
-  Future<void> insertActivity(ActivityCompanion row) => into(activity).insert(row);
+  Future<void> insertActivity(ActivityCompanion row) =>
+      into(activity).insert(row);
 
   /// Active activities on a given local date (`YYYY-MM-DD`), for the Home Today
   /// list (schema 8 index).
-  Stream<List<ActivityRow>> watchActivitiesForDate(String userId, String date) =>
+  Stream<List<ActivityRow>> watchActivitiesForDate(
+          String userId, String date) =>
       (select(activity)
             ..where((t) =>
                 t.userId.equals(userId) &
@@ -125,15 +130,59 @@ class ActivityDao extends DatabaseAccessor<AppDatabase> with _$ActivityDaoMixin 
   Future<List<ActivityRow>> getReminderCandidates(String userId) => (select(
         activity,
       )..where(
-          (t) =>
-              t.userId.equals(userId) &
-              t.isDeleted.equals(false) &
-              t.status.equalsValue(ActivityStatus.belum_mulai) &
-              t.startTime.isNotNull(),
-        ))
-      .get();
+              (t) =>
+                  t.userId.equals(userId) &
+                  t.isDeleted.equals(false) &
+                  t.status.equalsValue(ActivityStatus.belum_mulai) &
+                  t.startTime.isNotNull(),
+            ))
+          .get();
 
-  Future<void> setActivityStatus(String id, ActivityStatus status, {DateTime? now}) async {
+  Future<void> editManualActivity(
+      {required String userId,
+      required String id,
+      required String judul,
+      required String activityCategoryId,
+      bool isAllDay = false,
+      DateTime? startTime,
+      DateTime? endTime}) async {
+    final row = await (select(activity)
+          ..where((a) =>
+              a.id.equals(id) &
+              a.userId.equals(userId) &
+              a.isDeleted.equals(false) &
+              a.source.equalsValue(ActivitySource.manual)))
+        .getSingleOrNull();
+    if (row == null) throw StateError('Activity manual not found');
+    final category = await (select(activityCategory)
+          ..where((c) =>
+              c.id.equals(activityCategoryId) &
+              c.userId.equals(userId) &
+              c.isDeleted.equals(false) &
+              c.isArchived.equals(false)))
+        .getSingleOrNull();
+    if (category == null || judul.trim().isEmpty) {
+      throw ArgumentError('Invalid activity fields');
+    }
+    final start = isAllDay ? null : startTime;
+    final end = isAllDay ? null : endTime;
+    if (end != null && (start == null || !end.isAfter(start))) {
+      throw ArgumentError('Invalid activity interval');
+    }
+    await (update(activity)..where((a) => a.id.equals(id))).write(
+        ActivityCompanion(
+            judul: Value(judul.trim()),
+            activityCategoryId: Value(activityCategoryId),
+            isAllDay: Value(isAllDay),
+            startTime: Value(start),
+            endTime: Value(end),
+            reminderOffsetsMinutes:
+                start == null ? const Value([]) : const Value.absent(),
+            updatedAt: Value(DateTime.now().toUtc())));
+  }
+
+  Future<void> setActivityStatus(String id, ActivityStatus status,
+      {DateTime? now}) async {
     final ts = now ?? DateTime.now().toUtc();
     await (update(activity)..where((t) => t.id.equals(id))).write(
       ActivityCompanion(status: Value(status), updatedAt: Value(ts)),

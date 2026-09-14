@@ -59,7 +59,8 @@ class _SplashScreenState extends State<SplashScreen> {
         body: SafeArea(
           child: Center(
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 420),
+              constraints: BoxConstraints(
+                  maxWidth: state.stage == SplashStage.failed ? 480 : 420),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxl),
                 child: SingleChildScrollView(
@@ -81,7 +82,9 @@ class _SplashScreenState extends State<SplashScreen> {
       l10n.appWordmark,
       textAlign: TextAlign.center,
       style: theme.textTheme.headlineMedium?.copyWith(
-          fontSize: 30, fontWeight: FontWeight.w700, letterSpacing: -1),
+          fontSize: MediaQuery.sizeOf(context).width <= 680 ? 28 : 30,
+          fontWeight: FontWeight.w700,
+          letterSpacing: -1),
     );
 
     if (state.stage == SplashStage.failed) {
@@ -89,7 +92,7 @@ class _SplashScreenState extends State<SplashScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(child: wordmark),
+          wordmark,
           const SizedBox(height: AppSpacing.xxl),
           Text(
             _failureMessage(l10n, state.failureReasonKey),
@@ -97,6 +100,10 @@ class _SplashScreenState extends State<SplashScreen> {
                 ?.copyWith(color: theme.colorScheme.error),
           ),
           const SizedBox(height: AppSpacing.md),
+          ExpansionTile(
+              tilePadding: EdgeInsets.zero,
+              title: Text(l10n.splashRecoveryGuide),
+              children: [Text(l10n.splashRecoveryAdvice)]),
           if (state.retriable)
             ElevatedButton(
               onPressed: () => _cubit.start(),

@@ -124,24 +124,29 @@ class TugasListCubit extends Cubit<TugasListState> {
     String? mataKuliahId,
     int? estimasiMenit,
     List<TaskReminder>? reminders,
+    List<ChecklistDraft> checklist = const [],
   }) async {
     final ts = DateTime.now().toUtc();
-    await _db.tugasDao.insertTugas(TugasCompanion.insert(
-      id: DeterministicId.v4(),
-      createdAt: ts,
-      updatedAt: ts,
-      userId: _userId,
-      mataKuliahId: Value(mataKuliahId),
-      judul: judul,
-      deskripsi: Value(deskripsi),
-      deadline: deadline,
-      prioritas: prioritas,
-      estimasiMenit: Value(estimasiMenit),
-      status: TugasStatus.belum,
-      reminders: TaskReminder.toJsonList(
-        TaskReminder.dedupe(reminders ?? TaskReminder.defaults()),
-      ),
-    ));
+    final id = DeterministicId.v4();
+    await _db.transaction(() async {
+      await _db.tugasDao.insertTugas(TugasCompanion.insert(
+        id: id,
+        createdAt: ts,
+        updatedAt: ts,
+        userId: _userId,
+        mataKuliahId: Value(mataKuliahId),
+        judul: judul,
+        deskripsi: Value(deskripsi),
+        deadline: deadline,
+        prioritas: prioritas,
+        estimasiMenit: Value(estimasiMenit),
+        status: TugasStatus.belum,
+        reminders: TaskReminder.toJsonList(
+          TaskReminder.dedupe(reminders ?? TaskReminder.defaults()),
+        ),
+      ));
+      await _saveChecklist(id, checklist);
+    });
   }
 
   Future<void> editTugas({
@@ -153,21 +158,58 @@ class TugasListCubit extends Cubit<TugasListState> {
     String? mataKuliahId,
     int? estimasiMenit,
     List<TaskReminder>? reminders,
+    List<ChecklistDraft>? checklist,
   }) async {
-    await _db.tugasDao.updateTugas(
-      id,
-      TugasCompanion(
-        judul: Value(judul),
-        deskripsi: Value(deskripsi),
-        deadline: Value(deadline),
-        prioritas: Value(prioritas),
-        mataKuliahId: Value(mataKuliahId),
-        estimasiMenit: Value(estimasiMenit),
-        reminders: reminders == null
-            ? const Value.absent()
-            : Value(TaskReminder.toJsonList(TaskReminder.dedupe(reminders))),
-      ),
-    );
+    await _db.transaction(() async {
+      await _db.tugasDao.updateTugas(
+        id,
+        TugasCompanion(
+          judul: Value(judul),
+          deskripsi: Value(deskripsi),
+          deadline: Value(deadline),
+          prioritas: Value(prioritas),
+          mataKuliahId: Value(mataKuliahId),
+          estimasiMenit: Value(estimasiMenit),
+          reminders: reminders == null
+              ? const Value.absent()
+              : Value(TaskReminder.toJsonList(TaskReminder.dedupe(reminders))),
+        ),
+      );
+      if (checklist != null) await _saveChecklist(id, checklist);
+    });
+  }
+
+  Future<List<TugasChecklistRow>> loadChecklist(String id) =>
+      _db.tugasDao.getChecklist(id);
+
+  Future<void> _saveChecklist(String taskId, List<ChecklistDraft> draft) async {
+    final existing = await loadChecklist(taskId);
+    final retained = draft.map((d) => d.id).whereType<String>().toSet();
+    for (final row in existing) {
+      if (!retained.contains(row.id)) {
+        await _db.tugasDao.softDeleteChecklistItem(row.id);
+      }
+    }
+    for (final item in draft) {
+      final title = item.title.trim();
+      if (title.isEmpty) throw ArgumentError('Checklist title is required');
+      if (item.id != null) {
+        if (!existing.any((row) => row.id == item.id)) {
+          throw StateError('Checklist changed while editing');
+        }
+        await _db.tugasDao.editChecklistItem(item.id!, title);
+      } else {
+        final ts = DateTime.now().toUtc();
+        await _db.tugasDao.insertChecklistItem(TugasChecklistCompanion.insert(
+          id: DeterministicId.v4(),
+          createdAt: ts,
+          updatedAt: ts,
+          tugasId: taskId,
+          judul: title,
+          urutan: await _db.tugasDao.nextChecklistUrutan(taskId),
+        ));
+      }
+    }
   }
 
   Future<void> setStatus(String id, TugasStatus status) =>
@@ -184,4 +226,10 @@ class TugasListCubit extends Cubit<TugasListState> {
     _coursesSub?.cancel();
     return super.close();
   }
+}
+
+class ChecklistDraft {
+  const ChecklistDraft({this.id, required this.title});
+  final String? id;
+  final String title;
 }

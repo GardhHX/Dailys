@@ -9,11 +9,12 @@ Acuan: [`../preview/home.html`](../preview/home.html),
 Header identitas/tema → tanggal aktif dan tambah entry → strip Senin–Minggu →
 pilihan Daftar/Timeline/Mingguan → jadwal utama → pendamping **Next deadline**,
 **Habits**, dan shortcut Weekly Review. Desktop memberi ruang lebih besar pada
-jadwal. Ponsel menumpuk section; grid mingguan menjadi agenda per hari.
+jadwal. Ponsel menumpuk section; grid mingguan tetap tujuh kolom dengan gulir horizontal, sesuai permintaan pengguna. Area gulir dapat difokuskan dengan keyboard.
 
 Timebox terpilih memakai bidang indigo dominan dengan waktu/kategori/status,
 judul dan plan/actual. Entry lain memakai permukaan putih/gelap dan metadata
-ringkas. Aktivitas tanpa waktu berada pada bagian terpisah. Deadline tampil pada
+ringkas. Bagian **Perlu ditindaklanjuti** menggantikan kelompok tanpa waktu pada timeline.
+Daftar tetap menampilkan semua aktivitas tanpa jam, termasuk hasil yang selesai. Deadline tampil pada
 timeline/grid dan panel pendamping, termasuk tugas overdue aktif.
 
 ## Interaksi
@@ -48,3 +49,22 @@ seed streak sederhana pada fragmen Home hanya tampilan contoh. Lihat `../GAPS.md
 Tanggal tanpa entry, entry tanpa waktu, judul panjang, tugas terlambat, satu hasil
 execution, tujuh hari mobile beserta deadline/quick-add, dua tema, state data,
 modal dan fokus keyboard.
+
+## Perlu ditindaklanjuti
+
+Tampilkan maksimal tiga item: Timebox pending yang rentang rencananya sudah lewat
+dan belum dimulai, lalu Activity manual tanpa jam, lalu Activity manual yang
+waktunya sudah lewat tetapi belum selesai. Activity mengikuti tanggal aktif;
+Timebox tertunda mencakup tanggal sebelumnya sampai tanggal aktif (maksimal hari
+ini). Jangan memasukkan hasil Habit, item selesai/dilewati/missed/rescheduled,
+atau execution yang sudah dimulai. Tidak mengubah status secara otomatis.
+
+Timebox menyediakan Jadwalkan ulang dan Tandai terlewat. Activity tanpa jam
+menyediakan Tentukan waktu (form edit; boleh tetap fleksibel) dan Tandai selesai.
+Activity berjam menyediakan Tandai selesai. Judul membuka detail. Setelah
+tindakan, daftar dihitung ulang; item berikutnya mengisi batas tiga. Jika kosong,
+tampilkan “Tidak ada yang perlu ditindaklanjuti.” Loading/gagal mengikuti keadaan
+jadwal tanpa menampilkan kandidat contoh. Bagian tersedia pada Daftar/Timeline;
+Mingguan tetap menampilkan grid. Warna dan garis mengikuti token Home; tombol
+menumpuk pada ponsel. Ini interaksi preview dengan state sementara; agregasi
+missed review produksi dan data lintas modul masih merupakan gap.

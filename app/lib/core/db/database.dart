@@ -4,12 +4,14 @@ import 'daos/activity_dao.dart';
 import 'daos/mata_kuliah_dao.dart';
 import 'daos/settings_dao.dart';
 import 'daos/tugas_dao.dart';
+import 'daos/pomodoro_dao.dart';
 import '../ids/deterministic_id.dart';
 import 'migrations.dart';
 import 'seed/category_seed.dart';
 import 'tables/converters.dart';
 import 'tables/enums.dart';
 import 'tables/m1_tables.dart';
+import 'tables/m3_tables.dart';
 
 part 'database.g.dart';
 
@@ -29,20 +31,34 @@ part 'database.g.dart';
     ActivityCategory,
     ActivityRecurrence,
     Activity,
+    PomodoroSession,
+    TimeboxSchedule,
+    TimeboxExecution,
   ],
-  daos: [SettingsDao, MataKuliahDao, TugasDao, ActivityDao],
+  daos: [SettingsDao, MataKuliahDao, TugasDao, ActivityDao, PomodoroDao],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
+  static const currentSchemaVersion = 2;
+
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => currentSchemaVersion;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onCreate: (m) async {
           await m.createAll();
           await createM1Indexes(m);
+          await createM3Indexes(m);
+        },
+        onUpgrade: (m, from, to) async {
+          if (from < 2) {
+            await m.createTable(pomodoroSession);
+            await m.createTable(timeboxSchedule);
+            await m.createTable(timeboxExecution);
+            await createM3Indexes(m);
+          }
         },
         beforeOpen: (details) async {
           // Soft-delete keeps rows, so FK enforcement is safe and wanted.

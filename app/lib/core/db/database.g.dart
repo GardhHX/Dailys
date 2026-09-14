@@ -7359,6 +7359,2794 @@ class ActivityCompanion extends UpdateCompanion<ActivityRow> {
   }
 }
 
+class $PomodoroSessionTable extends PomodoroSession
+    with TableInfo<$PomodoroSessionTable, PomodoroSessionRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PomodoroSessionTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 36, maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+      'updated_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _isDeletedMeta =
+      const VerificationMeta('isDeleted');
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+      'is_deleted', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_deleted" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _deletedAtMeta =
+      const VerificationMeta('deletedAt');
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+      'deleted_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _serverRevisionMeta =
+      const VerificationMeta('serverRevision');
+  @override
+  late final GeneratedColumn<int> serverRevision = GeneratedColumn<int>(
+      'server_revision', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _originDeviceIdMeta =
+      const VerificationMeta('originDeviceId');
+  @override
+  late final GeneratedColumn<String> originDeviceId = GeneratedColumn<String>(
+      'origin_device_id', aliasedName, true,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 36, maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+      'user_id', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 36, maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES user (id)'));
+  static const VerificationMeta _tugasIdMeta =
+      const VerificationMeta('tugasId');
+  @override
+  late final GeneratedColumn<String> tugasId = GeneratedColumn<String>(
+      'tugas_id', aliasedName, true,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 36, maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES tugas (id)'));
+  static const VerificationMeta _habitIdMeta =
+      const VerificationMeta('habitId');
+  @override
+  late final GeneratedColumn<String> habitId = GeneratedColumn<String>(
+      'habit_id', aliasedName, true,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 36, maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _startTimeMeta =
+      const VerificationMeta('startTime');
+  @override
+  late final GeneratedColumn<DateTime> startTime = GeneratedColumn<DateTime>(
+      'start_time', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _endTimeMeta =
+      const VerificationMeta('endTime');
+  @override
+  late final GeneratedColumn<DateTime> endTime = GeneratedColumn<DateTime>(
+      'end_time', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _pausedAtMeta =
+      const VerificationMeta('pausedAt');
+  @override
+  late final GeneratedColumn<DateTime> pausedAt = GeneratedColumn<DateTime>(
+      'paused_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _accumulatedPauseSecondsMeta =
+      const VerificationMeta('accumulatedPauseSeconds');
+  @override
+  late final GeneratedColumn<int> accumulatedPauseSeconds =
+      GeneratedColumn<int>('accumulated_pause_seconds', aliasedName, false,
+          type: DriftSqlType.int,
+          requiredDuringInsert: false,
+          defaultValue: const Constant(0));
+  static const VerificationMeta _durasiMenitMeta =
+      const VerificationMeta('durasiMenit');
+  @override
+  late final GeneratedColumn<int> durasiMenit = GeneratedColumn<int>(
+      'durasi_menit', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _actualSecondsMeta =
+      const VerificationMeta('actualSeconds');
+  @override
+  late final GeneratedColumn<int> actualSeconds = GeneratedColumn<int>(
+      'actual_seconds', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  @override
+  late final GeneratedColumnWithTypeConverter<PomodoroJenis, String> jenis =
+      GeneratedColumn<String>('jenis', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<PomodoroJenis>($PomodoroSessionTable.$converterjenis);
+  @override
+  late final GeneratedColumnWithTypeConverter<PomodoroStatus, String> status =
+      GeneratedColumn<String>('status', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<PomodoroStatus>(
+              $PomodoroSessionTable.$converterstatus);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        createdAt,
+        updatedAt,
+        isDeleted,
+        deletedAt,
+        serverRevision,
+        originDeviceId,
+        userId,
+        tugasId,
+        habitId,
+        startTime,
+        endTime,
+        pausedAt,
+        accumulatedPauseSeconds,
+        durasiMenit,
+        actualSeconds,
+        jenis,
+        status
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'pomodoro_session';
+  @override
+  VerificationContext validateIntegrity(Insertable<PomodoroSessionRow> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(_isDeletedMeta,
+          isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta));
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(_deletedAtMeta,
+          deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta));
+    }
+    if (data.containsKey('server_revision')) {
+      context.handle(
+          _serverRevisionMeta,
+          serverRevision.isAcceptableOrUnknown(
+              data['server_revision']!, _serverRevisionMeta));
+    }
+    if (data.containsKey('origin_device_id')) {
+      context.handle(
+          _originDeviceIdMeta,
+          originDeviceId.isAcceptableOrUnknown(
+              data['origin_device_id']!, _originDeviceIdMeta));
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('tugas_id')) {
+      context.handle(_tugasIdMeta,
+          tugasId.isAcceptableOrUnknown(data['tugas_id']!, _tugasIdMeta));
+    }
+    if (data.containsKey('habit_id')) {
+      context.handle(_habitIdMeta,
+          habitId.isAcceptableOrUnknown(data['habit_id']!, _habitIdMeta));
+    }
+    if (data.containsKey('start_time')) {
+      context.handle(_startTimeMeta,
+          startTime.isAcceptableOrUnknown(data['start_time']!, _startTimeMeta));
+    } else if (isInserting) {
+      context.missing(_startTimeMeta);
+    }
+    if (data.containsKey('end_time')) {
+      context.handle(_endTimeMeta,
+          endTime.isAcceptableOrUnknown(data['end_time']!, _endTimeMeta));
+    }
+    if (data.containsKey('paused_at')) {
+      context.handle(_pausedAtMeta,
+          pausedAt.isAcceptableOrUnknown(data['paused_at']!, _pausedAtMeta));
+    }
+    if (data.containsKey('accumulated_pause_seconds')) {
+      context.handle(
+          _accumulatedPauseSecondsMeta,
+          accumulatedPauseSeconds.isAcceptableOrUnknown(
+              data['accumulated_pause_seconds']!,
+              _accumulatedPauseSecondsMeta));
+    }
+    if (data.containsKey('durasi_menit')) {
+      context.handle(
+          _durasiMenitMeta,
+          durasiMenit.isAcceptableOrUnknown(
+              data['durasi_menit']!, _durasiMenitMeta));
+    } else if (isInserting) {
+      context.missing(_durasiMenitMeta);
+    }
+    if (data.containsKey('actual_seconds')) {
+      context.handle(
+          _actualSecondsMeta,
+          actualSeconds.isAcceptableOrUnknown(
+              data['actual_seconds']!, _actualSecondsMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PomodoroSessionRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PomodoroSessionRow(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at'])!,
+      isDeleted: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_deleted'])!,
+      deletedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}deleted_at']),
+      serverRevision: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}server_revision']),
+      originDeviceId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}origin_device_id']),
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_id'])!,
+      tugasId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tugas_id']),
+      habitId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}habit_id']),
+      startTime: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}start_time'])!,
+      endTime: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}end_time']),
+      pausedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}paused_at']),
+      accumulatedPauseSeconds: attachedDatabase.typeMapping.read(
+          DriftSqlType.int,
+          data['${effectivePrefix}accumulated_pause_seconds'])!,
+      durasiMenit: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}durasi_menit'])!,
+      actualSeconds: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}actual_seconds']),
+      jenis: $PomodoroSessionTable.$converterjenis.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}jenis'])!),
+      status: $PomodoroSessionTable.$converterstatus.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}status'])!),
+    );
+  }
+
+  @override
+  $PomodoroSessionTable createAlias(String alias) {
+    return $PomodoroSessionTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<PomodoroJenis, String, String> $converterjenis =
+      const EnumNameConverter<PomodoroJenis>(PomodoroJenis.values);
+  static JsonTypeConverter2<PomodoroStatus, String, String> $converterstatus =
+      const EnumNameConverter<PomodoroStatus>(PomodoroStatus.values);
+}
+
+class PomodoroSessionRow extends DataClass
+    implements Insertable<PomodoroSessionRow> {
+  /// Primary key; client can mint the UUID while offline.
+  final String id;
+
+  /// Creation time from the origin device (Instant, UTC).
+  final DateTime createdAt;
+
+  /// Last mutation time from the origin device (Instant, UTC). Audit metadata,
+  /// not a pull cursor.
+  final DateTime updatedAt;
+
+  /// Soft-delete flag; deletes use a tombstone.
+  final bool isDeleted;
+
+  /// Set when [isDeleted] is true; null while the row is active.
+  final DateTime? deletedAt;
+
+  /// Revision the server assigned after accepting a mutation. Client never mints
+  /// this; null until first accepted.
+  final int? serverRevision;
+  final String? originDeviceId;
+  final String userId;
+  final String? tugasId;
+  final String? habitId;
+  final DateTime startTime;
+  final DateTime? endTime;
+  final DateTime? pausedAt;
+  final int accumulatedPauseSeconds;
+  final int durasiMenit;
+  final int? actualSeconds;
+  final PomodoroJenis jenis;
+  final PomodoroStatus status;
+  const PomodoroSessionRow(
+      {required this.id,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.isDeleted,
+      this.deletedAt,
+      this.serverRevision,
+      this.originDeviceId,
+      required this.userId,
+      this.tugasId,
+      this.habitId,
+      required this.startTime,
+      this.endTime,
+      this.pausedAt,
+      required this.accumulatedPauseSeconds,
+      required this.durasiMenit,
+      this.actualSeconds,
+      required this.jenis,
+      required this.status});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || serverRevision != null) {
+      map['server_revision'] = Variable<int>(serverRevision);
+    }
+    if (!nullToAbsent || originDeviceId != null) {
+      map['origin_device_id'] = Variable<String>(originDeviceId);
+    }
+    map['user_id'] = Variable<String>(userId);
+    if (!nullToAbsent || tugasId != null) {
+      map['tugas_id'] = Variable<String>(tugasId);
+    }
+    if (!nullToAbsent || habitId != null) {
+      map['habit_id'] = Variable<String>(habitId);
+    }
+    map['start_time'] = Variable<DateTime>(startTime);
+    if (!nullToAbsent || endTime != null) {
+      map['end_time'] = Variable<DateTime>(endTime);
+    }
+    if (!nullToAbsent || pausedAt != null) {
+      map['paused_at'] = Variable<DateTime>(pausedAt);
+    }
+    map['accumulated_pause_seconds'] = Variable<int>(accumulatedPauseSeconds);
+    map['durasi_menit'] = Variable<int>(durasiMenit);
+    if (!nullToAbsent || actualSeconds != null) {
+      map['actual_seconds'] = Variable<int>(actualSeconds);
+    }
+    {
+      map['jenis'] =
+          Variable<String>($PomodoroSessionTable.$converterjenis.toSql(jenis));
+    }
+    {
+      map['status'] = Variable<String>(
+          $PomodoroSessionTable.$converterstatus.toSql(status));
+    }
+    return map;
+  }
+
+  PomodoroSessionCompanion toCompanion(bool nullToAbsent) {
+    return PomodoroSessionCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      serverRevision: serverRevision == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverRevision),
+      originDeviceId: originDeviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(originDeviceId),
+      userId: Value(userId),
+      tugasId: tugasId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tugasId),
+      habitId: habitId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(habitId),
+      startTime: Value(startTime),
+      endTime: endTime == null && nullToAbsent
+          ? const Value.absent()
+          : Value(endTime),
+      pausedAt: pausedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(pausedAt),
+      accumulatedPauseSeconds: Value(accumulatedPauseSeconds),
+      durasiMenit: Value(durasiMenit),
+      actualSeconds: actualSeconds == null && nullToAbsent
+          ? const Value.absent()
+          : Value(actualSeconds),
+      jenis: Value(jenis),
+      status: Value(status),
+    );
+  }
+
+  factory PomodoroSessionRow.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PomodoroSessionRow(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      serverRevision: serializer.fromJson<int?>(json['serverRevision']),
+      originDeviceId: serializer.fromJson<String?>(json['originDeviceId']),
+      userId: serializer.fromJson<String>(json['userId']),
+      tugasId: serializer.fromJson<String?>(json['tugasId']),
+      habitId: serializer.fromJson<String?>(json['habitId']),
+      startTime: serializer.fromJson<DateTime>(json['startTime']),
+      endTime: serializer.fromJson<DateTime?>(json['endTime']),
+      pausedAt: serializer.fromJson<DateTime?>(json['pausedAt']),
+      accumulatedPauseSeconds:
+          serializer.fromJson<int>(json['accumulatedPauseSeconds']),
+      durasiMenit: serializer.fromJson<int>(json['durasiMenit']),
+      actualSeconds: serializer.fromJson<int?>(json['actualSeconds']),
+      jenis: $PomodoroSessionTable.$converterjenis
+          .fromJson(serializer.fromJson<String>(json['jenis'])),
+      status: $PomodoroSessionTable.$converterstatus
+          .fromJson(serializer.fromJson<String>(json['status'])),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'serverRevision': serializer.toJson<int?>(serverRevision),
+      'originDeviceId': serializer.toJson<String?>(originDeviceId),
+      'userId': serializer.toJson<String>(userId),
+      'tugasId': serializer.toJson<String?>(tugasId),
+      'habitId': serializer.toJson<String?>(habitId),
+      'startTime': serializer.toJson<DateTime>(startTime),
+      'endTime': serializer.toJson<DateTime?>(endTime),
+      'pausedAt': serializer.toJson<DateTime?>(pausedAt),
+      'accumulatedPauseSeconds':
+          serializer.toJson<int>(accumulatedPauseSeconds),
+      'durasiMenit': serializer.toJson<int>(durasiMenit),
+      'actualSeconds': serializer.toJson<int?>(actualSeconds),
+      'jenis': serializer
+          .toJson<String>($PomodoroSessionTable.$converterjenis.toJson(jenis)),
+      'status': serializer.toJson<String>(
+          $PomodoroSessionTable.$converterstatus.toJson(status)),
+    };
+  }
+
+  PomodoroSessionRow copyWith(
+          {String? id,
+          DateTime? createdAt,
+          DateTime? updatedAt,
+          bool? isDeleted,
+          Value<DateTime?> deletedAt = const Value.absent(),
+          Value<int?> serverRevision = const Value.absent(),
+          Value<String?> originDeviceId = const Value.absent(),
+          String? userId,
+          Value<String?> tugasId = const Value.absent(),
+          Value<String?> habitId = const Value.absent(),
+          DateTime? startTime,
+          Value<DateTime?> endTime = const Value.absent(),
+          Value<DateTime?> pausedAt = const Value.absent(),
+          int? accumulatedPauseSeconds,
+          int? durasiMenit,
+          Value<int?> actualSeconds = const Value.absent(),
+          PomodoroJenis? jenis,
+          PomodoroStatus? status}) =>
+      PomodoroSessionRow(
+        id: id ?? this.id,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        isDeleted: isDeleted ?? this.isDeleted,
+        deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+        serverRevision:
+            serverRevision.present ? serverRevision.value : this.serverRevision,
+        originDeviceId:
+            originDeviceId.present ? originDeviceId.value : this.originDeviceId,
+        userId: userId ?? this.userId,
+        tugasId: tugasId.present ? tugasId.value : this.tugasId,
+        habitId: habitId.present ? habitId.value : this.habitId,
+        startTime: startTime ?? this.startTime,
+        endTime: endTime.present ? endTime.value : this.endTime,
+        pausedAt: pausedAt.present ? pausedAt.value : this.pausedAt,
+        accumulatedPauseSeconds:
+            accumulatedPauseSeconds ?? this.accumulatedPauseSeconds,
+        durasiMenit: durasiMenit ?? this.durasiMenit,
+        actualSeconds:
+            actualSeconds.present ? actualSeconds.value : this.actualSeconds,
+        jenis: jenis ?? this.jenis,
+        status: status ?? this.status,
+      );
+  PomodoroSessionRow copyWithCompanion(PomodoroSessionCompanion data) {
+    return PomodoroSessionRow(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      serverRevision: data.serverRevision.present
+          ? data.serverRevision.value
+          : this.serverRevision,
+      originDeviceId: data.originDeviceId.present
+          ? data.originDeviceId.value
+          : this.originDeviceId,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      tugasId: data.tugasId.present ? data.tugasId.value : this.tugasId,
+      habitId: data.habitId.present ? data.habitId.value : this.habitId,
+      startTime: data.startTime.present ? data.startTime.value : this.startTime,
+      endTime: data.endTime.present ? data.endTime.value : this.endTime,
+      pausedAt: data.pausedAt.present ? data.pausedAt.value : this.pausedAt,
+      accumulatedPauseSeconds: data.accumulatedPauseSeconds.present
+          ? data.accumulatedPauseSeconds.value
+          : this.accumulatedPauseSeconds,
+      durasiMenit:
+          data.durasiMenit.present ? data.durasiMenit.value : this.durasiMenit,
+      actualSeconds: data.actualSeconds.present
+          ? data.actualSeconds.value
+          : this.actualSeconds,
+      jenis: data.jenis.present ? data.jenis.value : this.jenis,
+      status: data.status.present ? data.status.value : this.status,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PomodoroSessionRow(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('serverRevision: $serverRevision, ')
+          ..write('originDeviceId: $originDeviceId, ')
+          ..write('userId: $userId, ')
+          ..write('tugasId: $tugasId, ')
+          ..write('habitId: $habitId, ')
+          ..write('startTime: $startTime, ')
+          ..write('endTime: $endTime, ')
+          ..write('pausedAt: $pausedAt, ')
+          ..write('accumulatedPauseSeconds: $accumulatedPauseSeconds, ')
+          ..write('durasiMenit: $durasiMenit, ')
+          ..write('actualSeconds: $actualSeconds, ')
+          ..write('jenis: $jenis, ')
+          ..write('status: $status')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      createdAt,
+      updatedAt,
+      isDeleted,
+      deletedAt,
+      serverRevision,
+      originDeviceId,
+      userId,
+      tugasId,
+      habitId,
+      startTime,
+      endTime,
+      pausedAt,
+      accumulatedPauseSeconds,
+      durasiMenit,
+      actualSeconds,
+      jenis,
+      status);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PomodoroSessionRow &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted &&
+          other.deletedAt == this.deletedAt &&
+          other.serverRevision == this.serverRevision &&
+          other.originDeviceId == this.originDeviceId &&
+          other.userId == this.userId &&
+          other.tugasId == this.tugasId &&
+          other.habitId == this.habitId &&
+          other.startTime == this.startTime &&
+          other.endTime == this.endTime &&
+          other.pausedAt == this.pausedAt &&
+          other.accumulatedPauseSeconds == this.accumulatedPauseSeconds &&
+          other.durasiMenit == this.durasiMenit &&
+          other.actualSeconds == this.actualSeconds &&
+          other.jenis == this.jenis &&
+          other.status == this.status);
+}
+
+class PomodoroSessionCompanion extends UpdateCompanion<PomodoroSessionRow> {
+  final Value<String> id;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  final Value<DateTime?> deletedAt;
+  final Value<int?> serverRevision;
+  final Value<String?> originDeviceId;
+  final Value<String> userId;
+  final Value<String?> tugasId;
+  final Value<String?> habitId;
+  final Value<DateTime> startTime;
+  final Value<DateTime?> endTime;
+  final Value<DateTime?> pausedAt;
+  final Value<int> accumulatedPauseSeconds;
+  final Value<int> durasiMenit;
+  final Value<int?> actualSeconds;
+  final Value<PomodoroJenis> jenis;
+  final Value<PomodoroStatus> status;
+  final Value<int> rowid;
+  const PomodoroSessionCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.serverRevision = const Value.absent(),
+    this.originDeviceId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.tugasId = const Value.absent(),
+    this.habitId = const Value.absent(),
+    this.startTime = const Value.absent(),
+    this.endTime = const Value.absent(),
+    this.pausedAt = const Value.absent(),
+    this.accumulatedPauseSeconds = const Value.absent(),
+    this.durasiMenit = const Value.absent(),
+    this.actualSeconds = const Value.absent(),
+    this.jenis = const Value.absent(),
+    this.status = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PomodoroSessionCompanion.insert({
+    required String id,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.isDeleted = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.serverRevision = const Value.absent(),
+    this.originDeviceId = const Value.absent(),
+    required String userId,
+    this.tugasId = const Value.absent(),
+    this.habitId = const Value.absent(),
+    required DateTime startTime,
+    this.endTime = const Value.absent(),
+    this.pausedAt = const Value.absent(),
+    this.accumulatedPauseSeconds = const Value.absent(),
+    required int durasiMenit,
+    this.actualSeconds = const Value.absent(),
+    required PomodoroJenis jenis,
+    required PomodoroStatus status,
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        createdAt = Value(createdAt),
+        updatedAt = Value(updatedAt),
+        userId = Value(userId),
+        startTime = Value(startTime),
+        durasiMenit = Value(durasiMenit),
+        jenis = Value(jenis),
+        status = Value(status);
+  static Insertable<PomodoroSessionRow> custom({
+    Expression<String>? id,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+    Expression<DateTime>? deletedAt,
+    Expression<int>? serverRevision,
+    Expression<String>? originDeviceId,
+    Expression<String>? userId,
+    Expression<String>? tugasId,
+    Expression<String>? habitId,
+    Expression<DateTime>? startTime,
+    Expression<DateTime>? endTime,
+    Expression<DateTime>? pausedAt,
+    Expression<int>? accumulatedPauseSeconds,
+    Expression<int>? durasiMenit,
+    Expression<int>? actualSeconds,
+    Expression<String>? jenis,
+    Expression<String>? status,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (serverRevision != null) 'server_revision': serverRevision,
+      if (originDeviceId != null) 'origin_device_id': originDeviceId,
+      if (userId != null) 'user_id': userId,
+      if (tugasId != null) 'tugas_id': tugasId,
+      if (habitId != null) 'habit_id': habitId,
+      if (startTime != null) 'start_time': startTime,
+      if (endTime != null) 'end_time': endTime,
+      if (pausedAt != null) 'paused_at': pausedAt,
+      if (accumulatedPauseSeconds != null)
+        'accumulated_pause_seconds': accumulatedPauseSeconds,
+      if (durasiMenit != null) 'durasi_menit': durasiMenit,
+      if (actualSeconds != null) 'actual_seconds': actualSeconds,
+      if (jenis != null) 'jenis': jenis,
+      if (status != null) 'status': status,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PomodoroSessionCompanion copyWith(
+      {Value<String>? id,
+      Value<DateTime>? createdAt,
+      Value<DateTime>? updatedAt,
+      Value<bool>? isDeleted,
+      Value<DateTime?>? deletedAt,
+      Value<int?>? serverRevision,
+      Value<String?>? originDeviceId,
+      Value<String>? userId,
+      Value<String?>? tugasId,
+      Value<String?>? habitId,
+      Value<DateTime>? startTime,
+      Value<DateTime?>? endTime,
+      Value<DateTime?>? pausedAt,
+      Value<int>? accumulatedPauseSeconds,
+      Value<int>? durasiMenit,
+      Value<int?>? actualSeconds,
+      Value<PomodoroJenis>? jenis,
+      Value<PomodoroStatus>? status,
+      Value<int>? rowid}) {
+    return PomodoroSessionCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+      deletedAt: deletedAt ?? this.deletedAt,
+      serverRevision: serverRevision ?? this.serverRevision,
+      originDeviceId: originDeviceId ?? this.originDeviceId,
+      userId: userId ?? this.userId,
+      tugasId: tugasId ?? this.tugasId,
+      habitId: habitId ?? this.habitId,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      pausedAt: pausedAt ?? this.pausedAt,
+      accumulatedPauseSeconds:
+          accumulatedPauseSeconds ?? this.accumulatedPauseSeconds,
+      durasiMenit: durasiMenit ?? this.durasiMenit,
+      actualSeconds: actualSeconds ?? this.actualSeconds,
+      jenis: jenis ?? this.jenis,
+      status: status ?? this.status,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (serverRevision.present) {
+      map['server_revision'] = Variable<int>(serverRevision.value);
+    }
+    if (originDeviceId.present) {
+      map['origin_device_id'] = Variable<String>(originDeviceId.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (tugasId.present) {
+      map['tugas_id'] = Variable<String>(tugasId.value);
+    }
+    if (habitId.present) {
+      map['habit_id'] = Variable<String>(habitId.value);
+    }
+    if (startTime.present) {
+      map['start_time'] = Variable<DateTime>(startTime.value);
+    }
+    if (endTime.present) {
+      map['end_time'] = Variable<DateTime>(endTime.value);
+    }
+    if (pausedAt.present) {
+      map['paused_at'] = Variable<DateTime>(pausedAt.value);
+    }
+    if (accumulatedPauseSeconds.present) {
+      map['accumulated_pause_seconds'] =
+          Variable<int>(accumulatedPauseSeconds.value);
+    }
+    if (durasiMenit.present) {
+      map['durasi_menit'] = Variable<int>(durasiMenit.value);
+    }
+    if (actualSeconds.present) {
+      map['actual_seconds'] = Variable<int>(actualSeconds.value);
+    }
+    if (jenis.present) {
+      map['jenis'] = Variable<String>(
+          $PomodoroSessionTable.$converterjenis.toSql(jenis.value));
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(
+          $PomodoroSessionTable.$converterstatus.toSql(status.value));
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PomodoroSessionCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('serverRevision: $serverRevision, ')
+          ..write('originDeviceId: $originDeviceId, ')
+          ..write('userId: $userId, ')
+          ..write('tugasId: $tugasId, ')
+          ..write('habitId: $habitId, ')
+          ..write('startTime: $startTime, ')
+          ..write('endTime: $endTime, ')
+          ..write('pausedAt: $pausedAt, ')
+          ..write('accumulatedPauseSeconds: $accumulatedPauseSeconds, ')
+          ..write('durasiMenit: $durasiMenit, ')
+          ..write('actualSeconds: $actualSeconds, ')
+          ..write('jenis: $jenis, ')
+          ..write('status: $status, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TimeboxScheduleTable extends TimeboxSchedule
+    with TableInfo<$TimeboxScheduleTable, TimeboxScheduleRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TimeboxScheduleTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 36, maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+      'updated_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _isDeletedMeta =
+      const VerificationMeta('isDeleted');
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+      'is_deleted', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_deleted" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _deletedAtMeta =
+      const VerificationMeta('deletedAt');
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+      'deleted_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _serverRevisionMeta =
+      const VerificationMeta('serverRevision');
+  @override
+  late final GeneratedColumn<int> serverRevision = GeneratedColumn<int>(
+      'server_revision', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _originDeviceIdMeta =
+      const VerificationMeta('originDeviceId');
+  @override
+  late final GeneratedColumn<String> originDeviceId = GeneratedColumn<String>(
+      'origin_device_id', aliasedName, true,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 36, maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+      'user_id', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 36, maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES user (id)'));
+  static const VerificationMeta _tugasIdMeta =
+      const VerificationMeta('tugasId');
+  @override
+  late final GeneratedColumn<String> tugasId = GeneratedColumn<String>(
+      'tugas_id', aliasedName, true,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 36, maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES tugas (id)'));
+  static const VerificationMeta _habitIdMeta =
+      const VerificationMeta('habitId');
+  @override
+  late final GeneratedColumn<String> habitId = GeneratedColumn<String>(
+      'habit_id', aliasedName, true,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 36, maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _judulMeta = const VerificationMeta('judul');
+  @override
+  late final GeneratedColumn<String> judul =
+      GeneratedColumn<String>('judul', aliasedName, false,
+          additionalChecks: GeneratedColumn.checkTextLength(
+            minTextLength: 1,
+          ),
+          type: DriftSqlType.string,
+          requiredDuringInsert: true);
+  static const VerificationMeta _activityCategoryIdMeta =
+      const VerificationMeta('activityCategoryId');
+  @override
+  late final GeneratedColumn<String> activityCategoryId =
+      GeneratedColumn<String>('activity_category_id', aliasedName, false,
+          additionalChecks: GeneratedColumn.checkTextLength(
+              minTextLength: 36, maxTextLength: 36),
+          type: DriftSqlType.string,
+          requiredDuringInsert: true,
+          defaultConstraints: GeneratedColumn.constraintIsAlways(
+              'REFERENCES activity_category (id)'));
+  static const VerificationMeta _startTimeMeta =
+      const VerificationMeta('startTime');
+  @override
+  late final GeneratedColumn<String> startTime = GeneratedColumn<String>(
+      'start_time', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _endTimeMeta =
+      const VerificationMeta('endTime');
+  @override
+  late final GeneratedColumn<String> endTime = GeneratedColumn<String>(
+      'end_time', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _hariMeta = const VerificationMeta('hari');
+  @override
+  late final GeneratedColumn<int> hari = GeneratedColumn<int>(
+      'hari', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _tanggalSpesifikMeta =
+      const VerificationMeta('tanggalSpesifik');
+  @override
+  late final GeneratedColumn<String> tanggalSpesifik = GeneratedColumn<String>(
+      'tanggal_spesifik', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _isRecurringMeta =
+      const VerificationMeta('isRecurring');
+  @override
+  late final GeneratedColumn<bool> isRecurring = GeneratedColumn<bool>(
+      'is_recurring', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'CHECK ("is_recurring" IN (0, 1))'));
+  static const VerificationMeta _isActiveMeta =
+      const VerificationMeta('isActive');
+  @override
+  late final GeneratedColumn<bool> isActive = GeneratedColumn<bool>(
+      'is_active', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_active" IN (0, 1))'),
+      defaultValue: const Constant(true));
+  @override
+  late final GeneratedColumnWithTypeConverter<List<int>, String>
+      reminderOffsetsMinutes = GeneratedColumn<String>(
+              'reminder_offsets_minutes', aliasedName, false,
+              type: DriftSqlType.string,
+              requiredDuringInsert: false,
+              defaultValue: const Constant('[]'))
+          .withConverter<List<int>>(
+              $TimeboxScheduleTable.$converterreminderOffsetsMinutes);
+  static const VerificationMeta _materializedThroughDateMeta =
+      const VerificationMeta('materializedThroughDate');
+  @override
+  late final GeneratedColumn<String> materializedThroughDate =
+      GeneratedColumn<String>('materialized_through_date', aliasedName, true,
+          type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        createdAt,
+        updatedAt,
+        isDeleted,
+        deletedAt,
+        serverRevision,
+        originDeviceId,
+        userId,
+        tugasId,
+        habitId,
+        judul,
+        activityCategoryId,
+        startTime,
+        endTime,
+        hari,
+        tanggalSpesifik,
+        isRecurring,
+        isActive,
+        reminderOffsetsMinutes,
+        materializedThroughDate
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'timebox_schedule';
+  @override
+  VerificationContext validateIntegrity(Insertable<TimeboxScheduleRow> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(_isDeletedMeta,
+          isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta));
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(_deletedAtMeta,
+          deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta));
+    }
+    if (data.containsKey('server_revision')) {
+      context.handle(
+          _serverRevisionMeta,
+          serverRevision.isAcceptableOrUnknown(
+              data['server_revision']!, _serverRevisionMeta));
+    }
+    if (data.containsKey('origin_device_id')) {
+      context.handle(
+          _originDeviceIdMeta,
+          originDeviceId.isAcceptableOrUnknown(
+              data['origin_device_id']!, _originDeviceIdMeta));
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('tugas_id')) {
+      context.handle(_tugasIdMeta,
+          tugasId.isAcceptableOrUnknown(data['tugas_id']!, _tugasIdMeta));
+    }
+    if (data.containsKey('habit_id')) {
+      context.handle(_habitIdMeta,
+          habitId.isAcceptableOrUnknown(data['habit_id']!, _habitIdMeta));
+    }
+    if (data.containsKey('judul')) {
+      context.handle(
+          _judulMeta, judul.isAcceptableOrUnknown(data['judul']!, _judulMeta));
+    } else if (isInserting) {
+      context.missing(_judulMeta);
+    }
+    if (data.containsKey('activity_category_id')) {
+      context.handle(
+          _activityCategoryIdMeta,
+          activityCategoryId.isAcceptableOrUnknown(
+              data['activity_category_id']!, _activityCategoryIdMeta));
+    } else if (isInserting) {
+      context.missing(_activityCategoryIdMeta);
+    }
+    if (data.containsKey('start_time')) {
+      context.handle(_startTimeMeta,
+          startTime.isAcceptableOrUnknown(data['start_time']!, _startTimeMeta));
+    } else if (isInserting) {
+      context.missing(_startTimeMeta);
+    }
+    if (data.containsKey('end_time')) {
+      context.handle(_endTimeMeta,
+          endTime.isAcceptableOrUnknown(data['end_time']!, _endTimeMeta));
+    } else if (isInserting) {
+      context.missing(_endTimeMeta);
+    }
+    if (data.containsKey('hari')) {
+      context.handle(
+          _hariMeta, hari.isAcceptableOrUnknown(data['hari']!, _hariMeta));
+    }
+    if (data.containsKey('tanggal_spesifik')) {
+      context.handle(
+          _tanggalSpesifikMeta,
+          tanggalSpesifik.isAcceptableOrUnknown(
+              data['tanggal_spesifik']!, _tanggalSpesifikMeta));
+    }
+    if (data.containsKey('is_recurring')) {
+      context.handle(
+          _isRecurringMeta,
+          isRecurring.isAcceptableOrUnknown(
+              data['is_recurring']!, _isRecurringMeta));
+    } else if (isInserting) {
+      context.missing(_isRecurringMeta);
+    }
+    if (data.containsKey('is_active')) {
+      context.handle(_isActiveMeta,
+          isActive.isAcceptableOrUnknown(data['is_active']!, _isActiveMeta));
+    }
+    if (data.containsKey('materialized_through_date')) {
+      context.handle(
+          _materializedThroughDateMeta,
+          materializedThroughDate.isAcceptableOrUnknown(
+              data['materialized_through_date']!,
+              _materializedThroughDateMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TimeboxScheduleRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TimeboxScheduleRow(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at'])!,
+      isDeleted: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_deleted'])!,
+      deletedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}deleted_at']),
+      serverRevision: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}server_revision']),
+      originDeviceId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}origin_device_id']),
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_id'])!,
+      tugasId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tugas_id']),
+      habitId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}habit_id']),
+      judul: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}judul'])!,
+      activityCategoryId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}activity_category_id'])!,
+      startTime: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}start_time'])!,
+      endTime: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}end_time'])!,
+      hari: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}hari']),
+      tanggalSpesifik: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}tanggal_spesifik']),
+      isRecurring: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_recurring'])!,
+      isActive: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_active'])!,
+      reminderOffsetsMinutes: $TimeboxScheduleTable
+          .$converterreminderOffsetsMinutes
+          .fromSql(attachedDatabase.typeMapping.read(DriftSqlType.string,
+              data['${effectivePrefix}reminder_offsets_minutes'])!),
+      materializedThroughDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}materialized_through_date']),
+    );
+  }
+
+  @override
+  $TimeboxScheduleTable createAlias(String alias) {
+    return $TimeboxScheduleTable(attachedDatabase, alias);
+  }
+
+  static TypeConverter<List<int>, String> $converterreminderOffsetsMinutes =
+      const IntListConverter();
+}
+
+class TimeboxScheduleRow extends DataClass
+    implements Insertable<TimeboxScheduleRow> {
+  /// Primary key; client can mint the UUID while offline.
+  final String id;
+
+  /// Creation time from the origin device (Instant, UTC).
+  final DateTime createdAt;
+
+  /// Last mutation time from the origin device (Instant, UTC). Audit metadata,
+  /// not a pull cursor.
+  final DateTime updatedAt;
+
+  /// Soft-delete flag; deletes use a tombstone.
+  final bool isDeleted;
+
+  /// Set when [isDeleted] is true; null while the row is active.
+  final DateTime? deletedAt;
+
+  /// Revision the server assigned after accepting a mutation. Client never mints
+  /// this; null until first accepted.
+  final int? serverRevision;
+  final String? originDeviceId;
+  final String userId;
+  final String? tugasId;
+  final String? habitId;
+  final String judul;
+  final String activityCategoryId;
+  final String startTime;
+  final String endTime;
+  final int? hari;
+  final String? tanggalSpesifik;
+  final bool isRecurring;
+  final bool isActive;
+  final List<int> reminderOffsetsMinutes;
+  final String? materializedThroughDate;
+  const TimeboxScheduleRow(
+      {required this.id,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.isDeleted,
+      this.deletedAt,
+      this.serverRevision,
+      this.originDeviceId,
+      required this.userId,
+      this.tugasId,
+      this.habitId,
+      required this.judul,
+      required this.activityCategoryId,
+      required this.startTime,
+      required this.endTime,
+      this.hari,
+      this.tanggalSpesifik,
+      required this.isRecurring,
+      required this.isActive,
+      required this.reminderOffsetsMinutes,
+      this.materializedThroughDate});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || serverRevision != null) {
+      map['server_revision'] = Variable<int>(serverRevision);
+    }
+    if (!nullToAbsent || originDeviceId != null) {
+      map['origin_device_id'] = Variable<String>(originDeviceId);
+    }
+    map['user_id'] = Variable<String>(userId);
+    if (!nullToAbsent || tugasId != null) {
+      map['tugas_id'] = Variable<String>(tugasId);
+    }
+    if (!nullToAbsent || habitId != null) {
+      map['habit_id'] = Variable<String>(habitId);
+    }
+    map['judul'] = Variable<String>(judul);
+    map['activity_category_id'] = Variable<String>(activityCategoryId);
+    map['start_time'] = Variable<String>(startTime);
+    map['end_time'] = Variable<String>(endTime);
+    if (!nullToAbsent || hari != null) {
+      map['hari'] = Variable<int>(hari);
+    }
+    if (!nullToAbsent || tanggalSpesifik != null) {
+      map['tanggal_spesifik'] = Variable<String>(tanggalSpesifik);
+    }
+    map['is_recurring'] = Variable<bool>(isRecurring);
+    map['is_active'] = Variable<bool>(isActive);
+    {
+      map['reminder_offsets_minutes'] = Variable<String>($TimeboxScheduleTable
+          .$converterreminderOffsetsMinutes
+          .toSql(reminderOffsetsMinutes));
+    }
+    if (!nullToAbsent || materializedThroughDate != null) {
+      map['materialized_through_date'] =
+          Variable<String>(materializedThroughDate);
+    }
+    return map;
+  }
+
+  TimeboxScheduleCompanion toCompanion(bool nullToAbsent) {
+    return TimeboxScheduleCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      serverRevision: serverRevision == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverRevision),
+      originDeviceId: originDeviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(originDeviceId),
+      userId: Value(userId),
+      tugasId: tugasId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tugasId),
+      habitId: habitId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(habitId),
+      judul: Value(judul),
+      activityCategoryId: Value(activityCategoryId),
+      startTime: Value(startTime),
+      endTime: Value(endTime),
+      hari: hari == null && nullToAbsent ? const Value.absent() : Value(hari),
+      tanggalSpesifik: tanggalSpesifik == null && nullToAbsent
+          ? const Value.absent()
+          : Value(tanggalSpesifik),
+      isRecurring: Value(isRecurring),
+      isActive: Value(isActive),
+      reminderOffsetsMinutes: Value(reminderOffsetsMinutes),
+      materializedThroughDate: materializedThroughDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(materializedThroughDate),
+    );
+  }
+
+  factory TimeboxScheduleRow.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TimeboxScheduleRow(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      serverRevision: serializer.fromJson<int?>(json['serverRevision']),
+      originDeviceId: serializer.fromJson<String?>(json['originDeviceId']),
+      userId: serializer.fromJson<String>(json['userId']),
+      tugasId: serializer.fromJson<String?>(json['tugasId']),
+      habitId: serializer.fromJson<String?>(json['habitId']),
+      judul: serializer.fromJson<String>(json['judul']),
+      activityCategoryId:
+          serializer.fromJson<String>(json['activityCategoryId']),
+      startTime: serializer.fromJson<String>(json['startTime']),
+      endTime: serializer.fromJson<String>(json['endTime']),
+      hari: serializer.fromJson<int?>(json['hari']),
+      tanggalSpesifik: serializer.fromJson<String?>(json['tanggalSpesifik']),
+      isRecurring: serializer.fromJson<bool>(json['isRecurring']),
+      isActive: serializer.fromJson<bool>(json['isActive']),
+      reminderOffsetsMinutes:
+          serializer.fromJson<List<int>>(json['reminderOffsetsMinutes']),
+      materializedThroughDate:
+          serializer.fromJson<String?>(json['materializedThroughDate']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'serverRevision': serializer.toJson<int?>(serverRevision),
+      'originDeviceId': serializer.toJson<String?>(originDeviceId),
+      'userId': serializer.toJson<String>(userId),
+      'tugasId': serializer.toJson<String?>(tugasId),
+      'habitId': serializer.toJson<String?>(habitId),
+      'judul': serializer.toJson<String>(judul),
+      'activityCategoryId': serializer.toJson<String>(activityCategoryId),
+      'startTime': serializer.toJson<String>(startTime),
+      'endTime': serializer.toJson<String>(endTime),
+      'hari': serializer.toJson<int?>(hari),
+      'tanggalSpesifik': serializer.toJson<String?>(tanggalSpesifik),
+      'isRecurring': serializer.toJson<bool>(isRecurring),
+      'isActive': serializer.toJson<bool>(isActive),
+      'reminderOffsetsMinutes':
+          serializer.toJson<List<int>>(reminderOffsetsMinutes),
+      'materializedThroughDate':
+          serializer.toJson<String?>(materializedThroughDate),
+    };
+  }
+
+  TimeboxScheduleRow copyWith(
+          {String? id,
+          DateTime? createdAt,
+          DateTime? updatedAt,
+          bool? isDeleted,
+          Value<DateTime?> deletedAt = const Value.absent(),
+          Value<int?> serverRevision = const Value.absent(),
+          Value<String?> originDeviceId = const Value.absent(),
+          String? userId,
+          Value<String?> tugasId = const Value.absent(),
+          Value<String?> habitId = const Value.absent(),
+          String? judul,
+          String? activityCategoryId,
+          String? startTime,
+          String? endTime,
+          Value<int?> hari = const Value.absent(),
+          Value<String?> tanggalSpesifik = const Value.absent(),
+          bool? isRecurring,
+          bool? isActive,
+          List<int>? reminderOffsetsMinutes,
+          Value<String?> materializedThroughDate = const Value.absent()}) =>
+      TimeboxScheduleRow(
+        id: id ?? this.id,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        isDeleted: isDeleted ?? this.isDeleted,
+        deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+        serverRevision:
+            serverRevision.present ? serverRevision.value : this.serverRevision,
+        originDeviceId:
+            originDeviceId.present ? originDeviceId.value : this.originDeviceId,
+        userId: userId ?? this.userId,
+        tugasId: tugasId.present ? tugasId.value : this.tugasId,
+        habitId: habitId.present ? habitId.value : this.habitId,
+        judul: judul ?? this.judul,
+        activityCategoryId: activityCategoryId ?? this.activityCategoryId,
+        startTime: startTime ?? this.startTime,
+        endTime: endTime ?? this.endTime,
+        hari: hari.present ? hari.value : this.hari,
+        tanggalSpesifik: tanggalSpesifik.present
+            ? tanggalSpesifik.value
+            : this.tanggalSpesifik,
+        isRecurring: isRecurring ?? this.isRecurring,
+        isActive: isActive ?? this.isActive,
+        reminderOffsetsMinutes:
+            reminderOffsetsMinutes ?? this.reminderOffsetsMinutes,
+        materializedThroughDate: materializedThroughDate.present
+            ? materializedThroughDate.value
+            : this.materializedThroughDate,
+      );
+  TimeboxScheduleRow copyWithCompanion(TimeboxScheduleCompanion data) {
+    return TimeboxScheduleRow(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      serverRevision: data.serverRevision.present
+          ? data.serverRevision.value
+          : this.serverRevision,
+      originDeviceId: data.originDeviceId.present
+          ? data.originDeviceId.value
+          : this.originDeviceId,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      tugasId: data.tugasId.present ? data.tugasId.value : this.tugasId,
+      habitId: data.habitId.present ? data.habitId.value : this.habitId,
+      judul: data.judul.present ? data.judul.value : this.judul,
+      activityCategoryId: data.activityCategoryId.present
+          ? data.activityCategoryId.value
+          : this.activityCategoryId,
+      startTime: data.startTime.present ? data.startTime.value : this.startTime,
+      endTime: data.endTime.present ? data.endTime.value : this.endTime,
+      hari: data.hari.present ? data.hari.value : this.hari,
+      tanggalSpesifik: data.tanggalSpesifik.present
+          ? data.tanggalSpesifik.value
+          : this.tanggalSpesifik,
+      isRecurring:
+          data.isRecurring.present ? data.isRecurring.value : this.isRecurring,
+      isActive: data.isActive.present ? data.isActive.value : this.isActive,
+      reminderOffsetsMinutes: data.reminderOffsetsMinutes.present
+          ? data.reminderOffsetsMinutes.value
+          : this.reminderOffsetsMinutes,
+      materializedThroughDate: data.materializedThroughDate.present
+          ? data.materializedThroughDate.value
+          : this.materializedThroughDate,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TimeboxScheduleRow(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('serverRevision: $serverRevision, ')
+          ..write('originDeviceId: $originDeviceId, ')
+          ..write('userId: $userId, ')
+          ..write('tugasId: $tugasId, ')
+          ..write('habitId: $habitId, ')
+          ..write('judul: $judul, ')
+          ..write('activityCategoryId: $activityCategoryId, ')
+          ..write('startTime: $startTime, ')
+          ..write('endTime: $endTime, ')
+          ..write('hari: $hari, ')
+          ..write('tanggalSpesifik: $tanggalSpesifik, ')
+          ..write('isRecurring: $isRecurring, ')
+          ..write('isActive: $isActive, ')
+          ..write('reminderOffsetsMinutes: $reminderOffsetsMinutes, ')
+          ..write('materializedThroughDate: $materializedThroughDate')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      createdAt,
+      updatedAt,
+      isDeleted,
+      deletedAt,
+      serverRevision,
+      originDeviceId,
+      userId,
+      tugasId,
+      habitId,
+      judul,
+      activityCategoryId,
+      startTime,
+      endTime,
+      hari,
+      tanggalSpesifik,
+      isRecurring,
+      isActive,
+      reminderOffsetsMinutes,
+      materializedThroughDate);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TimeboxScheduleRow &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted &&
+          other.deletedAt == this.deletedAt &&
+          other.serverRevision == this.serverRevision &&
+          other.originDeviceId == this.originDeviceId &&
+          other.userId == this.userId &&
+          other.tugasId == this.tugasId &&
+          other.habitId == this.habitId &&
+          other.judul == this.judul &&
+          other.activityCategoryId == this.activityCategoryId &&
+          other.startTime == this.startTime &&
+          other.endTime == this.endTime &&
+          other.hari == this.hari &&
+          other.tanggalSpesifik == this.tanggalSpesifik &&
+          other.isRecurring == this.isRecurring &&
+          other.isActive == this.isActive &&
+          other.reminderOffsetsMinutes == this.reminderOffsetsMinutes &&
+          other.materializedThroughDate == this.materializedThroughDate);
+}
+
+class TimeboxScheduleCompanion extends UpdateCompanion<TimeboxScheduleRow> {
+  final Value<String> id;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  final Value<DateTime?> deletedAt;
+  final Value<int?> serverRevision;
+  final Value<String?> originDeviceId;
+  final Value<String> userId;
+  final Value<String?> tugasId;
+  final Value<String?> habitId;
+  final Value<String> judul;
+  final Value<String> activityCategoryId;
+  final Value<String> startTime;
+  final Value<String> endTime;
+  final Value<int?> hari;
+  final Value<String?> tanggalSpesifik;
+  final Value<bool> isRecurring;
+  final Value<bool> isActive;
+  final Value<List<int>> reminderOffsetsMinutes;
+  final Value<String?> materializedThroughDate;
+  final Value<int> rowid;
+  const TimeboxScheduleCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.serverRevision = const Value.absent(),
+    this.originDeviceId = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.tugasId = const Value.absent(),
+    this.habitId = const Value.absent(),
+    this.judul = const Value.absent(),
+    this.activityCategoryId = const Value.absent(),
+    this.startTime = const Value.absent(),
+    this.endTime = const Value.absent(),
+    this.hari = const Value.absent(),
+    this.tanggalSpesifik = const Value.absent(),
+    this.isRecurring = const Value.absent(),
+    this.isActive = const Value.absent(),
+    this.reminderOffsetsMinutes = const Value.absent(),
+    this.materializedThroughDate = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TimeboxScheduleCompanion.insert({
+    required String id,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.isDeleted = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.serverRevision = const Value.absent(),
+    this.originDeviceId = const Value.absent(),
+    required String userId,
+    this.tugasId = const Value.absent(),
+    this.habitId = const Value.absent(),
+    required String judul,
+    required String activityCategoryId,
+    required String startTime,
+    required String endTime,
+    this.hari = const Value.absent(),
+    this.tanggalSpesifik = const Value.absent(),
+    required bool isRecurring,
+    this.isActive = const Value.absent(),
+    this.reminderOffsetsMinutes = const Value.absent(),
+    this.materializedThroughDate = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        createdAt = Value(createdAt),
+        updatedAt = Value(updatedAt),
+        userId = Value(userId),
+        judul = Value(judul),
+        activityCategoryId = Value(activityCategoryId),
+        startTime = Value(startTime),
+        endTime = Value(endTime),
+        isRecurring = Value(isRecurring);
+  static Insertable<TimeboxScheduleRow> custom({
+    Expression<String>? id,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+    Expression<DateTime>? deletedAt,
+    Expression<int>? serverRevision,
+    Expression<String>? originDeviceId,
+    Expression<String>? userId,
+    Expression<String>? tugasId,
+    Expression<String>? habitId,
+    Expression<String>? judul,
+    Expression<String>? activityCategoryId,
+    Expression<String>? startTime,
+    Expression<String>? endTime,
+    Expression<int>? hari,
+    Expression<String>? tanggalSpesifik,
+    Expression<bool>? isRecurring,
+    Expression<bool>? isActive,
+    Expression<String>? reminderOffsetsMinutes,
+    Expression<String>? materializedThroughDate,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (serverRevision != null) 'server_revision': serverRevision,
+      if (originDeviceId != null) 'origin_device_id': originDeviceId,
+      if (userId != null) 'user_id': userId,
+      if (tugasId != null) 'tugas_id': tugasId,
+      if (habitId != null) 'habit_id': habitId,
+      if (judul != null) 'judul': judul,
+      if (activityCategoryId != null)
+        'activity_category_id': activityCategoryId,
+      if (startTime != null) 'start_time': startTime,
+      if (endTime != null) 'end_time': endTime,
+      if (hari != null) 'hari': hari,
+      if (tanggalSpesifik != null) 'tanggal_spesifik': tanggalSpesifik,
+      if (isRecurring != null) 'is_recurring': isRecurring,
+      if (isActive != null) 'is_active': isActive,
+      if (reminderOffsetsMinutes != null)
+        'reminder_offsets_minutes': reminderOffsetsMinutes,
+      if (materializedThroughDate != null)
+        'materialized_through_date': materializedThroughDate,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TimeboxScheduleCompanion copyWith(
+      {Value<String>? id,
+      Value<DateTime>? createdAt,
+      Value<DateTime>? updatedAt,
+      Value<bool>? isDeleted,
+      Value<DateTime?>? deletedAt,
+      Value<int?>? serverRevision,
+      Value<String?>? originDeviceId,
+      Value<String>? userId,
+      Value<String?>? tugasId,
+      Value<String?>? habitId,
+      Value<String>? judul,
+      Value<String>? activityCategoryId,
+      Value<String>? startTime,
+      Value<String>? endTime,
+      Value<int?>? hari,
+      Value<String?>? tanggalSpesifik,
+      Value<bool>? isRecurring,
+      Value<bool>? isActive,
+      Value<List<int>>? reminderOffsetsMinutes,
+      Value<String?>? materializedThroughDate,
+      Value<int>? rowid}) {
+    return TimeboxScheduleCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+      deletedAt: deletedAt ?? this.deletedAt,
+      serverRevision: serverRevision ?? this.serverRevision,
+      originDeviceId: originDeviceId ?? this.originDeviceId,
+      userId: userId ?? this.userId,
+      tugasId: tugasId ?? this.tugasId,
+      habitId: habitId ?? this.habitId,
+      judul: judul ?? this.judul,
+      activityCategoryId: activityCategoryId ?? this.activityCategoryId,
+      startTime: startTime ?? this.startTime,
+      endTime: endTime ?? this.endTime,
+      hari: hari ?? this.hari,
+      tanggalSpesifik: tanggalSpesifik ?? this.tanggalSpesifik,
+      isRecurring: isRecurring ?? this.isRecurring,
+      isActive: isActive ?? this.isActive,
+      reminderOffsetsMinutes:
+          reminderOffsetsMinutes ?? this.reminderOffsetsMinutes,
+      materializedThroughDate:
+          materializedThroughDate ?? this.materializedThroughDate,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (serverRevision.present) {
+      map['server_revision'] = Variable<int>(serverRevision.value);
+    }
+    if (originDeviceId.present) {
+      map['origin_device_id'] = Variable<String>(originDeviceId.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (tugasId.present) {
+      map['tugas_id'] = Variable<String>(tugasId.value);
+    }
+    if (habitId.present) {
+      map['habit_id'] = Variable<String>(habitId.value);
+    }
+    if (judul.present) {
+      map['judul'] = Variable<String>(judul.value);
+    }
+    if (activityCategoryId.present) {
+      map['activity_category_id'] = Variable<String>(activityCategoryId.value);
+    }
+    if (startTime.present) {
+      map['start_time'] = Variable<String>(startTime.value);
+    }
+    if (endTime.present) {
+      map['end_time'] = Variable<String>(endTime.value);
+    }
+    if (hari.present) {
+      map['hari'] = Variable<int>(hari.value);
+    }
+    if (tanggalSpesifik.present) {
+      map['tanggal_spesifik'] = Variable<String>(tanggalSpesifik.value);
+    }
+    if (isRecurring.present) {
+      map['is_recurring'] = Variable<bool>(isRecurring.value);
+    }
+    if (isActive.present) {
+      map['is_active'] = Variable<bool>(isActive.value);
+    }
+    if (reminderOffsetsMinutes.present) {
+      map['reminder_offsets_minutes'] = Variable<String>($TimeboxScheduleTable
+          .$converterreminderOffsetsMinutes
+          .toSql(reminderOffsetsMinutes.value));
+    }
+    if (materializedThroughDate.present) {
+      map['materialized_through_date'] =
+          Variable<String>(materializedThroughDate.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TimeboxScheduleCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('serverRevision: $serverRevision, ')
+          ..write('originDeviceId: $originDeviceId, ')
+          ..write('userId: $userId, ')
+          ..write('tugasId: $tugasId, ')
+          ..write('habitId: $habitId, ')
+          ..write('judul: $judul, ')
+          ..write('activityCategoryId: $activityCategoryId, ')
+          ..write('startTime: $startTime, ')
+          ..write('endTime: $endTime, ')
+          ..write('hari: $hari, ')
+          ..write('tanggalSpesifik: $tanggalSpesifik, ')
+          ..write('isRecurring: $isRecurring, ')
+          ..write('isActive: $isActive, ')
+          ..write('reminderOffsetsMinutes: $reminderOffsetsMinutes, ')
+          ..write('materializedThroughDate: $materializedThroughDate, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $TimeboxExecutionTable extends TimeboxExecution
+    with TableInfo<$TimeboxExecutionTable, TimeboxExecutionRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $TimeboxExecutionTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 36, maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+      'updated_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _isDeletedMeta =
+      const VerificationMeta('isDeleted');
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+      'is_deleted', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_deleted" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _deletedAtMeta =
+      const VerificationMeta('deletedAt');
+  @override
+  late final GeneratedColumn<DateTime> deletedAt = GeneratedColumn<DateTime>(
+      'deleted_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _serverRevisionMeta =
+      const VerificationMeta('serverRevision');
+  @override
+  late final GeneratedColumn<int> serverRevision = GeneratedColumn<int>(
+      'server_revision', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _originDeviceIdMeta =
+      const VerificationMeta('originDeviceId');
+  @override
+  late final GeneratedColumn<String> originDeviceId = GeneratedColumn<String>(
+      'origin_device_id', aliasedName, true,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 36, maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false);
+  static const VerificationMeta _scheduleIdMeta =
+      const VerificationMeta('scheduleId');
+  @override
+  late final GeneratedColumn<String> scheduleId = GeneratedColumn<String>(
+      'schedule_id', aliasedName, false,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 36, maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES timebox_schedule (id)'));
+  static const VerificationMeta _occurrenceDateMeta =
+      const VerificationMeta('occurrenceDate');
+  @override
+  late final GeneratedColumn<String> occurrenceDate = GeneratedColumn<String>(
+      'occurrence_date', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _plannedStartAtMeta =
+      const VerificationMeta('plannedStartAt');
+  @override
+  late final GeneratedColumn<DateTime> plannedStartAt =
+      GeneratedColumn<DateTime>('planned_start_at', aliasedName, false,
+          type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _plannedEndAtMeta =
+      const VerificationMeta('plannedEndAt');
+  @override
+  late final GeneratedColumn<DateTime> plannedEndAt = GeneratedColumn<DateTime>(
+      'planned_end_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  late final GeneratedColumnWithTypeConverter<TimeboxExecutionStatus, String>
+      status = GeneratedColumn<String>('status', aliasedName, false,
+              type: DriftSqlType.string, requiredDuringInsert: true)
+          .withConverter<TimeboxExecutionStatus>(
+              $TimeboxExecutionTable.$converterstatus);
+  static const VerificationMeta _actualStartAtMeta =
+      const VerificationMeta('actualStartAt');
+  @override
+  late final GeneratedColumn<DateTime> actualStartAt =
+      GeneratedColumn<DateTime>('actual_start_at', aliasedName, true,
+          type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _actualEndAtMeta =
+      const VerificationMeta('actualEndAt');
+  @override
+  late final GeneratedColumn<DateTime> actualEndAt = GeneratedColumn<DateTime>(
+      'actual_end_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _rescheduledToIdMeta =
+      const VerificationMeta('rescheduledToId');
+  @override
+  late final GeneratedColumn<String> rescheduledToId = GeneratedColumn<String>(
+      'rescheduled_to_id', aliasedName, true,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 36, maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultConstraints: GeneratedColumn.constraintIsAlways(
+          'REFERENCES timebox_execution (id)'));
+  static const VerificationMeta _activityIdMeta =
+      const VerificationMeta('activityId');
+  @override
+  late final GeneratedColumn<String> activityId = GeneratedColumn<String>(
+      'activity_id', aliasedName, true,
+      additionalChecks:
+          GeneratedColumn.checkTextLength(minTextLength: 36, maxTextLength: 36),
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES activity (id)'));
+  static const VerificationMeta _catatanMeta =
+      const VerificationMeta('catatan');
+  @override
+  late final GeneratedColumn<String> catatan = GeneratedColumn<String>(
+      'catatan', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        createdAt,
+        updatedAt,
+        isDeleted,
+        deletedAt,
+        serverRevision,
+        originDeviceId,
+        scheduleId,
+        occurrenceDate,
+        plannedStartAt,
+        plannedEndAt,
+        status,
+        actualStartAt,
+        actualEndAt,
+        rescheduledToId,
+        activityId,
+        catatan
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'timebox_execution';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<TimeboxExecutionRow> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(_isDeletedMeta,
+          isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta));
+    }
+    if (data.containsKey('deleted_at')) {
+      context.handle(_deletedAtMeta,
+          deletedAt.isAcceptableOrUnknown(data['deleted_at']!, _deletedAtMeta));
+    }
+    if (data.containsKey('server_revision')) {
+      context.handle(
+          _serverRevisionMeta,
+          serverRevision.isAcceptableOrUnknown(
+              data['server_revision']!, _serverRevisionMeta));
+    }
+    if (data.containsKey('origin_device_id')) {
+      context.handle(
+          _originDeviceIdMeta,
+          originDeviceId.isAcceptableOrUnknown(
+              data['origin_device_id']!, _originDeviceIdMeta));
+    }
+    if (data.containsKey('schedule_id')) {
+      context.handle(
+          _scheduleIdMeta,
+          scheduleId.isAcceptableOrUnknown(
+              data['schedule_id']!, _scheduleIdMeta));
+    } else if (isInserting) {
+      context.missing(_scheduleIdMeta);
+    }
+    if (data.containsKey('occurrence_date')) {
+      context.handle(
+          _occurrenceDateMeta,
+          occurrenceDate.isAcceptableOrUnknown(
+              data['occurrence_date']!, _occurrenceDateMeta));
+    } else if (isInserting) {
+      context.missing(_occurrenceDateMeta);
+    }
+    if (data.containsKey('planned_start_at')) {
+      context.handle(
+          _plannedStartAtMeta,
+          plannedStartAt.isAcceptableOrUnknown(
+              data['planned_start_at']!, _plannedStartAtMeta));
+    } else if (isInserting) {
+      context.missing(_plannedStartAtMeta);
+    }
+    if (data.containsKey('planned_end_at')) {
+      context.handle(
+          _plannedEndAtMeta,
+          plannedEndAt.isAcceptableOrUnknown(
+              data['planned_end_at']!, _plannedEndAtMeta));
+    } else if (isInserting) {
+      context.missing(_plannedEndAtMeta);
+    }
+    if (data.containsKey('actual_start_at')) {
+      context.handle(
+          _actualStartAtMeta,
+          actualStartAt.isAcceptableOrUnknown(
+              data['actual_start_at']!, _actualStartAtMeta));
+    }
+    if (data.containsKey('actual_end_at')) {
+      context.handle(
+          _actualEndAtMeta,
+          actualEndAt.isAcceptableOrUnknown(
+              data['actual_end_at']!, _actualEndAtMeta));
+    }
+    if (data.containsKey('rescheduled_to_id')) {
+      context.handle(
+          _rescheduledToIdMeta,
+          rescheduledToId.isAcceptableOrUnknown(
+              data['rescheduled_to_id']!, _rescheduledToIdMeta));
+    }
+    if (data.containsKey('activity_id')) {
+      context.handle(
+          _activityIdMeta,
+          activityId.isAcceptableOrUnknown(
+              data['activity_id']!, _activityIdMeta));
+    }
+    if (data.containsKey('catatan')) {
+      context.handle(_catatanMeta,
+          catatan.isAcceptableOrUnknown(data['catatan']!, _catatanMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  TimeboxExecutionRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return TimeboxExecutionRow(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at'])!,
+      isDeleted: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_deleted'])!,
+      deletedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}deleted_at']),
+      serverRevision: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}server_revision']),
+      originDeviceId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}origin_device_id']),
+      scheduleId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}schedule_id'])!,
+      occurrenceDate: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}occurrence_date'])!,
+      plannedStartAt: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}planned_start_at'])!,
+      plannedEndAt: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}planned_end_at'])!,
+      status: $TimeboxExecutionTable.$converterstatus.fromSql(attachedDatabase
+          .typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}status'])!),
+      actualStartAt: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}actual_start_at']),
+      actualEndAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}actual_end_at']),
+      rescheduledToId: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}rescheduled_to_id']),
+      activityId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}activity_id']),
+      catatan: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}catatan']),
+    );
+  }
+
+  @override
+  $TimeboxExecutionTable createAlias(String alias) {
+    return $TimeboxExecutionTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<TimeboxExecutionStatus, String, String>
+      $converterstatus = const EnumNameConverter<TimeboxExecutionStatus>(
+          TimeboxExecutionStatus.values);
+}
+
+class TimeboxExecutionRow extends DataClass
+    implements Insertable<TimeboxExecutionRow> {
+  /// Primary key; client can mint the UUID while offline.
+  final String id;
+
+  /// Creation time from the origin device (Instant, UTC).
+  final DateTime createdAt;
+
+  /// Last mutation time from the origin device (Instant, UTC). Audit metadata,
+  /// not a pull cursor.
+  final DateTime updatedAt;
+
+  /// Soft-delete flag; deletes use a tombstone.
+  final bool isDeleted;
+
+  /// Set when [isDeleted] is true; null while the row is active.
+  final DateTime? deletedAt;
+
+  /// Revision the server assigned after accepting a mutation. Client never mints
+  /// this; null until first accepted.
+  final int? serverRevision;
+  final String? originDeviceId;
+  final String scheduleId;
+  final String occurrenceDate;
+  final DateTime plannedStartAt;
+  final DateTime plannedEndAt;
+  final TimeboxExecutionStatus status;
+  final DateTime? actualStartAt;
+  final DateTime? actualEndAt;
+  final String? rescheduledToId;
+  final String? activityId;
+  final String? catatan;
+  const TimeboxExecutionRow(
+      {required this.id,
+      required this.createdAt,
+      required this.updatedAt,
+      required this.isDeleted,
+      this.deletedAt,
+      this.serverRevision,
+      this.originDeviceId,
+      required this.scheduleId,
+      required this.occurrenceDate,
+      required this.plannedStartAt,
+      required this.plannedEndAt,
+      required this.status,
+      this.actualStartAt,
+      this.actualEndAt,
+      this.rescheduledToId,
+      this.activityId,
+      this.catatan});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    if (!nullToAbsent || deletedAt != null) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt);
+    }
+    if (!nullToAbsent || serverRevision != null) {
+      map['server_revision'] = Variable<int>(serverRevision);
+    }
+    if (!nullToAbsent || originDeviceId != null) {
+      map['origin_device_id'] = Variable<String>(originDeviceId);
+    }
+    map['schedule_id'] = Variable<String>(scheduleId);
+    map['occurrence_date'] = Variable<String>(occurrenceDate);
+    map['planned_start_at'] = Variable<DateTime>(plannedStartAt);
+    map['planned_end_at'] = Variable<DateTime>(plannedEndAt);
+    {
+      map['status'] = Variable<String>(
+          $TimeboxExecutionTable.$converterstatus.toSql(status));
+    }
+    if (!nullToAbsent || actualStartAt != null) {
+      map['actual_start_at'] = Variable<DateTime>(actualStartAt);
+    }
+    if (!nullToAbsent || actualEndAt != null) {
+      map['actual_end_at'] = Variable<DateTime>(actualEndAt);
+    }
+    if (!nullToAbsent || rescheduledToId != null) {
+      map['rescheduled_to_id'] = Variable<String>(rescheduledToId);
+    }
+    if (!nullToAbsent || activityId != null) {
+      map['activity_id'] = Variable<String>(activityId);
+    }
+    if (!nullToAbsent || catatan != null) {
+      map['catatan'] = Variable<String>(catatan);
+    }
+    return map;
+  }
+
+  TimeboxExecutionCompanion toCompanion(bool nullToAbsent) {
+    return TimeboxExecutionCompanion(
+      id: Value(id),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+      deletedAt: deletedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(deletedAt),
+      serverRevision: serverRevision == null && nullToAbsent
+          ? const Value.absent()
+          : Value(serverRevision),
+      originDeviceId: originDeviceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(originDeviceId),
+      scheduleId: Value(scheduleId),
+      occurrenceDate: Value(occurrenceDate),
+      plannedStartAt: Value(plannedStartAt),
+      plannedEndAt: Value(plannedEndAt),
+      status: Value(status),
+      actualStartAt: actualStartAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(actualStartAt),
+      actualEndAt: actualEndAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(actualEndAt),
+      rescheduledToId: rescheduledToId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(rescheduledToId),
+      activityId: activityId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(activityId),
+      catatan: catatan == null && nullToAbsent
+          ? const Value.absent()
+          : Value(catatan),
+    );
+  }
+
+  factory TimeboxExecutionRow.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return TimeboxExecutionRow(
+      id: serializer.fromJson<String>(json['id']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+      deletedAt: serializer.fromJson<DateTime?>(json['deletedAt']),
+      serverRevision: serializer.fromJson<int?>(json['serverRevision']),
+      originDeviceId: serializer.fromJson<String?>(json['originDeviceId']),
+      scheduleId: serializer.fromJson<String>(json['scheduleId']),
+      occurrenceDate: serializer.fromJson<String>(json['occurrenceDate']),
+      plannedStartAt: serializer.fromJson<DateTime>(json['plannedStartAt']),
+      plannedEndAt: serializer.fromJson<DateTime>(json['plannedEndAt']),
+      status: $TimeboxExecutionTable.$converterstatus
+          .fromJson(serializer.fromJson<String>(json['status'])),
+      actualStartAt: serializer.fromJson<DateTime?>(json['actualStartAt']),
+      actualEndAt: serializer.fromJson<DateTime?>(json['actualEndAt']),
+      rescheduledToId: serializer.fromJson<String?>(json['rescheduledToId']),
+      activityId: serializer.fromJson<String?>(json['activityId']),
+      catatan: serializer.fromJson<String?>(json['catatan']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+      'deletedAt': serializer.toJson<DateTime?>(deletedAt),
+      'serverRevision': serializer.toJson<int?>(serverRevision),
+      'originDeviceId': serializer.toJson<String?>(originDeviceId),
+      'scheduleId': serializer.toJson<String>(scheduleId),
+      'occurrenceDate': serializer.toJson<String>(occurrenceDate),
+      'plannedStartAt': serializer.toJson<DateTime>(plannedStartAt),
+      'plannedEndAt': serializer.toJson<DateTime>(plannedEndAt),
+      'status': serializer.toJson<String>(
+          $TimeboxExecutionTable.$converterstatus.toJson(status)),
+      'actualStartAt': serializer.toJson<DateTime?>(actualStartAt),
+      'actualEndAt': serializer.toJson<DateTime?>(actualEndAt),
+      'rescheduledToId': serializer.toJson<String?>(rescheduledToId),
+      'activityId': serializer.toJson<String?>(activityId),
+      'catatan': serializer.toJson<String?>(catatan),
+    };
+  }
+
+  TimeboxExecutionRow copyWith(
+          {String? id,
+          DateTime? createdAt,
+          DateTime? updatedAt,
+          bool? isDeleted,
+          Value<DateTime?> deletedAt = const Value.absent(),
+          Value<int?> serverRevision = const Value.absent(),
+          Value<String?> originDeviceId = const Value.absent(),
+          String? scheduleId,
+          String? occurrenceDate,
+          DateTime? plannedStartAt,
+          DateTime? plannedEndAt,
+          TimeboxExecutionStatus? status,
+          Value<DateTime?> actualStartAt = const Value.absent(),
+          Value<DateTime?> actualEndAt = const Value.absent(),
+          Value<String?> rescheduledToId = const Value.absent(),
+          Value<String?> activityId = const Value.absent(),
+          Value<String?> catatan = const Value.absent()}) =>
+      TimeboxExecutionRow(
+        id: id ?? this.id,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        isDeleted: isDeleted ?? this.isDeleted,
+        deletedAt: deletedAt.present ? deletedAt.value : this.deletedAt,
+        serverRevision:
+            serverRevision.present ? serverRevision.value : this.serverRevision,
+        originDeviceId:
+            originDeviceId.present ? originDeviceId.value : this.originDeviceId,
+        scheduleId: scheduleId ?? this.scheduleId,
+        occurrenceDate: occurrenceDate ?? this.occurrenceDate,
+        plannedStartAt: plannedStartAt ?? this.plannedStartAt,
+        plannedEndAt: plannedEndAt ?? this.plannedEndAt,
+        status: status ?? this.status,
+        actualStartAt:
+            actualStartAt.present ? actualStartAt.value : this.actualStartAt,
+        actualEndAt: actualEndAt.present ? actualEndAt.value : this.actualEndAt,
+        rescheduledToId: rescheduledToId.present
+            ? rescheduledToId.value
+            : this.rescheduledToId,
+        activityId: activityId.present ? activityId.value : this.activityId,
+        catatan: catatan.present ? catatan.value : this.catatan,
+      );
+  TimeboxExecutionRow copyWithCompanion(TimeboxExecutionCompanion data) {
+    return TimeboxExecutionRow(
+      id: data.id.present ? data.id.value : this.id,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+      deletedAt: data.deletedAt.present ? data.deletedAt.value : this.deletedAt,
+      serverRevision: data.serverRevision.present
+          ? data.serverRevision.value
+          : this.serverRevision,
+      originDeviceId: data.originDeviceId.present
+          ? data.originDeviceId.value
+          : this.originDeviceId,
+      scheduleId:
+          data.scheduleId.present ? data.scheduleId.value : this.scheduleId,
+      occurrenceDate: data.occurrenceDate.present
+          ? data.occurrenceDate.value
+          : this.occurrenceDate,
+      plannedStartAt: data.plannedStartAt.present
+          ? data.plannedStartAt.value
+          : this.plannedStartAt,
+      plannedEndAt: data.plannedEndAt.present
+          ? data.plannedEndAt.value
+          : this.plannedEndAt,
+      status: data.status.present ? data.status.value : this.status,
+      actualStartAt: data.actualStartAt.present
+          ? data.actualStartAt.value
+          : this.actualStartAt,
+      actualEndAt:
+          data.actualEndAt.present ? data.actualEndAt.value : this.actualEndAt,
+      rescheduledToId: data.rescheduledToId.present
+          ? data.rescheduledToId.value
+          : this.rescheduledToId,
+      activityId:
+          data.activityId.present ? data.activityId.value : this.activityId,
+      catatan: data.catatan.present ? data.catatan.value : this.catatan,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TimeboxExecutionRow(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('serverRevision: $serverRevision, ')
+          ..write('originDeviceId: $originDeviceId, ')
+          ..write('scheduleId: $scheduleId, ')
+          ..write('occurrenceDate: $occurrenceDate, ')
+          ..write('plannedStartAt: $plannedStartAt, ')
+          ..write('plannedEndAt: $plannedEndAt, ')
+          ..write('status: $status, ')
+          ..write('actualStartAt: $actualStartAt, ')
+          ..write('actualEndAt: $actualEndAt, ')
+          ..write('rescheduledToId: $rescheduledToId, ')
+          ..write('activityId: $activityId, ')
+          ..write('catatan: $catatan')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      createdAt,
+      updatedAt,
+      isDeleted,
+      deletedAt,
+      serverRevision,
+      originDeviceId,
+      scheduleId,
+      occurrenceDate,
+      plannedStartAt,
+      plannedEndAt,
+      status,
+      actualStartAt,
+      actualEndAt,
+      rescheduledToId,
+      activityId,
+      catatan);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is TimeboxExecutionRow &&
+          other.id == this.id &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted &&
+          other.deletedAt == this.deletedAt &&
+          other.serverRevision == this.serverRevision &&
+          other.originDeviceId == this.originDeviceId &&
+          other.scheduleId == this.scheduleId &&
+          other.occurrenceDate == this.occurrenceDate &&
+          other.plannedStartAt == this.plannedStartAt &&
+          other.plannedEndAt == this.plannedEndAt &&
+          other.status == this.status &&
+          other.actualStartAt == this.actualStartAt &&
+          other.actualEndAt == this.actualEndAt &&
+          other.rescheduledToId == this.rescheduledToId &&
+          other.activityId == this.activityId &&
+          other.catatan == this.catatan);
+}
+
+class TimeboxExecutionCompanion extends UpdateCompanion<TimeboxExecutionRow> {
+  final Value<String> id;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  final Value<DateTime?> deletedAt;
+  final Value<int?> serverRevision;
+  final Value<String?> originDeviceId;
+  final Value<String> scheduleId;
+  final Value<String> occurrenceDate;
+  final Value<DateTime> plannedStartAt;
+  final Value<DateTime> plannedEndAt;
+  final Value<TimeboxExecutionStatus> status;
+  final Value<DateTime?> actualStartAt;
+  final Value<DateTime?> actualEndAt;
+  final Value<String?> rescheduledToId;
+  final Value<String?> activityId;
+  final Value<String?> catatan;
+  final Value<int> rowid;
+  const TimeboxExecutionCompanion({
+    this.id = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.serverRevision = const Value.absent(),
+    this.originDeviceId = const Value.absent(),
+    this.scheduleId = const Value.absent(),
+    this.occurrenceDate = const Value.absent(),
+    this.plannedStartAt = const Value.absent(),
+    this.plannedEndAt = const Value.absent(),
+    this.status = const Value.absent(),
+    this.actualStartAt = const Value.absent(),
+    this.actualEndAt = const Value.absent(),
+    this.rescheduledToId = const Value.absent(),
+    this.activityId = const Value.absent(),
+    this.catatan = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  TimeboxExecutionCompanion.insert({
+    required String id,
+    required DateTime createdAt,
+    required DateTime updatedAt,
+    this.isDeleted = const Value.absent(),
+    this.deletedAt = const Value.absent(),
+    this.serverRevision = const Value.absent(),
+    this.originDeviceId = const Value.absent(),
+    required String scheduleId,
+    required String occurrenceDate,
+    required DateTime plannedStartAt,
+    required DateTime plannedEndAt,
+    required TimeboxExecutionStatus status,
+    this.actualStartAt = const Value.absent(),
+    this.actualEndAt = const Value.absent(),
+    this.rescheduledToId = const Value.absent(),
+    this.activityId = const Value.absent(),
+    this.catatan = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        createdAt = Value(createdAt),
+        updatedAt = Value(updatedAt),
+        scheduleId = Value(scheduleId),
+        occurrenceDate = Value(occurrenceDate),
+        plannedStartAt = Value(plannedStartAt),
+        plannedEndAt = Value(plannedEndAt),
+        status = Value(status);
+  static Insertable<TimeboxExecutionRow> custom({
+    Expression<String>? id,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+    Expression<DateTime>? deletedAt,
+    Expression<int>? serverRevision,
+    Expression<String>? originDeviceId,
+    Expression<String>? scheduleId,
+    Expression<String>? occurrenceDate,
+    Expression<DateTime>? plannedStartAt,
+    Expression<DateTime>? plannedEndAt,
+    Expression<String>? status,
+    Expression<DateTime>? actualStartAt,
+    Expression<DateTime>? actualEndAt,
+    Expression<String>? rescheduledToId,
+    Expression<String>? activityId,
+    Expression<String>? catatan,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (deletedAt != null) 'deleted_at': deletedAt,
+      if (serverRevision != null) 'server_revision': serverRevision,
+      if (originDeviceId != null) 'origin_device_id': originDeviceId,
+      if (scheduleId != null) 'schedule_id': scheduleId,
+      if (occurrenceDate != null) 'occurrence_date': occurrenceDate,
+      if (plannedStartAt != null) 'planned_start_at': plannedStartAt,
+      if (plannedEndAt != null) 'planned_end_at': plannedEndAt,
+      if (status != null) 'status': status,
+      if (actualStartAt != null) 'actual_start_at': actualStartAt,
+      if (actualEndAt != null) 'actual_end_at': actualEndAt,
+      if (rescheduledToId != null) 'rescheduled_to_id': rescheduledToId,
+      if (activityId != null) 'activity_id': activityId,
+      if (catatan != null) 'catatan': catatan,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  TimeboxExecutionCompanion copyWith(
+      {Value<String>? id,
+      Value<DateTime>? createdAt,
+      Value<DateTime>? updatedAt,
+      Value<bool>? isDeleted,
+      Value<DateTime?>? deletedAt,
+      Value<int?>? serverRevision,
+      Value<String?>? originDeviceId,
+      Value<String>? scheduleId,
+      Value<String>? occurrenceDate,
+      Value<DateTime>? plannedStartAt,
+      Value<DateTime>? plannedEndAt,
+      Value<TimeboxExecutionStatus>? status,
+      Value<DateTime?>? actualStartAt,
+      Value<DateTime?>? actualEndAt,
+      Value<String?>? rescheduledToId,
+      Value<String?>? activityId,
+      Value<String?>? catatan,
+      Value<int>? rowid}) {
+    return TimeboxExecutionCompanion(
+      id: id ?? this.id,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+      deletedAt: deletedAt ?? this.deletedAt,
+      serverRevision: serverRevision ?? this.serverRevision,
+      originDeviceId: originDeviceId ?? this.originDeviceId,
+      scheduleId: scheduleId ?? this.scheduleId,
+      occurrenceDate: occurrenceDate ?? this.occurrenceDate,
+      plannedStartAt: plannedStartAt ?? this.plannedStartAt,
+      plannedEndAt: plannedEndAt ?? this.plannedEndAt,
+      status: status ?? this.status,
+      actualStartAt: actualStartAt ?? this.actualStartAt,
+      actualEndAt: actualEndAt ?? this.actualEndAt,
+      rescheduledToId: rescheduledToId ?? this.rescheduledToId,
+      activityId: activityId ?? this.activityId,
+      catatan: catatan ?? this.catatan,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (deletedAt.present) {
+      map['deleted_at'] = Variable<DateTime>(deletedAt.value);
+    }
+    if (serverRevision.present) {
+      map['server_revision'] = Variable<int>(serverRevision.value);
+    }
+    if (originDeviceId.present) {
+      map['origin_device_id'] = Variable<String>(originDeviceId.value);
+    }
+    if (scheduleId.present) {
+      map['schedule_id'] = Variable<String>(scheduleId.value);
+    }
+    if (occurrenceDate.present) {
+      map['occurrence_date'] = Variable<String>(occurrenceDate.value);
+    }
+    if (plannedStartAt.present) {
+      map['planned_start_at'] = Variable<DateTime>(plannedStartAt.value);
+    }
+    if (plannedEndAt.present) {
+      map['planned_end_at'] = Variable<DateTime>(plannedEndAt.value);
+    }
+    if (status.present) {
+      map['status'] = Variable<String>(
+          $TimeboxExecutionTable.$converterstatus.toSql(status.value));
+    }
+    if (actualStartAt.present) {
+      map['actual_start_at'] = Variable<DateTime>(actualStartAt.value);
+    }
+    if (actualEndAt.present) {
+      map['actual_end_at'] = Variable<DateTime>(actualEndAt.value);
+    }
+    if (rescheduledToId.present) {
+      map['rescheduled_to_id'] = Variable<String>(rescheduledToId.value);
+    }
+    if (activityId.present) {
+      map['activity_id'] = Variable<String>(activityId.value);
+    }
+    if (catatan.present) {
+      map['catatan'] = Variable<String>(catatan.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('TimeboxExecutionCompanion(')
+          ..write('id: $id, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('deletedAt: $deletedAt, ')
+          ..write('serverRevision: $serverRevision, ')
+          ..write('originDeviceId: $originDeviceId, ')
+          ..write('scheduleId: $scheduleId, ')
+          ..write('occurrenceDate: $occurrenceDate, ')
+          ..write('plannedStartAt: $plannedStartAt, ')
+          ..write('plannedEndAt: $plannedEndAt, ')
+          ..write('status: $status, ')
+          ..write('actualStartAt: $actualStartAt, ')
+          ..write('actualEndAt: $actualEndAt, ')
+          ..write('rescheduledToId: $rescheduledToId, ')
+          ..write('activityId: $activityId, ')
+          ..write('catatan: $catatan, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -7374,10 +10162,17 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $ActivityRecurrenceTable activityRecurrence =
       $ActivityRecurrenceTable(this);
   late final $ActivityTable activity = $ActivityTable(this);
+  late final $PomodoroSessionTable pomodoroSession =
+      $PomodoroSessionTable(this);
+  late final $TimeboxScheduleTable timeboxSchedule =
+      $TimeboxScheduleTable(this);
+  late final $TimeboxExecutionTable timeboxExecution =
+      $TimeboxExecutionTable(this);
   late final SettingsDao settingsDao = SettingsDao(this as AppDatabase);
   late final MataKuliahDao mataKuliahDao = MataKuliahDao(this as AppDatabase);
   late final TugasDao tugasDao = TugasDao(this as AppDatabase);
   late final ActivityDao activityDao = ActivityDao(this as AppDatabase);
+  late final PomodoroDao pomodoroDao = PomodoroDao(this as AppDatabase);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -7392,7 +10187,10 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         tugasChecklist,
         activityCategory,
         activityRecurrence,
-        activity
+        activity,
+        pomodoroSession,
+        timeboxSchedule,
+        timeboxExecution
       ];
 }
 
@@ -7512,6 +10310,40 @@ final class $$UsersTableReferences
         .filter((f) => f.userId.id.sqlEquals($_itemColumn<String>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_activityRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+
+  static MultiTypedResultKey<$PomodoroSessionTable, List<PomodoroSessionRow>>
+      _pomodoroSessionRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.pomodoroSession,
+              aliasName:
+                  $_aliasNameGenerator(db.users.id, db.pomodoroSession.userId));
+
+  $$PomodoroSessionTableProcessedTableManager get pomodoroSessionRefs {
+    final manager =
+        $$PomodoroSessionTableTableManager($_db, $_db.pomodoroSession)
+            .filter((f) => f.userId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache =
+        $_typedResult.readTableOrNull(_pomodoroSessionRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+
+  static MultiTypedResultKey<$TimeboxScheduleTable, List<TimeboxScheduleRow>>
+      _timeboxScheduleRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.timeboxSchedule,
+              aliasName:
+                  $_aliasNameGenerator(db.users.id, db.timeboxSchedule.userId));
+
+  $$TimeboxScheduleTableProcessedTableManager get timeboxScheduleRefs {
+    final manager =
+        $$TimeboxScheduleTableTableManager($_db, $_db.timeboxSchedule)
+            .filter((f) => f.userId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache =
+        $_typedResult.readTableOrNull(_timeboxScheduleRefsTable($_db));
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
@@ -7671,6 +10503,48 @@ class $$UsersTableFilterComposer extends Composer<_$AppDatabase, $UsersTable> {
             $$ActivityTableFilterComposer(
               $db: $db,
               $table: $db.activity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<bool> pomodoroSessionRefs(
+      Expression<bool> Function($$PomodoroSessionTableFilterComposer f) f) {
+    final $$PomodoroSessionTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.pomodoroSession,
+        getReferencedColumn: (t) => t.userId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PomodoroSessionTableFilterComposer(
+              $db: $db,
+              $table: $db.pomodoroSession,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<bool> timeboxScheduleRefs(
+      Expression<bool> Function($$TimeboxScheduleTableFilterComposer f) f) {
+    final $$TimeboxScheduleTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.timeboxSchedule,
+        getReferencedColumn: (t) => t.userId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TimeboxScheduleTableFilterComposer(
+              $db: $db,
+              $table: $db.timeboxSchedule,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
@@ -7880,6 +10754,48 @@ class $$UsersTableAnnotationComposer
             ));
     return f(composer);
   }
+
+  Expression<T> pomodoroSessionRefs<T extends Object>(
+      Expression<T> Function($$PomodoroSessionTableAnnotationComposer a) f) {
+    final $$PomodoroSessionTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.pomodoroSession,
+        getReferencedColumn: (t) => t.userId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PomodoroSessionTableAnnotationComposer(
+              $db: $db,
+              $table: $db.pomodoroSession,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<T> timeboxScheduleRefs<T extends Object>(
+      Expression<T> Function($$TimeboxScheduleTableAnnotationComposer a) f) {
+    final $$TimeboxScheduleTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.timeboxSchedule,
+        getReferencedColumn: (t) => t.userId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TimeboxScheduleTableAnnotationComposer(
+              $db: $db,
+              $table: $db.timeboxSchedule,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
 }
 
 class $$UsersTableTableManager extends RootTableManager<
@@ -7899,7 +10815,9 @@ class $$UsersTableTableManager extends RootTableManager<
         bool tugasRefs,
         bool activityCategoryRefs,
         bool activityRecurrenceRefs,
-        bool activityRefs})> {
+        bool activityRefs,
+        bool pomodoroSessionRefs,
+        bool timeboxScheduleRefs})> {
   $$UsersTableTableManager(_$AppDatabase db, $UsersTable table)
       : super(TableManagerState(
           db: db,
@@ -7968,7 +10886,9 @@ class $$UsersTableTableManager extends RootTableManager<
               tugasRefs = false,
               activityCategoryRefs = false,
               activityRecurrenceRefs = false,
-              activityRefs = false}) {
+              activityRefs = false,
+              pomodoroSessionRefs = false,
+              timeboxScheduleRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
@@ -7977,7 +10897,9 @@ class $$UsersTableTableManager extends RootTableManager<
                 if (tugasRefs) db.tugas,
                 if (activityCategoryRefs) db.activityCategory,
                 if (activityRecurrenceRefs) db.activityRecurrence,
-                if (activityRefs) db.activity
+                if (activityRefs) db.activity,
+                if (pomodoroSessionRefs) db.pomodoroSession,
+                if (timeboxScheduleRefs) db.timeboxSchedule
               ],
               addJoins: null,
               getPrefetchedDataCallback: (items) async {
@@ -8056,6 +10978,32 @@ class $$UsersTableTableManager extends RootTableManager<
                         referencedItemsForCurrentItem: (item,
                                 referencedItems) =>
                             referencedItems.where((e) => e.userId == item.id),
+                        typedResults: items),
+                  if (pomodoroSessionRefs)
+                    await $_getPrefetchedData<UserRow, $UsersTable,
+                            PomodoroSessionRow>(
+                        currentTable: table,
+                        referencedTable: $$UsersTableReferences
+                            ._pomodoroSessionRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$UsersTableReferences(db, table, p0)
+                                .pomodoroSessionRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.userId == item.id),
+                        typedResults: items),
+                  if (timeboxScheduleRefs)
+                    await $_getPrefetchedData<UserRow, $UsersTable,
+                            TimeboxScheduleRow>(
+                        currentTable: table,
+                        referencedTable: $$UsersTableReferences
+                            ._timeboxScheduleRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$UsersTableReferences(db, table, p0)
+                                .timeboxScheduleRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.userId == item.id),
                         typedResults: items)
                 ];
               },
@@ -8081,7 +11029,9 @@ typedef $$UsersTableProcessedTableManager = ProcessedTableManager<
         bool tugasRefs,
         bool activityCategoryRefs,
         bool activityRecurrenceRefs,
-        bool activityRefs})>;
+        bool activityRefs,
+        bool pomodoroSessionRefs,
+        bool timeboxScheduleRefs})>;
 typedef $$UserSettingsTableCreateCompanionBuilder = UserSettingsCompanion
     Function({
   required String id,
@@ -9826,6 +12776,40 @@ final class $$TugasTableReferences
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
+
+  static MultiTypedResultKey<$PomodoroSessionTable, List<PomodoroSessionRow>>
+      _pomodoroSessionRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.pomodoroSession,
+              aliasName: $_aliasNameGenerator(
+                  db.tugas.id, db.pomodoroSession.tugasId));
+
+  $$PomodoroSessionTableProcessedTableManager get pomodoroSessionRefs {
+    final manager =
+        $$PomodoroSessionTableTableManager($_db, $_db.pomodoroSession)
+            .filter((f) => f.tugasId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache =
+        $_typedResult.readTableOrNull(_pomodoroSessionRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+
+  static MultiTypedResultKey<$TimeboxScheduleTable, List<TimeboxScheduleRow>>
+      _timeboxScheduleRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.timeboxSchedule,
+              aliasName: $_aliasNameGenerator(
+                  db.tugas.id, db.timeboxSchedule.tugasId));
+
+  $$TimeboxScheduleTableProcessedTableManager get timeboxScheduleRefs {
+    final manager =
+        $$TimeboxScheduleTableTableManager($_db, $_db.timeboxSchedule)
+            .filter((f) => f.tugasId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache =
+        $_typedResult.readTableOrNull(_timeboxScheduleRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
 }
 
 class $$TugasTableFilterComposer extends Composer<_$AppDatabase, $TugasTable> {
@@ -9946,6 +12930,48 @@ class $$TugasTableFilterComposer extends Composer<_$AppDatabase, $TugasTable> {
             $$TugasChecklistTableFilterComposer(
               $db: $db,
               $table: $db.tugasChecklist,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<bool> pomodoroSessionRefs(
+      Expression<bool> Function($$PomodoroSessionTableFilterComposer f) f) {
+    final $$PomodoroSessionTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.pomodoroSession,
+        getReferencedColumn: (t) => t.tugasId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PomodoroSessionTableFilterComposer(
+              $db: $db,
+              $table: $db.pomodoroSession,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<bool> timeboxScheduleRefs(
+      Expression<bool> Function($$TimeboxScheduleTableFilterComposer f) f) {
+    final $$TimeboxScheduleTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.timeboxSchedule,
+        getReferencedColumn: (t) => t.tugasId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TimeboxScheduleTableFilterComposer(
+              $db: $db,
+              $table: $db.timeboxSchedule,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
@@ -10174,6 +13200,48 @@ class $$TugasTableAnnotationComposer
             ));
     return f(composer);
   }
+
+  Expression<T> pomodoroSessionRefs<T extends Object>(
+      Expression<T> Function($$PomodoroSessionTableAnnotationComposer a) f) {
+    final $$PomodoroSessionTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.pomodoroSession,
+        getReferencedColumn: (t) => t.tugasId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$PomodoroSessionTableAnnotationComposer(
+              $db: $db,
+              $table: $db.pomodoroSession,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<T> timeboxScheduleRefs<T extends Object>(
+      Expression<T> Function($$TimeboxScheduleTableAnnotationComposer a) f) {
+    final $$TimeboxScheduleTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.timeboxSchedule,
+        getReferencedColumn: (t) => t.tugasId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TimeboxScheduleTableAnnotationComposer(
+              $db: $db,
+              $table: $db.timeboxSchedule,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
 }
 
 class $$TugasTableTableManager extends RootTableManager<
@@ -10188,7 +13256,11 @@ class $$TugasTableTableManager extends RootTableManager<
     (TugasRow, $$TugasTableReferences),
     TugasRow,
     PrefetchHooks Function(
-        {bool userId, bool mataKuliahId, bool tugasChecklistRefs})> {
+        {bool userId,
+        bool mataKuliahId,
+        bool tugasChecklistRefs,
+        bool pomodoroSessionRefs,
+        bool timeboxScheduleRefs})> {
   $$TugasTableTableManager(_$AppDatabase db, $TugasTable table)
       : super(TableManagerState(
           db: db,
@@ -10290,11 +13362,15 @@ class $$TugasTableTableManager extends RootTableManager<
           prefetchHooksCallback: (
               {userId = false,
               mataKuliahId = false,
-              tugasChecklistRefs = false}) {
+              tugasChecklistRefs = false,
+              pomodoroSessionRefs = false,
+              timeboxScheduleRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
-                if (tugasChecklistRefs) db.tugasChecklist
+                if (tugasChecklistRefs) db.tugasChecklist,
+                if (pomodoroSessionRefs) db.pomodoroSession,
+                if (timeboxScheduleRefs) db.timeboxSchedule
               ],
               addJoins: <
                   T extends TableManagerState<
@@ -10345,6 +13421,32 @@ class $$TugasTableTableManager extends RootTableManager<
                         referencedItemsForCurrentItem: (item,
                                 referencedItems) =>
                             referencedItems.where((e) => e.tugasId == item.id),
+                        typedResults: items),
+                  if (pomodoroSessionRefs)
+                    await $_getPrefetchedData<TugasRow, $TugasTable,
+                            PomodoroSessionRow>(
+                        currentTable: table,
+                        referencedTable: $$TugasTableReferences
+                            ._pomodoroSessionRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$TugasTableReferences(db, table, p0)
+                                .pomodoroSessionRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.tugasId == item.id),
+                        typedResults: items),
+                  if (timeboxScheduleRefs)
+                    await $_getPrefetchedData<TugasRow, $TugasTable,
+                            TimeboxScheduleRow>(
+                        currentTable: table,
+                        referencedTable: $$TugasTableReferences
+                            ._timeboxScheduleRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$TugasTableReferences(db, table, p0)
+                                .timeboxScheduleRefs,
+                        referencedItemsForCurrentItem: (item,
+                                referencedItems) =>
+                            referencedItems.where((e) => e.tugasId == item.id),
                         typedResults: items)
                 ];
               },
@@ -10365,7 +13467,11 @@ typedef $$TugasTableProcessedTableManager = ProcessedTableManager<
     (TugasRow, $$TugasTableReferences),
     TugasRow,
     PrefetchHooks Function(
-        {bool userId, bool mataKuliahId, bool tugasChecklistRefs})>;
+        {bool userId,
+        bool mataKuliahId,
+        bool tugasChecklistRefs,
+        bool pomodoroSessionRefs,
+        bool timeboxScheduleRefs})>;
 typedef $$TugasChecklistTableCreateCompanionBuilder = TugasChecklistCompanion
     Function({
   required String id,
@@ -10823,6 +13929,24 @@ final class $$ActivityCategoryTableReferences extends BaseReferences<
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: cache));
   }
+
+  static MultiTypedResultKey<$TimeboxScheduleTable, List<TimeboxScheduleRow>>
+      _timeboxScheduleRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.timeboxSchedule,
+              aliasName: $_aliasNameGenerator(db.activityCategory.id,
+                  db.timeboxSchedule.activityCategoryId));
+
+  $$TimeboxScheduleTableProcessedTableManager get timeboxScheduleRefs {
+    final manager =
+        $$TimeboxScheduleTableTableManager($_db, $_db.timeboxSchedule).filter(
+            (f) =>
+                f.activityCategoryId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache =
+        $_typedResult.readTableOrNull(_timeboxScheduleRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
 }
 
 class $$ActivityCategoryTableFilterComposer
@@ -10926,6 +14050,27 @@ class $$ActivityCategoryTableFilterComposer
             $$ActivityTableFilterComposer(
               $db: $db,
               $table: $db.activity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+
+  Expression<bool> timeboxScheduleRefs(
+      Expression<bool> Function($$TimeboxScheduleTableFilterComposer f) f) {
+    final $$TimeboxScheduleTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.timeboxSchedule,
+        getReferencedColumn: (t) => t.activityCategoryId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TimeboxScheduleTableFilterComposer(
+              $db: $db,
+              $table: $db.timeboxSchedule,
               $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
               joinBuilder: joinBuilder,
               $removeJoinBuilderFromRootComposer:
@@ -11110,6 +14255,27 @@ class $$ActivityCategoryTableAnnotationComposer
             ));
     return f(composer);
   }
+
+  Expression<T> timeboxScheduleRefs<T extends Object>(
+      Expression<T> Function($$TimeboxScheduleTableAnnotationComposer a) f) {
+    final $$TimeboxScheduleTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.timeboxSchedule,
+        getReferencedColumn: (t) => t.activityCategoryId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TimeboxScheduleTableAnnotationComposer(
+              $db: $db,
+              $table: $db.timeboxSchedule,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
 }
 
 class $$ActivityCategoryTableTableManager extends RootTableManager<
@@ -11124,7 +14290,10 @@ class $$ActivityCategoryTableTableManager extends RootTableManager<
     (ActivityCategoryRow, $$ActivityCategoryTableReferences),
     ActivityCategoryRow,
     PrefetchHooks Function(
-        {bool userId, bool activityRecurrenceRefs, bool activityRefs})> {
+        {bool userId,
+        bool activityRecurrenceRefs,
+        bool activityRefs,
+        bool timeboxScheduleRefs})> {
   $$ActivityCategoryTableTableManager(
       _$AppDatabase db, $ActivityCategoryTable table)
       : super(TableManagerState(
@@ -11209,12 +14378,14 @@ class $$ActivityCategoryTableTableManager extends RootTableManager<
           prefetchHooksCallback: (
               {userId = false,
               activityRecurrenceRefs = false,
-              activityRefs = false}) {
+              activityRefs = false,
+              timeboxScheduleRefs = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [
                 if (activityRecurrenceRefs) db.activityRecurrence,
-                if (activityRefs) db.activity
+                if (activityRefs) db.activity,
+                if (timeboxScheduleRefs) db.timeboxSchedule
               ],
               addJoins: <
                   T extends TableManagerState<
@@ -11269,6 +14440,19 @@ class $$ActivityCategoryTableTableManager extends RootTableManager<
                         referencedItemsForCurrentItem:
                             (item, referencedItems) => referencedItems
                                 .where((e) => e.activityCategoryId == item.id),
+                        typedResults: items),
+                  if (timeboxScheduleRefs)
+                    await $_getPrefetchedData<ActivityCategoryRow,
+                            $ActivityCategoryTable, TimeboxScheduleRow>(
+                        currentTable: table,
+                        referencedTable: $$ActivityCategoryTableReferences
+                            ._timeboxScheduleRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$ActivityCategoryTableReferences(db, table, p0)
+                                .timeboxScheduleRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.activityCategoryId == item.id),
                         typedResults: items)
                 ];
               },
@@ -11289,7 +14473,10 @@ typedef $$ActivityCategoryTableProcessedTableManager = ProcessedTableManager<
     (ActivityCategoryRow, $$ActivityCategoryTableReferences),
     ActivityCategoryRow,
     PrefetchHooks Function(
-        {bool userId, bool activityRecurrenceRefs, bool activityRefs})>;
+        {bool userId,
+        bool activityRecurrenceRefs,
+        bool activityRefs,
+        bool timeboxScheduleRefs})>;
 typedef $$ActivityRecurrenceTableCreateCompanionBuilder
     = ActivityRecurrenceCompanion Function({
   required String id,
@@ -12041,6 +15228,23 @@ final class $$ActivityTableReferences
     return ProcessedTableManager(
         manager.$state.copyWith(prefetchedData: [item]));
   }
+
+  static MultiTypedResultKey<$TimeboxExecutionTable, List<TimeboxExecutionRow>>
+      _timeboxExecutionRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.timeboxExecution,
+              aliasName: $_aliasNameGenerator(
+                  db.activity.id, db.timeboxExecution.activityId));
+
+  $$TimeboxExecutionTableProcessedTableManager get timeboxExecutionRefs {
+    final manager = $$TimeboxExecutionTableTableManager(
+            $_db, $_db.timeboxExecution)
+        .filter((f) => f.activityId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache =
+        $_typedResult.readTableOrNull(_timeboxExecutionRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
 }
 
 class $$ActivityTableFilterComposer
@@ -12170,6 +15374,27 @@ class $$ActivityTableFilterComposer
                   $removeJoinBuilderFromRootComposer,
             ));
     return composer;
+  }
+
+  Expression<bool> timeboxExecutionRefs(
+      Expression<bool> Function($$TimeboxExecutionTableFilterComposer f) f) {
+    final $$TimeboxExecutionTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.timeboxExecution,
+        getReferencedColumn: (t) => t.activityId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TimeboxExecutionTableFilterComposer(
+              $db: $db,
+              $table: $db.timeboxExecution,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
   }
 }
 
@@ -12419,6 +15644,27 @@ class $$ActivityTableAnnotationComposer
             ));
     return composer;
   }
+
+  Expression<T> timeboxExecutionRefs<T extends Object>(
+      Expression<T> Function($$TimeboxExecutionTableAnnotationComposer a) f) {
+    final $$TimeboxExecutionTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.timeboxExecution,
+        getReferencedColumn: (t) => t.activityId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TimeboxExecutionTableAnnotationComposer(
+              $db: $db,
+              $table: $db.timeboxExecution,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
 }
 
 class $$ActivityTableTableManager extends RootTableManager<
@@ -12433,7 +15679,10 @@ class $$ActivityTableTableManager extends RootTableManager<
     (ActivityRow, $$ActivityTableReferences),
     ActivityRow,
     PrefetchHooks Function(
-        {bool userId, bool recurrenceId, bool activityCategoryId})> {
+        {bool userId,
+        bool recurrenceId,
+        bool activityCategoryId,
+        bool timeboxExecutionRefs})> {
   $$ActivityTableTableManager(_$AppDatabase db, $ActivityTable table)
       : super(TableManagerState(
           db: db,
@@ -12543,10 +15792,13 @@ class $$ActivityTableTableManager extends RootTableManager<
           prefetchHooksCallback: (
               {userId = false,
               recurrenceId = false,
-              activityCategoryId = false}) {
+              activityCategoryId = false,
+              timeboxExecutionRefs = false}) {
             return PrefetchHooks(
               db: db,
-              explicitlyWatchedTables: [],
+              explicitlyWatchedTables: [
+                if (timeboxExecutionRefs) db.timeboxExecution
+              ],
               addJoins: <
                   T extends TableManagerState<
                       dynamic,
@@ -12594,7 +15846,21 @@ class $$ActivityTableTableManager extends RootTableManager<
                 return state;
               },
               getPrefetchedDataCallback: (items) async {
-                return [];
+                return [
+                  if (timeboxExecutionRefs)
+                    await $_getPrefetchedData<ActivityRow, $ActivityTable,
+                            TimeboxExecutionRow>(
+                        currentTable: table,
+                        referencedTable: $$ActivityTableReferences
+                            ._timeboxExecutionRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$ActivityTableReferences(db, table, p0)
+                                .timeboxExecutionRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.activityId == item.id),
+                        typedResults: items)
+                ];
               },
             );
           },
@@ -12613,7 +15879,1952 @@ typedef $$ActivityTableProcessedTableManager = ProcessedTableManager<
     (ActivityRow, $$ActivityTableReferences),
     ActivityRow,
     PrefetchHooks Function(
-        {bool userId, bool recurrenceId, bool activityCategoryId})>;
+        {bool userId,
+        bool recurrenceId,
+        bool activityCategoryId,
+        bool timeboxExecutionRefs})>;
+typedef $$PomodoroSessionTableCreateCompanionBuilder = PomodoroSessionCompanion
+    Function({
+  required String id,
+  required DateTime createdAt,
+  required DateTime updatedAt,
+  Value<bool> isDeleted,
+  Value<DateTime?> deletedAt,
+  Value<int?> serverRevision,
+  Value<String?> originDeviceId,
+  required String userId,
+  Value<String?> tugasId,
+  Value<String?> habitId,
+  required DateTime startTime,
+  Value<DateTime?> endTime,
+  Value<DateTime?> pausedAt,
+  Value<int> accumulatedPauseSeconds,
+  required int durasiMenit,
+  Value<int?> actualSeconds,
+  required PomodoroJenis jenis,
+  required PomodoroStatus status,
+  Value<int> rowid,
+});
+typedef $$PomodoroSessionTableUpdateCompanionBuilder = PomodoroSessionCompanion
+    Function({
+  Value<String> id,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
+  Value<bool> isDeleted,
+  Value<DateTime?> deletedAt,
+  Value<int?> serverRevision,
+  Value<String?> originDeviceId,
+  Value<String> userId,
+  Value<String?> tugasId,
+  Value<String?> habitId,
+  Value<DateTime> startTime,
+  Value<DateTime?> endTime,
+  Value<DateTime?> pausedAt,
+  Value<int> accumulatedPauseSeconds,
+  Value<int> durasiMenit,
+  Value<int?> actualSeconds,
+  Value<PomodoroJenis> jenis,
+  Value<PomodoroStatus> status,
+  Value<int> rowid,
+});
+
+final class $$PomodoroSessionTableReferences extends BaseReferences<
+    _$AppDatabase, $PomodoroSessionTable, PomodoroSessionRow> {
+  $$PomodoroSessionTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static $UsersTable _userIdTable(_$AppDatabase db) => db.users.createAlias(
+      $_aliasNameGenerator(db.pomodoroSession.userId, db.users.id));
+
+  $$UsersTableProcessedTableManager get userId {
+    final $_column = $_itemColumn<String>('user_id')!;
+
+    final manager = $$UsersTableTableManager($_db, $_db.users)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static $TugasTable _tugasIdTable(_$AppDatabase db) => db.tugas.createAlias(
+      $_aliasNameGenerator(db.pomodoroSession.tugasId, db.tugas.id));
+
+  $$TugasTableProcessedTableManager? get tugasId {
+    final $_column = $_itemColumn<String>('tugas_id');
+    if ($_column == null) return null;
+    final manager = $$TugasTableTableManager($_db, $_db.tugas)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_tugasIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+}
+
+class $$PomodoroSessionTableFilterComposer
+    extends Composer<_$AppDatabase, $PomodoroSessionTable> {
+  $$PomodoroSessionTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+      column: $table.deletedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get serverRevision => $composableBuilder(
+      column: $table.serverRevision,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get originDeviceId => $composableBuilder(
+      column: $table.originDeviceId,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get habitId => $composableBuilder(
+      column: $table.habitId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get startTime => $composableBuilder(
+      column: $table.startTime, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get endTime => $composableBuilder(
+      column: $table.endTime, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get pausedAt => $composableBuilder(
+      column: $table.pausedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get accumulatedPauseSeconds => $composableBuilder(
+      column: $table.accumulatedPauseSeconds,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get durasiMenit => $composableBuilder(
+      column: $table.durasiMenit, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get actualSeconds => $composableBuilder(
+      column: $table.actualSeconds, builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<PomodoroJenis, PomodoroJenis, String>
+      get jenis => $composableBuilder(
+          column: $table.jenis,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnWithTypeConverterFilters<PomodoroStatus, PomodoroStatus, String>
+      get status => $composableBuilder(
+          column: $table.status,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  $$UsersTableFilterComposer get userId {
+    final $$UsersTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.userId,
+        referencedTable: $db.users,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$UsersTableFilterComposer(
+              $db: $db,
+              $table: $db.users,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$TugasTableFilterComposer get tugasId {
+    final $$TugasTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.tugasId,
+        referencedTable: $db.tugas,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TugasTableFilterComposer(
+              $db: $db,
+              $table: $db.tugas,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$PomodoroSessionTableOrderingComposer
+    extends Composer<_$AppDatabase, $PomodoroSessionTable> {
+  $$PomodoroSessionTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+      column: $table.deletedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get serverRevision => $composableBuilder(
+      column: $table.serverRevision,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get originDeviceId => $composableBuilder(
+      column: $table.originDeviceId,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get habitId => $composableBuilder(
+      column: $table.habitId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get startTime => $composableBuilder(
+      column: $table.startTime, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get endTime => $composableBuilder(
+      column: $table.endTime, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get pausedAt => $composableBuilder(
+      column: $table.pausedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get accumulatedPauseSeconds => $composableBuilder(
+      column: $table.accumulatedPauseSeconds,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get durasiMenit => $composableBuilder(
+      column: $table.durasiMenit, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get actualSeconds => $composableBuilder(
+      column: $table.actualSeconds,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get jenis => $composableBuilder(
+      column: $table.jenis, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get status => $composableBuilder(
+      column: $table.status, builder: (column) => ColumnOrderings(column));
+
+  $$UsersTableOrderingComposer get userId {
+    final $$UsersTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.userId,
+        referencedTable: $db.users,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$UsersTableOrderingComposer(
+              $db: $db,
+              $table: $db.users,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$TugasTableOrderingComposer get tugasId {
+    final $$TugasTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.tugasId,
+        referencedTable: $db.tugas,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TugasTableOrderingComposer(
+              $db: $db,
+              $table: $db.tugas,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$PomodoroSessionTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PomodoroSessionTable> {
+  $$PomodoroSessionTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<int> get serverRevision => $composableBuilder(
+      column: $table.serverRevision, builder: (column) => column);
+
+  GeneratedColumn<String> get originDeviceId => $composableBuilder(
+      column: $table.originDeviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get habitId =>
+      $composableBuilder(column: $table.habitId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get startTime =>
+      $composableBuilder(column: $table.startTime, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get endTime =>
+      $composableBuilder(column: $table.endTime, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get pausedAt =>
+      $composableBuilder(column: $table.pausedAt, builder: (column) => column);
+
+  GeneratedColumn<int> get accumulatedPauseSeconds => $composableBuilder(
+      column: $table.accumulatedPauseSeconds, builder: (column) => column);
+
+  GeneratedColumn<int> get durasiMenit => $composableBuilder(
+      column: $table.durasiMenit, builder: (column) => column);
+
+  GeneratedColumn<int> get actualSeconds => $composableBuilder(
+      column: $table.actualSeconds, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<PomodoroJenis, String> get jenis =>
+      $composableBuilder(column: $table.jenis, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<PomodoroStatus, String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  $$UsersTableAnnotationComposer get userId {
+    final $$UsersTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.userId,
+        referencedTable: $db.users,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$UsersTableAnnotationComposer(
+              $db: $db,
+              $table: $db.users,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$TugasTableAnnotationComposer get tugasId {
+    final $$TugasTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.tugasId,
+        referencedTable: $db.tugas,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TugasTableAnnotationComposer(
+              $db: $db,
+              $table: $db.tugas,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$PomodoroSessionTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $PomodoroSessionTable,
+    PomodoroSessionRow,
+    $$PomodoroSessionTableFilterComposer,
+    $$PomodoroSessionTableOrderingComposer,
+    $$PomodoroSessionTableAnnotationComposer,
+    $$PomodoroSessionTableCreateCompanionBuilder,
+    $$PomodoroSessionTableUpdateCompanionBuilder,
+    (PomodoroSessionRow, $$PomodoroSessionTableReferences),
+    PomodoroSessionRow,
+    PrefetchHooks Function({bool userId, bool tugasId})> {
+  $$PomodoroSessionTableTableManager(
+      _$AppDatabase db, $PomodoroSessionTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PomodoroSessionTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PomodoroSessionTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PomodoroSessionTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime> updatedAt = const Value.absent(),
+            Value<bool> isDeleted = const Value.absent(),
+            Value<DateTime?> deletedAt = const Value.absent(),
+            Value<int?> serverRevision = const Value.absent(),
+            Value<String?> originDeviceId = const Value.absent(),
+            Value<String> userId = const Value.absent(),
+            Value<String?> tugasId = const Value.absent(),
+            Value<String?> habitId = const Value.absent(),
+            Value<DateTime> startTime = const Value.absent(),
+            Value<DateTime?> endTime = const Value.absent(),
+            Value<DateTime?> pausedAt = const Value.absent(),
+            Value<int> accumulatedPauseSeconds = const Value.absent(),
+            Value<int> durasiMenit = const Value.absent(),
+            Value<int?> actualSeconds = const Value.absent(),
+            Value<PomodoroJenis> jenis = const Value.absent(),
+            Value<PomodoroStatus> status = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              PomodoroSessionCompanion(
+            id: id,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            isDeleted: isDeleted,
+            deletedAt: deletedAt,
+            serverRevision: serverRevision,
+            originDeviceId: originDeviceId,
+            userId: userId,
+            tugasId: tugasId,
+            habitId: habitId,
+            startTime: startTime,
+            endTime: endTime,
+            pausedAt: pausedAt,
+            accumulatedPauseSeconds: accumulatedPauseSeconds,
+            durasiMenit: durasiMenit,
+            actualSeconds: actualSeconds,
+            jenis: jenis,
+            status: status,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required DateTime createdAt,
+            required DateTime updatedAt,
+            Value<bool> isDeleted = const Value.absent(),
+            Value<DateTime?> deletedAt = const Value.absent(),
+            Value<int?> serverRevision = const Value.absent(),
+            Value<String?> originDeviceId = const Value.absent(),
+            required String userId,
+            Value<String?> tugasId = const Value.absent(),
+            Value<String?> habitId = const Value.absent(),
+            required DateTime startTime,
+            Value<DateTime?> endTime = const Value.absent(),
+            Value<DateTime?> pausedAt = const Value.absent(),
+            Value<int> accumulatedPauseSeconds = const Value.absent(),
+            required int durasiMenit,
+            Value<int?> actualSeconds = const Value.absent(),
+            required PomodoroJenis jenis,
+            required PomodoroStatus status,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              PomodoroSessionCompanion.insert(
+            id: id,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            isDeleted: isDeleted,
+            deletedAt: deletedAt,
+            serverRevision: serverRevision,
+            originDeviceId: originDeviceId,
+            userId: userId,
+            tugasId: tugasId,
+            habitId: habitId,
+            startTime: startTime,
+            endTime: endTime,
+            pausedAt: pausedAt,
+            accumulatedPauseSeconds: accumulatedPauseSeconds,
+            durasiMenit: durasiMenit,
+            actualSeconds: actualSeconds,
+            jenis: jenis,
+            status: status,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$PomodoroSessionTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: ({userId = false, tugasId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (userId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.userId,
+                    referencedTable:
+                        $$PomodoroSessionTableReferences._userIdTable(db),
+                    referencedColumn:
+                        $$PomodoroSessionTableReferences._userIdTable(db).id,
+                  ) as T;
+                }
+                if (tugasId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.tugasId,
+                    referencedTable:
+                        $$PomodoroSessionTableReferences._tugasIdTable(db),
+                    referencedColumn:
+                        $$PomodoroSessionTableReferences._tugasIdTable(db).id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$PomodoroSessionTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $PomodoroSessionTable,
+    PomodoroSessionRow,
+    $$PomodoroSessionTableFilterComposer,
+    $$PomodoroSessionTableOrderingComposer,
+    $$PomodoroSessionTableAnnotationComposer,
+    $$PomodoroSessionTableCreateCompanionBuilder,
+    $$PomodoroSessionTableUpdateCompanionBuilder,
+    (PomodoroSessionRow, $$PomodoroSessionTableReferences),
+    PomodoroSessionRow,
+    PrefetchHooks Function({bool userId, bool tugasId})>;
+typedef $$TimeboxScheduleTableCreateCompanionBuilder = TimeboxScheduleCompanion
+    Function({
+  required String id,
+  required DateTime createdAt,
+  required DateTime updatedAt,
+  Value<bool> isDeleted,
+  Value<DateTime?> deletedAt,
+  Value<int?> serverRevision,
+  Value<String?> originDeviceId,
+  required String userId,
+  Value<String?> tugasId,
+  Value<String?> habitId,
+  required String judul,
+  required String activityCategoryId,
+  required String startTime,
+  required String endTime,
+  Value<int?> hari,
+  Value<String?> tanggalSpesifik,
+  required bool isRecurring,
+  Value<bool> isActive,
+  Value<List<int>> reminderOffsetsMinutes,
+  Value<String?> materializedThroughDate,
+  Value<int> rowid,
+});
+typedef $$TimeboxScheduleTableUpdateCompanionBuilder = TimeboxScheduleCompanion
+    Function({
+  Value<String> id,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
+  Value<bool> isDeleted,
+  Value<DateTime?> deletedAt,
+  Value<int?> serverRevision,
+  Value<String?> originDeviceId,
+  Value<String> userId,
+  Value<String?> tugasId,
+  Value<String?> habitId,
+  Value<String> judul,
+  Value<String> activityCategoryId,
+  Value<String> startTime,
+  Value<String> endTime,
+  Value<int?> hari,
+  Value<String?> tanggalSpesifik,
+  Value<bool> isRecurring,
+  Value<bool> isActive,
+  Value<List<int>> reminderOffsetsMinutes,
+  Value<String?> materializedThroughDate,
+  Value<int> rowid,
+});
+
+final class $$TimeboxScheduleTableReferences extends BaseReferences<
+    _$AppDatabase, $TimeboxScheduleTable, TimeboxScheduleRow> {
+  $$TimeboxScheduleTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static $UsersTable _userIdTable(_$AppDatabase db) => db.users.createAlias(
+      $_aliasNameGenerator(db.timeboxSchedule.userId, db.users.id));
+
+  $$UsersTableProcessedTableManager get userId {
+    final $_column = $_itemColumn<String>('user_id')!;
+
+    final manager = $$UsersTableTableManager($_db, $_db.users)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_userIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static $TugasTable _tugasIdTable(_$AppDatabase db) => db.tugas.createAlias(
+      $_aliasNameGenerator(db.timeboxSchedule.tugasId, db.tugas.id));
+
+  $$TugasTableProcessedTableManager? get tugasId {
+    final $_column = $_itemColumn<String>('tugas_id');
+    if ($_column == null) return null;
+    final manager = $$TugasTableTableManager($_db, $_db.tugas)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_tugasIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static $ActivityCategoryTable _activityCategoryIdTable(_$AppDatabase db) =>
+      db.activityCategory.createAlias($_aliasNameGenerator(
+          db.timeboxSchedule.activityCategoryId, db.activityCategory.id));
+
+  $$ActivityCategoryTableProcessedTableManager get activityCategoryId {
+    final $_column = $_itemColumn<String>('activity_category_id')!;
+
+    final manager =
+        $$ActivityCategoryTableTableManager($_db, $_db.activityCategory)
+            .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_activityCategoryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static MultiTypedResultKey<$TimeboxExecutionTable, List<TimeboxExecutionRow>>
+      _timeboxExecutionRefsTable(_$AppDatabase db) =>
+          MultiTypedResultKey.fromTable(db.timeboxExecution,
+              aliasName: $_aliasNameGenerator(
+                  db.timeboxSchedule.id, db.timeboxExecution.scheduleId));
+
+  $$TimeboxExecutionTableProcessedTableManager get timeboxExecutionRefs {
+    final manager = $$TimeboxExecutionTableTableManager(
+            $_db, $_db.timeboxExecution)
+        .filter((f) => f.scheduleId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache =
+        $_typedResult.readTableOrNull(_timeboxExecutionRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
+class $$TimeboxScheduleTableFilterComposer
+    extends Composer<_$AppDatabase, $TimeboxScheduleTable> {
+  $$TimeboxScheduleTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+      column: $table.deletedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get serverRevision => $composableBuilder(
+      column: $table.serverRevision,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get originDeviceId => $composableBuilder(
+      column: $table.originDeviceId,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get habitId => $composableBuilder(
+      column: $table.habitId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get judul => $composableBuilder(
+      column: $table.judul, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get startTime => $composableBuilder(
+      column: $table.startTime, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get endTime => $composableBuilder(
+      column: $table.endTime, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get hari => $composableBuilder(
+      column: $table.hari, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get tanggalSpesifik => $composableBuilder(
+      column: $table.tanggalSpesifik,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isRecurring => $composableBuilder(
+      column: $table.isRecurring, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isActive => $composableBuilder(
+      column: $table.isActive, builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<List<int>, List<int>, String>
+      get reminderOffsetsMinutes => $composableBuilder(
+          column: $table.reminderOffsetsMinutes,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnFilters<String> get materializedThroughDate => $composableBuilder(
+      column: $table.materializedThroughDate,
+      builder: (column) => ColumnFilters(column));
+
+  $$UsersTableFilterComposer get userId {
+    final $$UsersTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.userId,
+        referencedTable: $db.users,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$UsersTableFilterComposer(
+              $db: $db,
+              $table: $db.users,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$TugasTableFilterComposer get tugasId {
+    final $$TugasTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.tugasId,
+        referencedTable: $db.tugas,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TugasTableFilterComposer(
+              $db: $db,
+              $table: $db.tugas,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$ActivityCategoryTableFilterComposer get activityCategoryId {
+    final $$ActivityCategoryTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.activityCategoryId,
+        referencedTable: $db.activityCategory,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$ActivityCategoryTableFilterComposer(
+              $db: $db,
+              $table: $db.activityCategory,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  Expression<bool> timeboxExecutionRefs(
+      Expression<bool> Function($$TimeboxExecutionTableFilterComposer f) f) {
+    final $$TimeboxExecutionTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.timeboxExecution,
+        getReferencedColumn: (t) => t.scheduleId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TimeboxExecutionTableFilterComposer(
+              $db: $db,
+              $table: $db.timeboxExecution,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $$TimeboxScheduleTableOrderingComposer
+    extends Composer<_$AppDatabase, $TimeboxScheduleTable> {
+  $$TimeboxScheduleTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+      column: $table.deletedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get serverRevision => $composableBuilder(
+      column: $table.serverRevision,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get originDeviceId => $composableBuilder(
+      column: $table.originDeviceId,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get habitId => $composableBuilder(
+      column: $table.habitId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get judul => $composableBuilder(
+      column: $table.judul, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get startTime => $composableBuilder(
+      column: $table.startTime, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get endTime => $composableBuilder(
+      column: $table.endTime, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get hari => $composableBuilder(
+      column: $table.hari, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get tanggalSpesifik => $composableBuilder(
+      column: $table.tanggalSpesifik,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isRecurring => $composableBuilder(
+      column: $table.isRecurring, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isActive => $composableBuilder(
+      column: $table.isActive, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get reminderOffsetsMinutes => $composableBuilder(
+      column: $table.reminderOffsetsMinutes,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get materializedThroughDate => $composableBuilder(
+      column: $table.materializedThroughDate,
+      builder: (column) => ColumnOrderings(column));
+
+  $$UsersTableOrderingComposer get userId {
+    final $$UsersTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.userId,
+        referencedTable: $db.users,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$UsersTableOrderingComposer(
+              $db: $db,
+              $table: $db.users,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$TugasTableOrderingComposer get tugasId {
+    final $$TugasTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.tugasId,
+        referencedTable: $db.tugas,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TugasTableOrderingComposer(
+              $db: $db,
+              $table: $db.tugas,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$ActivityCategoryTableOrderingComposer get activityCategoryId {
+    final $$ActivityCategoryTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.activityCategoryId,
+        referencedTable: $db.activityCategory,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$ActivityCategoryTableOrderingComposer(
+              $db: $db,
+              $table: $db.activityCategory,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$TimeboxScheduleTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TimeboxScheduleTable> {
+  $$TimeboxScheduleTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<int> get serverRevision => $composableBuilder(
+      column: $table.serverRevision, builder: (column) => column);
+
+  GeneratedColumn<String> get originDeviceId => $composableBuilder(
+      column: $table.originDeviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get habitId =>
+      $composableBuilder(column: $table.habitId, builder: (column) => column);
+
+  GeneratedColumn<String> get judul =>
+      $composableBuilder(column: $table.judul, builder: (column) => column);
+
+  GeneratedColumn<String> get startTime =>
+      $composableBuilder(column: $table.startTime, builder: (column) => column);
+
+  GeneratedColumn<String> get endTime =>
+      $composableBuilder(column: $table.endTime, builder: (column) => column);
+
+  GeneratedColumn<int> get hari =>
+      $composableBuilder(column: $table.hari, builder: (column) => column);
+
+  GeneratedColumn<String> get tanggalSpesifik => $composableBuilder(
+      column: $table.tanggalSpesifik, builder: (column) => column);
+
+  GeneratedColumn<bool> get isRecurring => $composableBuilder(
+      column: $table.isRecurring, builder: (column) => column);
+
+  GeneratedColumn<bool> get isActive =>
+      $composableBuilder(column: $table.isActive, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<List<int>, String>
+      get reminderOffsetsMinutes => $composableBuilder(
+          column: $table.reminderOffsetsMinutes, builder: (column) => column);
+
+  GeneratedColumn<String> get materializedThroughDate => $composableBuilder(
+      column: $table.materializedThroughDate, builder: (column) => column);
+
+  $$UsersTableAnnotationComposer get userId {
+    final $$UsersTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.userId,
+        referencedTable: $db.users,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$UsersTableAnnotationComposer(
+              $db: $db,
+              $table: $db.users,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$TugasTableAnnotationComposer get tugasId {
+    final $$TugasTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.tugasId,
+        referencedTable: $db.tugas,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TugasTableAnnotationComposer(
+              $db: $db,
+              $table: $db.tugas,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$ActivityCategoryTableAnnotationComposer get activityCategoryId {
+    final $$ActivityCategoryTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.activityCategoryId,
+        referencedTable: $db.activityCategory,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$ActivityCategoryTableAnnotationComposer(
+              $db: $db,
+              $table: $db.activityCategory,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  Expression<T> timeboxExecutionRefs<T extends Object>(
+      Expression<T> Function($$TimeboxExecutionTableAnnotationComposer a) f) {
+    final $$TimeboxExecutionTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.timeboxExecution,
+        getReferencedColumn: (t) => t.scheduleId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TimeboxExecutionTableAnnotationComposer(
+              $db: $db,
+              $table: $db.timeboxExecution,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $$TimeboxScheduleTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $TimeboxScheduleTable,
+    TimeboxScheduleRow,
+    $$TimeboxScheduleTableFilterComposer,
+    $$TimeboxScheduleTableOrderingComposer,
+    $$TimeboxScheduleTableAnnotationComposer,
+    $$TimeboxScheduleTableCreateCompanionBuilder,
+    $$TimeboxScheduleTableUpdateCompanionBuilder,
+    (TimeboxScheduleRow, $$TimeboxScheduleTableReferences),
+    TimeboxScheduleRow,
+    PrefetchHooks Function(
+        {bool userId,
+        bool tugasId,
+        bool activityCategoryId,
+        bool timeboxExecutionRefs})> {
+  $$TimeboxScheduleTableTableManager(
+      _$AppDatabase db, $TimeboxScheduleTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TimeboxScheduleTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TimeboxScheduleTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TimeboxScheduleTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime> updatedAt = const Value.absent(),
+            Value<bool> isDeleted = const Value.absent(),
+            Value<DateTime?> deletedAt = const Value.absent(),
+            Value<int?> serverRevision = const Value.absent(),
+            Value<String?> originDeviceId = const Value.absent(),
+            Value<String> userId = const Value.absent(),
+            Value<String?> tugasId = const Value.absent(),
+            Value<String?> habitId = const Value.absent(),
+            Value<String> judul = const Value.absent(),
+            Value<String> activityCategoryId = const Value.absent(),
+            Value<String> startTime = const Value.absent(),
+            Value<String> endTime = const Value.absent(),
+            Value<int?> hari = const Value.absent(),
+            Value<String?> tanggalSpesifik = const Value.absent(),
+            Value<bool> isRecurring = const Value.absent(),
+            Value<bool> isActive = const Value.absent(),
+            Value<List<int>> reminderOffsetsMinutes = const Value.absent(),
+            Value<String?> materializedThroughDate = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              TimeboxScheduleCompanion(
+            id: id,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            isDeleted: isDeleted,
+            deletedAt: deletedAt,
+            serverRevision: serverRevision,
+            originDeviceId: originDeviceId,
+            userId: userId,
+            tugasId: tugasId,
+            habitId: habitId,
+            judul: judul,
+            activityCategoryId: activityCategoryId,
+            startTime: startTime,
+            endTime: endTime,
+            hari: hari,
+            tanggalSpesifik: tanggalSpesifik,
+            isRecurring: isRecurring,
+            isActive: isActive,
+            reminderOffsetsMinutes: reminderOffsetsMinutes,
+            materializedThroughDate: materializedThroughDate,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required DateTime createdAt,
+            required DateTime updatedAt,
+            Value<bool> isDeleted = const Value.absent(),
+            Value<DateTime?> deletedAt = const Value.absent(),
+            Value<int?> serverRevision = const Value.absent(),
+            Value<String?> originDeviceId = const Value.absent(),
+            required String userId,
+            Value<String?> tugasId = const Value.absent(),
+            Value<String?> habitId = const Value.absent(),
+            required String judul,
+            required String activityCategoryId,
+            required String startTime,
+            required String endTime,
+            Value<int?> hari = const Value.absent(),
+            Value<String?> tanggalSpesifik = const Value.absent(),
+            required bool isRecurring,
+            Value<bool> isActive = const Value.absent(),
+            Value<List<int>> reminderOffsetsMinutes = const Value.absent(),
+            Value<String?> materializedThroughDate = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              TimeboxScheduleCompanion.insert(
+            id: id,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            isDeleted: isDeleted,
+            deletedAt: deletedAt,
+            serverRevision: serverRevision,
+            originDeviceId: originDeviceId,
+            userId: userId,
+            tugasId: tugasId,
+            habitId: habitId,
+            judul: judul,
+            activityCategoryId: activityCategoryId,
+            startTime: startTime,
+            endTime: endTime,
+            hari: hari,
+            tanggalSpesifik: tanggalSpesifik,
+            isRecurring: isRecurring,
+            isActive: isActive,
+            reminderOffsetsMinutes: reminderOffsetsMinutes,
+            materializedThroughDate: materializedThroughDate,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$TimeboxScheduleTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: (
+              {userId = false,
+              tugasId = false,
+              activityCategoryId = false,
+              timeboxExecutionRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (timeboxExecutionRefs) db.timeboxExecution
+              ],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (userId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.userId,
+                    referencedTable:
+                        $$TimeboxScheduleTableReferences._userIdTable(db),
+                    referencedColumn:
+                        $$TimeboxScheduleTableReferences._userIdTable(db).id,
+                  ) as T;
+                }
+                if (tugasId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.tugasId,
+                    referencedTable:
+                        $$TimeboxScheduleTableReferences._tugasIdTable(db),
+                    referencedColumn:
+                        $$TimeboxScheduleTableReferences._tugasIdTable(db).id,
+                  ) as T;
+                }
+                if (activityCategoryId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.activityCategoryId,
+                    referencedTable: $$TimeboxScheduleTableReferences
+                        ._activityCategoryIdTable(db),
+                    referencedColumn: $$TimeboxScheduleTableReferences
+                        ._activityCategoryIdTable(db)
+                        .id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (timeboxExecutionRefs)
+                    await $_getPrefetchedData<TimeboxScheduleRow,
+                            $TimeboxScheduleTable, TimeboxExecutionRow>(
+                        currentTable: table,
+                        referencedTable: $$TimeboxScheduleTableReferences
+                            ._timeboxExecutionRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$TimeboxScheduleTableReferences(db, table, p0)
+                                .timeboxExecutionRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.scheduleId == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$TimeboxScheduleTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $TimeboxScheduleTable,
+    TimeboxScheduleRow,
+    $$TimeboxScheduleTableFilterComposer,
+    $$TimeboxScheduleTableOrderingComposer,
+    $$TimeboxScheduleTableAnnotationComposer,
+    $$TimeboxScheduleTableCreateCompanionBuilder,
+    $$TimeboxScheduleTableUpdateCompanionBuilder,
+    (TimeboxScheduleRow, $$TimeboxScheduleTableReferences),
+    TimeboxScheduleRow,
+    PrefetchHooks Function(
+        {bool userId,
+        bool tugasId,
+        bool activityCategoryId,
+        bool timeboxExecutionRefs})>;
+typedef $$TimeboxExecutionTableCreateCompanionBuilder
+    = TimeboxExecutionCompanion Function({
+  required String id,
+  required DateTime createdAt,
+  required DateTime updatedAt,
+  Value<bool> isDeleted,
+  Value<DateTime?> deletedAt,
+  Value<int?> serverRevision,
+  Value<String?> originDeviceId,
+  required String scheduleId,
+  required String occurrenceDate,
+  required DateTime plannedStartAt,
+  required DateTime plannedEndAt,
+  required TimeboxExecutionStatus status,
+  Value<DateTime?> actualStartAt,
+  Value<DateTime?> actualEndAt,
+  Value<String?> rescheduledToId,
+  Value<String?> activityId,
+  Value<String?> catatan,
+  Value<int> rowid,
+});
+typedef $$TimeboxExecutionTableUpdateCompanionBuilder
+    = TimeboxExecutionCompanion Function({
+  Value<String> id,
+  Value<DateTime> createdAt,
+  Value<DateTime> updatedAt,
+  Value<bool> isDeleted,
+  Value<DateTime?> deletedAt,
+  Value<int?> serverRevision,
+  Value<String?> originDeviceId,
+  Value<String> scheduleId,
+  Value<String> occurrenceDate,
+  Value<DateTime> plannedStartAt,
+  Value<DateTime> plannedEndAt,
+  Value<TimeboxExecutionStatus> status,
+  Value<DateTime?> actualStartAt,
+  Value<DateTime?> actualEndAt,
+  Value<String?> rescheduledToId,
+  Value<String?> activityId,
+  Value<String?> catatan,
+  Value<int> rowid,
+});
+
+final class $$TimeboxExecutionTableReferences extends BaseReferences<
+    _$AppDatabase, $TimeboxExecutionTable, TimeboxExecutionRow> {
+  $$TimeboxExecutionTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static $TimeboxScheduleTable _scheduleIdTable(_$AppDatabase db) =>
+      db.timeboxSchedule.createAlias($_aliasNameGenerator(
+          db.timeboxExecution.scheduleId, db.timeboxSchedule.id));
+
+  $$TimeboxScheduleTableProcessedTableManager get scheduleId {
+    final $_column = $_itemColumn<String>('schedule_id')!;
+
+    final manager =
+        $$TimeboxScheduleTableTableManager($_db, $_db.timeboxSchedule)
+            .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_scheduleIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static $TimeboxExecutionTable _rescheduledToIdTable(_$AppDatabase db) =>
+      db.timeboxExecution.createAlias($_aliasNameGenerator(
+          db.timeboxExecution.rescheduledToId, db.timeboxExecution.id));
+
+  $$TimeboxExecutionTableProcessedTableManager? get rescheduledToId {
+    final $_column = $_itemColumn<String>('rescheduled_to_id');
+    if ($_column == null) return null;
+    final manager =
+        $$TimeboxExecutionTableTableManager($_db, $_db.timeboxExecution)
+            .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_rescheduledToIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+
+  static $ActivityTable _activityIdTable(_$AppDatabase db) =>
+      db.activity.createAlias(
+          $_aliasNameGenerator(db.timeboxExecution.activityId, db.activity.id));
+
+  $$ActivityTableProcessedTableManager? get activityId {
+    final $_column = $_itemColumn<String>('activity_id');
+    if ($_column == null) return null;
+    final manager = $$ActivityTableTableManager($_db, $_db.activity)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_activityIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+}
+
+class $$TimeboxExecutionTableFilterComposer
+    extends Composer<_$AppDatabase, $TimeboxExecutionTable> {
+  $$TimeboxExecutionTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get deletedAt => $composableBuilder(
+      column: $table.deletedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get serverRevision => $composableBuilder(
+      column: $table.serverRevision,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get originDeviceId => $composableBuilder(
+      column: $table.originDeviceId,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get occurrenceDate => $composableBuilder(
+      column: $table.occurrenceDate,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get plannedStartAt => $composableBuilder(
+      column: $table.plannedStartAt,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get plannedEndAt => $composableBuilder(
+      column: $table.plannedEndAt, builder: (column) => ColumnFilters(column));
+
+  ColumnWithTypeConverterFilters<TimeboxExecutionStatus, TimeboxExecutionStatus,
+          String>
+      get status => $composableBuilder(
+          column: $table.status,
+          builder: (column) => ColumnWithTypeConverterFilters(column));
+
+  ColumnFilters<DateTime> get actualStartAt => $composableBuilder(
+      column: $table.actualStartAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get actualEndAt => $composableBuilder(
+      column: $table.actualEndAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get catatan => $composableBuilder(
+      column: $table.catatan, builder: (column) => ColumnFilters(column));
+
+  $$TimeboxScheduleTableFilterComposer get scheduleId {
+    final $$TimeboxScheduleTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.scheduleId,
+        referencedTable: $db.timeboxSchedule,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TimeboxScheduleTableFilterComposer(
+              $db: $db,
+              $table: $db.timeboxSchedule,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$TimeboxExecutionTableFilterComposer get rescheduledToId {
+    final $$TimeboxExecutionTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.rescheduledToId,
+        referencedTable: $db.timeboxExecution,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TimeboxExecutionTableFilterComposer(
+              $db: $db,
+              $table: $db.timeboxExecution,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$ActivityTableFilterComposer get activityId {
+    final $$ActivityTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.activityId,
+        referencedTable: $db.activity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$ActivityTableFilterComposer(
+              $db: $db,
+              $table: $db.activity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$TimeboxExecutionTableOrderingComposer
+    extends Composer<_$AppDatabase, $TimeboxExecutionTable> {
+  $$TimeboxExecutionTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+      column: $table.isDeleted, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get deletedAt => $composableBuilder(
+      column: $table.deletedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get serverRevision => $composableBuilder(
+      column: $table.serverRevision,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get originDeviceId => $composableBuilder(
+      column: $table.originDeviceId,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get occurrenceDate => $composableBuilder(
+      column: $table.occurrenceDate,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get plannedStartAt => $composableBuilder(
+      column: $table.plannedStartAt,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get plannedEndAt => $composableBuilder(
+      column: $table.plannedEndAt,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get status => $composableBuilder(
+      column: $table.status, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get actualStartAt => $composableBuilder(
+      column: $table.actualStartAt,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get actualEndAt => $composableBuilder(
+      column: $table.actualEndAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get catatan => $composableBuilder(
+      column: $table.catatan, builder: (column) => ColumnOrderings(column));
+
+  $$TimeboxScheduleTableOrderingComposer get scheduleId {
+    final $$TimeboxScheduleTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.scheduleId,
+        referencedTable: $db.timeboxSchedule,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TimeboxScheduleTableOrderingComposer(
+              $db: $db,
+              $table: $db.timeboxSchedule,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$TimeboxExecutionTableOrderingComposer get rescheduledToId {
+    final $$TimeboxExecutionTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.rescheduledToId,
+        referencedTable: $db.timeboxExecution,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TimeboxExecutionTableOrderingComposer(
+              $db: $db,
+              $table: $db.timeboxExecution,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$ActivityTableOrderingComposer get activityId {
+    final $$ActivityTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.activityId,
+        referencedTable: $db.activity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$ActivityTableOrderingComposer(
+              $db: $db,
+              $table: $db.activity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$TimeboxExecutionTableAnnotationComposer
+    extends Composer<_$AppDatabase, $TimeboxExecutionTable> {
+  $$TimeboxExecutionTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get deletedAt =>
+      $composableBuilder(column: $table.deletedAt, builder: (column) => column);
+
+  GeneratedColumn<int> get serverRevision => $composableBuilder(
+      column: $table.serverRevision, builder: (column) => column);
+
+  GeneratedColumn<String> get originDeviceId => $composableBuilder(
+      column: $table.originDeviceId, builder: (column) => column);
+
+  GeneratedColumn<String> get occurrenceDate => $composableBuilder(
+      column: $table.occurrenceDate, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get plannedStartAt => $composableBuilder(
+      column: $table.plannedStartAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get plannedEndAt => $composableBuilder(
+      column: $table.plannedEndAt, builder: (column) => column);
+
+  GeneratedColumnWithTypeConverter<TimeboxExecutionStatus, String> get status =>
+      $composableBuilder(column: $table.status, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get actualStartAt => $composableBuilder(
+      column: $table.actualStartAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get actualEndAt => $composableBuilder(
+      column: $table.actualEndAt, builder: (column) => column);
+
+  GeneratedColumn<String> get catatan =>
+      $composableBuilder(column: $table.catatan, builder: (column) => column);
+
+  $$TimeboxScheduleTableAnnotationComposer get scheduleId {
+    final $$TimeboxScheduleTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.scheduleId,
+        referencedTable: $db.timeboxSchedule,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TimeboxScheduleTableAnnotationComposer(
+              $db: $db,
+              $table: $db.timeboxSchedule,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$TimeboxExecutionTableAnnotationComposer get rescheduledToId {
+    final $$TimeboxExecutionTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.rescheduledToId,
+        referencedTable: $db.timeboxExecution,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$TimeboxExecutionTableAnnotationComposer(
+              $db: $db,
+              $table: $db.timeboxExecution,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+
+  $$ActivityTableAnnotationComposer get activityId {
+    final $$ActivityTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.activityId,
+        referencedTable: $db.activity,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$ActivityTableAnnotationComposer(
+              $db: $db,
+              $table: $db.activity,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$TimeboxExecutionTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $TimeboxExecutionTable,
+    TimeboxExecutionRow,
+    $$TimeboxExecutionTableFilterComposer,
+    $$TimeboxExecutionTableOrderingComposer,
+    $$TimeboxExecutionTableAnnotationComposer,
+    $$TimeboxExecutionTableCreateCompanionBuilder,
+    $$TimeboxExecutionTableUpdateCompanionBuilder,
+    (TimeboxExecutionRow, $$TimeboxExecutionTableReferences),
+    TimeboxExecutionRow,
+    PrefetchHooks Function(
+        {bool scheduleId, bool rescheduledToId, bool activityId})> {
+  $$TimeboxExecutionTableTableManager(
+      _$AppDatabase db, $TimeboxExecutionTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$TimeboxExecutionTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$TimeboxExecutionTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$TimeboxExecutionTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime> updatedAt = const Value.absent(),
+            Value<bool> isDeleted = const Value.absent(),
+            Value<DateTime?> deletedAt = const Value.absent(),
+            Value<int?> serverRevision = const Value.absent(),
+            Value<String?> originDeviceId = const Value.absent(),
+            Value<String> scheduleId = const Value.absent(),
+            Value<String> occurrenceDate = const Value.absent(),
+            Value<DateTime> plannedStartAt = const Value.absent(),
+            Value<DateTime> plannedEndAt = const Value.absent(),
+            Value<TimeboxExecutionStatus> status = const Value.absent(),
+            Value<DateTime?> actualStartAt = const Value.absent(),
+            Value<DateTime?> actualEndAt = const Value.absent(),
+            Value<String?> rescheduledToId = const Value.absent(),
+            Value<String?> activityId = const Value.absent(),
+            Value<String?> catatan = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              TimeboxExecutionCompanion(
+            id: id,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            isDeleted: isDeleted,
+            deletedAt: deletedAt,
+            serverRevision: serverRevision,
+            originDeviceId: originDeviceId,
+            scheduleId: scheduleId,
+            occurrenceDate: occurrenceDate,
+            plannedStartAt: plannedStartAt,
+            plannedEndAt: plannedEndAt,
+            status: status,
+            actualStartAt: actualStartAt,
+            actualEndAt: actualEndAt,
+            rescheduledToId: rescheduledToId,
+            activityId: activityId,
+            catatan: catatan,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required DateTime createdAt,
+            required DateTime updatedAt,
+            Value<bool> isDeleted = const Value.absent(),
+            Value<DateTime?> deletedAt = const Value.absent(),
+            Value<int?> serverRevision = const Value.absent(),
+            Value<String?> originDeviceId = const Value.absent(),
+            required String scheduleId,
+            required String occurrenceDate,
+            required DateTime plannedStartAt,
+            required DateTime plannedEndAt,
+            required TimeboxExecutionStatus status,
+            Value<DateTime?> actualStartAt = const Value.absent(),
+            Value<DateTime?> actualEndAt = const Value.absent(),
+            Value<String?> rescheduledToId = const Value.absent(),
+            Value<String?> activityId = const Value.absent(),
+            Value<String?> catatan = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              TimeboxExecutionCompanion.insert(
+            id: id,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            isDeleted: isDeleted,
+            deletedAt: deletedAt,
+            serverRevision: serverRevision,
+            originDeviceId: originDeviceId,
+            scheduleId: scheduleId,
+            occurrenceDate: occurrenceDate,
+            plannedStartAt: plannedStartAt,
+            plannedEndAt: plannedEndAt,
+            status: status,
+            actualStartAt: actualStartAt,
+            actualEndAt: actualEndAt,
+            rescheduledToId: rescheduledToId,
+            activityId: activityId,
+            catatan: catatan,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$TimeboxExecutionTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: (
+              {scheduleId = false,
+              rescheduledToId = false,
+              activityId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (scheduleId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.scheduleId,
+                    referencedTable:
+                        $$TimeboxExecutionTableReferences._scheduleIdTable(db),
+                    referencedColumn: $$TimeboxExecutionTableReferences
+                        ._scheduleIdTable(db)
+                        .id,
+                  ) as T;
+                }
+                if (rescheduledToId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.rescheduledToId,
+                    referencedTable: $$TimeboxExecutionTableReferences
+                        ._rescheduledToIdTable(db),
+                    referencedColumn: $$TimeboxExecutionTableReferences
+                        ._rescheduledToIdTable(db)
+                        .id,
+                  ) as T;
+                }
+                if (activityId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.activityId,
+                    referencedTable:
+                        $$TimeboxExecutionTableReferences._activityIdTable(db),
+                    referencedColumn: $$TimeboxExecutionTableReferences
+                        ._activityIdTable(db)
+                        .id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$TimeboxExecutionTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $TimeboxExecutionTable,
+    TimeboxExecutionRow,
+    $$TimeboxExecutionTableFilterComposer,
+    $$TimeboxExecutionTableOrderingComposer,
+    $$TimeboxExecutionTableAnnotationComposer,
+    $$TimeboxExecutionTableCreateCompanionBuilder,
+    $$TimeboxExecutionTableUpdateCompanionBuilder,
+    (TimeboxExecutionRow, $$TimeboxExecutionTableReferences),
+    TimeboxExecutionRow,
+    PrefetchHooks Function(
+        {bool scheduleId, bool rescheduledToId, bool activityId})>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -12638,4 +17849,10 @@ class $AppDatabaseManager {
       $$ActivityRecurrenceTableTableManager(_db, _db.activityRecurrence);
   $$ActivityTableTableManager get activity =>
       $$ActivityTableTableManager(_db, _db.activity);
+  $$PomodoroSessionTableTableManager get pomodoroSession =>
+      $$PomodoroSessionTableTableManager(_db, _db.pomodoroSession);
+  $$TimeboxScheduleTableTableManager get timeboxSchedule =>
+      $$TimeboxScheduleTableTableManager(_db, _db.timeboxSchedule);
+  $$TimeboxExecutionTableTableManager get timeboxExecution =>
+      $$TimeboxExecutionTableTableManager(_db, _db.timeboxExecution);
 }

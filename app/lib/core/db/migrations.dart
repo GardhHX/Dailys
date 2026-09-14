@@ -33,6 +33,19 @@ const List<String> m1Indexes = [
       'WHERE is_deleted = 0 AND source_id IS NOT NULL',
 ];
 
+/// Index DDL for the M3 tables (schema 9, 10, 10.1). Applied on fresh install
+/// (`onCreate`) and on the v1 -> v2 upgrade (`onUpgrade`).
+const List<String> m3Indexes = [
+  'CREATE INDEX idx_pomodoro_user_start ON pomodoro_session (user_id, is_deleted, start_time)',
+  'CREATE INDEX idx_pomodoro_user_status ON pomodoro_session (user_id, status, start_time)',
+  'CREATE INDEX idx_timebox_schedule_user ON timebox_schedule (user_id, is_deleted, is_active)',
+  'CREATE INDEX idx_timebox_execution_range ON timebox_execution '
+      '(schedule_id, is_deleted, occurrence_date, planned_start_at)',
+  // Unique active (schedule_id, planned_start_at) (schema 10.1).
+  'CREATE UNIQUE INDEX uq_timebox_execution_active ON timebox_execution (schedule_id, planned_start_at) '
+      'WHERE is_deleted = 0',
+];
+
 /// Domain + local tables whose row counts are compared source-vs-copy during the
 /// pre-migration backup (OPERATIONS 3 step 5). Deferred M2+ tables
 /// (`SyncOutbox`, `SyncEntityBase`, …) are not created in M1, so only the tables
@@ -48,11 +61,22 @@ const List<String> _backupVerifiedTables = [
   'activity_recurrence',
   'activity',
   'device_settings',
+  'pomodoro_session',
+  'timebox_schedule',
+  'timebox_execution',
 ];
 
 /// Applies M1 index DDL. Called from [MigrationStrategy.onCreate].
 Future<void> createM1Indexes(Migrator m) async {
   for (final stmt in m1Indexes) {
+    await m.database.customStatement(stmt);
+  }
+}
+
+/// Applies M3 index DDL (see [m3Indexes]). Called from both a fresh install's
+/// `onCreate` and the v1 -> v2 `onUpgrade` step.
+Future<void> createM3Indexes(Migrator m) async {
+  for (final stmt in m3Indexes) {
     await m.database.customStatement(stmt);
   }
 }
@@ -130,7 +154,8 @@ class MigrationSafety {
     final aes = cipher ?? BackupCipher();
     final stamp = (now ?? DateTime.now().toUtc());
     await Directory(backupDir).create(recursive: true);
-    final base = 'dailys-${stamp.millisecondsSinceEpoch}-v$fromSchemaVersion-to-v$toSchemaVersion';
+    final base =
+        'dailys-${stamp.millisecondsSinceEpoch}-v$fromSchemaVersion-to-v$toSchemaVersion';
     final plaintextTemp = File(p.join(backupDir, '$base.plain.tmp'));
     final backupPath = p.join(backupDir, '$base.db.enc');
     final manifestPath = p.join(backupDir, '$base.manifest.json');
@@ -220,7 +245,8 @@ class MigrationSafety {
     final rows = db.select('PRAGMA integrity_check');
     final result = rows.isEmpty ? '' : rows.first.values.first;
     if (result != 'ok') {
-      throw MigrationBackupException('integrity_check failed on $label: $result');
+      throw MigrationBackupException(
+          'integrity_check failed on $label: $result');
     }
   }
 

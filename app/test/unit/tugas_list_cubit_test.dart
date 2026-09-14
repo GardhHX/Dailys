@@ -16,7 +16,8 @@ import 'package:dailys/core/time/local_date.dart';
 void main() {
   setUpAll(() {
     if (Platform.isWindows) {
-      open.overrideFor(OperatingSystem.windows, () => DynamicLibrary.open('winsqlite3.dll'));
+      open.overrideFor(
+          OperatingSystem.windows, () => DynamicLibrary.open('winsqlite3.dll'));
     }
     tzdata.initializeTimeZones();
   });
@@ -50,7 +51,8 @@ void main() {
     return cubit.state.tugas.firstWhere((t) => t.judul == judul).id;
   }
 
-  test('createTugas seeds default reminders and shows in active list', () async {
+  test('createTugas seeds default reminders and shows in active list',
+      () async {
     final cubit = makeCubit();
     addTearDown(cubit.close);
     await pump();
@@ -62,7 +64,30 @@ void main() {
     expect(row.reminders, hasLength(4)); // schema 5 defaults
   });
 
-  test('completing a task keeps it active during the 7-day grace window', () async {
+  test('checklist edit preserves identity and done; invalid draft rolls back task', () async {
+    final cubit = makeCubit();
+    addTearDown(cubit.close);
+    await cubit.createTugas(judul: 'Checklist', deadline: DateTime.utc(2026, 9, 20),
+      prioritas: TugasPrioritas.medium, checklist: [const ChecklistDraft(title: 'Keep'), const ChecklistDraft(title: 'Remove')]);
+    await pump();
+    final id = cubit.state.tugas.single.id;
+    final before = await cubit.loadChecklist(id);
+    await db.tugasDao.setChecklistDone(before.first.id, true);
+    await cubit.editTugas(id: id, judul: 'Edited', deadline: DateTime.utc(2026, 9, 20),
+      prioritas: TugasPrioritas.medium, checklist: [ChecklistDraft(id: before.first.id, title: 'Renamed'), const ChecklistDraft(title: 'New')]);
+    final after = await cubit.loadChecklist(id);
+    expect(after.first.id, before.first.id);
+    expect(after.first.isDone, isTrue);
+    expect(after.map((r) => r.judul), ['Renamed', 'New']);
+    await expectLater(cubit.editTugas(id: id, judul: 'Should rollback', deadline: DateTime.utc(2026, 9, 20),
+      prioritas: TugasPrioritas.high, checklist: [const ChecklistDraft(title: '')]), throwsArgumentError);
+    await pump();
+    expect(cubit.state.tugas.single.judul, 'Edited');
+    expect((await cubit.loadChecklist(id)).map((r) => r.id), after.map((r) => r.id));
+  });
+
+  test('completing a task keeps it active during the 7-day grace window',
+      () async {
     final cubit = makeCubit();
     addTearDown(cubit.close);
     await pump();
@@ -70,7 +95,8 @@ void main() {
 
     // Complete at a fixed Instant: 2026-09-14 10:00 WIB.
     await db.tugasDao.setStatus(id, TugasStatus.selesai,
-        completedAt: DateTime.utc(2026, 9, 14, 3), now: DateTime.utc(2026, 9, 14, 3));
+        completedAt: DateTime.utc(2026, 9, 14, 3),
+        now: DateTime.utc(2026, 9, 14, 3));
     await pump();
 
     final row = cubit.state.tugas.single;
@@ -129,9 +155,13 @@ void main() {
     addTearDown(cubit.close);
     await pump();
     await cubit.createTugas(
-        judul: 'low', deadline: DateTime.utc(2026, 9, 18), prioritas: TugasPrioritas.low);
+        judul: 'low',
+        deadline: DateTime.utc(2026, 9, 18),
+        prioritas: TugasPrioritas.low);
     await cubit.createTugas(
-        judul: 'high', deadline: DateTime.utc(2026, 9, 25), prioritas: TugasPrioritas.high);
+        judul: 'high',
+        deadline: DateTime.utc(2026, 9, 25),
+        prioritas: TugasPrioritas.high);
     await pump();
 
     cubit.setSort(TugasSort.prioritas);

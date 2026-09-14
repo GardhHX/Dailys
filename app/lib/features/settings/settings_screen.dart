@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../app/theme/tokens.dart';
+import '../../app/theme/design_form.dart';
 import '../../core/db/database.dart';
 import '../../core/db/tables/enums.dart';
 import '../../core/time/tz_data.dart';
@@ -15,11 +16,13 @@ class SettingsScreen extends StatefulWidget {
       {super.key,
       required this.db,
       required this.userId,
-      required this.deviceId});
+      required this.deviceId,
+      this.initialSection = 0});
 
   final AppDatabase db;
   final String userId;
   final String deviceId;
+  final int initialSection;
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -27,12 +30,14 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   late final SettingsCubit _cubit;
-  final _sectionKeys = List.generate(6, (_) => GlobalKey());
+  final _sectionKeys = List.generate(8, (_) => GlobalKey());
   int _activeSection = 0;
+  bool _initialScrolled = false;
 
   @override
   void initState() {
     super.initState();
+    _activeSection = widget.initialSection;
     ensureTimeZoneDatabaseLoaded();
     _cubit = SettingsCubit(
         db: widget.db, userId: widget.userId, deviceId: widget.deviceId)
@@ -67,100 +72,166 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       ])),
           );
         }
+        if (!_initialScrolled &&
+            widget.initialSection > 0 &&
+            widget.initialSection < _sectionKeys.length) {
+          _initialScrolled = true;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            final target = _sectionKeys[widget.initialSection].currentContext;
+            if (mounted && target != null) Scrollable.ensureVisible(target);
+          });
+        }
         final us = state.userSettings!;
         final ds = state.deviceSettings!;
+        T draft<T>(String key, T stored) => (state.drafts[key] as T?) ?? stored;
+        Widget feedback(String field, Widget child) => _FieldFeedback(
+            phase: state.feedback[field],
+            onRetry: () => _cubit.retry(field),
+            child: child);
+
         final sections = <Widget>[
           if (state.error != null)
             _ErrorBanner(messageKey: state.error!, l10n: l10n),
           _Section(
             key: _sectionKeys[0],
             title: l10n.settingsSectionAppearanceLanguage,
+            source: l10n.settingsSourceUser,
             children: [
               _PreferenceRow(
                   label: l10n.onboardingLanguageLabel,
-                  child: _LanguagePicker(
-                      value: us.language,
-                      onChanged: _cubit.setLanguage,
-                      l10n: l10n)),
+                  child: feedback(
+                      'language',
+                      _LanguagePicker(
+                          value: draft('language', us.language),
+                          onChanged: _cubit.setLanguage,
+                          l10n: l10n))),
             ],
           ),
           _Section(
             key: _sectionKeys[1],
             title: l10n.settingsSectionTimezone,
+            source: l10n.settingsSourceUser,
             children: [
               _PreferenceRow(
                   label: l10n.onboardingTimezoneLabel,
-                  child: _TimezonePicker(
-                      value: us.timezone, onChanged: _cubit.setTimezone)),
+                  child: feedback(
+                      'timezone',
+                      _TimezonePicker(
+                          value: draft('timezone', us.timezone),
+                          onChanged: _cubit.setTimezone))),
             ],
           ),
           _Section(
             key: _sectionKeys[2],
             title: l10n.settingsSectionPomodoro,
+            source: l10n.settingsSourceUser,
             children: [
+              Text(l10n.settingsTimerHint),
+              const SizedBox(height: 12),
               _FieldGrid(children: [
-                _BoundedIntField(
-                  label: l10n.settingsPomodoroFocusLabel,
-                  value: us.pomodoroFocusMinutes,
-                  onChanged: _cubit.setPomodoroFocusMinutes,
-                ),
-                _BoundedIntField(
-                  label: l10n.settingsPomodoroShortBreakLabel,
-                  value: us.pomodoroShortBreakMinutes,
-                  onChanged: _cubit.setPomodoroShortBreakMinutes,
-                ),
-                _BoundedIntField(
-                  label: l10n.settingsPomodoroLongBreakLabel,
-                  value: us.pomodoroLongBreakMinutes,
-                  onChanged: _cubit.setPomodoroLongBreakMinutes,
-                ),
-                _BoundedIntField(
-                  label: l10n.settingsPomodoroLongBreakIntervalLabel,
-                  value: us.pomodoroLongBreakInterval,
-                  onChanged: _cubit.setPomodoroLongBreakInterval,
-                ),
+                feedback(
+                    'focus',
+                    _BoundedIntField(
+                      label: l10n.settingsPomodoroFocusLabel,
+                      min: 1,
+                      max: 180,
+                      value: draft('focus', us.pomodoroFocusMinutes),
+                      onChanged: _cubit.setPomodoroFocusMinutes,
+                    )),
+                feedback(
+                    'shortBreak',
+                    _BoundedIntField(
+                      label: l10n.settingsPomodoroShortBreakLabel,
+                      min: 1,
+                      max: 60,
+                      value: draft('shortBreak', us.pomodoroShortBreakMinutes),
+                      onChanged: _cubit.setPomodoroShortBreakMinutes,
+                    )),
+                feedback(
+                    'longBreak',
+                    _BoundedIntField(
+                      label: l10n.settingsPomodoroLongBreakLabel,
+                      min: 1,
+                      max: 120,
+                      value: draft('longBreak', us.pomodoroLongBreakMinutes),
+                      onChanged: _cubit.setPomodoroLongBreakMinutes,
+                    )),
+                feedback(
+                    'interval',
+                    _BoundedIntField(
+                      label: l10n.settingsPomodoroLongBreakIntervalLabel,
+                      min: 2,
+                      max: 12,
+                      value: draft('interval', us.pomodoroLongBreakInterval),
+                      onChanged: _cubit.setPomodoroLongBreakInterval,
+                    )),
               ]),
             ],
           ),
           _Section(
             key: _sectionKeys[3],
             title: l10n.settingsSectionNotifications,
+            source: l10n.settingsSourceUser,
             children: [
-              SwitchListTile(
-                title: Text(l10n.settingsNotificationsEnabledLabel),
-                value: us.notificationsEnabled,
-                onChanged: _cubit.setNotificationsEnabled,
-              ),
-              _AlarmModePicker(
-                  value: us.alarmMode,
-                  onChanged: _cubit.setAlarmMode,
-                  l10n: l10n),
+              Text(l10n.settingsNotificationHint),
+              feedback(
+                  'notifications',
+                  SwitchListTile(
+                    title: Text(l10n.settingsNotificationsEnabledLabel),
+                    value: draft('notifications', us.notificationsEnabled),
+                    onChanged: _cubit.setNotificationsEnabled,
+                  )),
+              feedback(
+                  'alarm',
+                  _AlarmModePicker(
+                      value: draft('alarm', us.alarmMode),
+                      onChanged: _cubit.setAlarmMode,
+                      l10n: l10n)),
             ],
           ),
           _Section(
             key: _sectionKeys[4],
             title: l10n.settingsSectionWeeklyReview,
+            source: l10n.settingsSourceUser,
             children: [
-              _WeeklyReviewTimePicker(
-                value: us.weeklyReviewTime,
-                onChanged: _cubit.setWeeklyReviewTime,
-                l10n: l10n,
-              ),
+              Text(l10n.settingsReviewHint),
+              feedback(
+                  'reviewTime',
+                  _WeeklyReviewTimePicker(
+                    value: draft('reviewTime', us.weeklyReviewTime),
+                    onChanged: _cubit.setWeeklyReviewTime,
+                    l10n: l10n,
+                  )),
             ],
           ),
           _Section(
             key: _sectionKeys[5],
             title: l10n.settingsSectionThisDevice,
+            source: l10n.settingsSourceDevice,
             children: [
-              _ThemePicker(
-                  value: ds.theme, onChanged: _cubit.setTheme, l10n: l10n),
-              _AlarmVolumeSlider(
-                value: ds.alarmVolumePercent,
-                onChanged: _cubit.setAlarmVolumePercent,
-                l10n: l10n,
-              ),
+              feedback(
+                  'theme',
+                  _ThemePicker(
+                      value: draft('theme', ds.theme),
+                      onChanged: _cubit.setTheme,
+                      l10n: l10n)),
+              feedback(
+                  'volume',
+                  _AlarmVolumeSlider(
+                    value: draft('volume', ds.alarmVolumePercent),
+                    onChanged: _cubit.setAlarmVolumePercent,
+                    l10n: l10n,
+                  )),
             ],
           ),
+          _Section(
+              key: _sectionKeys[6],
+              title: l10n.settingsSyncTitle,
+              children: [Text(l10n.settingsSyncUnavailable)]),
+          _Section(
+              key: _sectionKeys[7],
+              title: l10n.settingsAboutTitle,
+              children: [Text(l10n.settingsAboutBody)]),
         ];
         final labels = [
           l10n.settingsSectionAppearanceLanguage,
@@ -168,7 +239,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
           l10n.settingsSectionPomodoro,
           l10n.settingsSectionNotifications,
           l10n.settingsSectionWeeklyReview,
-          l10n.settingsSectionThisDevice
+          l10n.settingsSectionThisDevice,
+          l10n.settingsSyncTitle,
+          l10n.settingsAboutTitle
         ];
         return Scaffold(
           appBar: AppBar(
@@ -183,7 +256,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       fontWeight: FontWeight.w800,
                       letterSpacing: -1))),
           body: LayoutBuilder(builder: (context, constraints) {
-            final mobile = constraints.maxWidth <= 680;
+            final mobile = constraints.maxWidth <= 736;
             final content = Container(
                 decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
@@ -196,7 +269,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     children: sections));
             return SingleChildScrollView(
                 padding: EdgeInsets.symmetric(
-                    horizontal: mobile ? 16 : 32, vertical: 28),
+                    horizontal:
+                        mobile ? 16 : (constraints.maxWidth <= 960 ? 24 : 32),
+                    vertical: 28),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -208,7 +283,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               label: Text(l10n.homeTitle))),
                       const SizedBox(height: 16),
                       Text(l10n.settingsTitle,
-                          style: Theme.of(context).textTheme.headlineMedium),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium
+                              ?.copyWith(fontSize: mobile ? 28 : 30)),
                       const SizedBox(height: 6),
                       Text(l10n.settingsIntro,
                           style: Theme.of(context).textTheme.bodySmall),
@@ -220,7 +298,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                  width: 208,
+                                  width:
+                                      constraints.maxWidth <= 960 ? 170 : 208,
                                   child: Padding(
                                       padding: const EdgeInsets.only(right: 22),
                                       child: Column(
@@ -277,7 +356,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                                           style: const TextStyle(
                                                               fontSize: 12)))),
                                           ]))),
-                              const SizedBox(width: 32),
+                              SizedBox(
+                                  width: constraints.maxWidth <= 960 ? 24 : 32),
                               Expanded(child: content),
                             ]),
                     ]));
@@ -289,8 +369,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
 }
 
 class _Section extends StatelessWidget {
-  const _Section({super.key, required this.title, required this.children});
+  const _Section(
+      {super.key, required this.title, required this.children, this.source});
   final String title;
+  final String? source;
   final List<Widget> children;
 
   @override
@@ -307,6 +389,11 @@ class _Section extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(title, style: Theme.of(context).textTheme.titleMedium),
+            if (source != null)
+              Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: Text(source!,
+                      style: Theme.of(context).textTheme.bodySmall)),
             const SizedBox(height: AppSpacing.md),
             ...children,
           ],
@@ -348,6 +435,8 @@ class _LanguagePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SegmentedButton<Language>(
+      style:
+          SegmentedButton.styleFrom(textStyle: const TextStyle(fontSize: 12)),
       segments: [
         ButtonSegment(
             value: Language.id, label: Text(l10n.onboardingLanguageId)),
@@ -371,6 +460,8 @@ class _TimezonePicker extends StatelessWidget {
     return LayoutBuilder(
         builder: (context, constraints) => DropdownMenu<String>(
               initialSelection: value,
+              textStyle: TextStyle(
+                  fontSize: MediaQuery.sizeOf(context).width <= 440 ? 16 : 14),
               width: constraints.maxWidth,
               enableFilter: true,
               requestFocusOnTap: true,
@@ -386,9 +477,15 @@ class _TimezonePicker extends StatelessWidget {
 
 class _BoundedIntField extends StatefulWidget {
   const _BoundedIntField(
-      {required this.label, required this.value, required this.onChanged});
+      {required this.label,
+      required this.value,
+      required this.onChanged,
+      required this.min,
+      required this.max});
   final String label;
   final int value;
+  final int min;
+  final int max;
   final ValueChanged<int> onChanged;
 
   @override
@@ -396,6 +493,7 @@ class _BoundedIntField extends StatefulWidget {
 }
 
 class _BoundedIntFieldState extends State<_BoundedIntField> {
+  bool _invalid = false;
   late final TextEditingController _controller =
       TextEditingController(text: widget.value.toString());
 
@@ -418,15 +516,24 @@ class _BoundedIntFieldState extends State<_BoundedIntField> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.md),
-      child: TextField(
-        controller: _controller,
-        keyboardType: TextInputType.number,
-        decoration: InputDecoration(labelText: widget.label),
-        onSubmitted: (text) {
-          final v = int.tryParse(text);
-          if (v != null) widget.onChanged(v);
-        },
-      ),
+      child: DesignField(
+          label: widget.label,
+          child: TextField(
+            style: const TextStyle(fontSize: 16),
+            controller: _controller,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+                helperText: '${widget.min}–${widget.max}',
+                errorText: _invalid
+                    ? AppLocalizations.of(context)!.settingsValueOutOfRange
+                    : null),
+            onSubmitted: (text) {
+              final v = int.tryParse(text);
+              setState(() =>
+                  _invalid = v == null || v < widget.min || v > widget.max);
+              if (!_invalid && v != null) widget.onChanged(v);
+            },
+          )),
     );
   }
 }
@@ -443,6 +550,8 @@ class _AlarmModePicker extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: AppSpacing.sm),
       child: SegmentedButton<AlarmMode>(
+        style:
+            SegmentedButton.styleFrom(textStyle: const TextStyle(fontSize: 12)),
         segments: [
           ButtonSegment(
               value: AlarmMode.sound, label: Text(l10n.settingsAlarmModeSound)),
@@ -497,6 +606,8 @@ class _ThemePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SegmentedButton<ThemePreference>(
+      style:
+          SegmentedButton.styleFrom(textStyle: const TextStyle(fontSize: 12)),
       segments: [
         ButtonSegment(
             value: ThemePreference.system,
@@ -549,7 +660,10 @@ class _FieldGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       LayoutBuilder(builder: (context, constraints) {
-        final columns = constraints.maxWidth >= 440 ? 2 : 1;
+        final columns = MediaQuery.sizeOf(context).width > 520 &&
+                constraints.maxWidth >= 400
+            ? 2
+            : 1;
         return Wrap(spacing: 16, runSpacing: 12, children: [
           for (final child in children)
             SizedBox(
@@ -580,4 +694,39 @@ class _PreferenceRow extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [title, const SizedBox(height: 12), child]));
       });
+}
+
+class _FieldFeedback extends StatelessWidget {
+  const _FieldFeedback(
+      {required this.phase, required this.onRetry, required this.child});
+  final String? phase;
+  final VoidCallback onRetry;
+  final Widget child;
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      child,
+      if (phase != null)
+        Padding(
+            padding: const EdgeInsets.only(top: 6, bottom: 8),
+            child: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 8,
+                children: [
+                  Text(
+                      phase == 'saving'
+                          ? l10n.settingsSavingField
+                          : phase == 'saved'
+                              ? l10n.settingsSavedField
+                              : phase == 'invalid'
+                                  ? l10n.settingsValueOutOfRange
+                                  : l10n.settingsSaveFailed,
+                      style: Theme.of(context).textTheme.bodySmall),
+                  if (phase == 'error')
+                    TextButton(
+                        onPressed: onRetry, child: Text(l10n.actionRetry)),
+                ])),
+    ]);
+  }
 }

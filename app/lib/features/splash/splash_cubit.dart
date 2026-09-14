@@ -18,10 +18,8 @@ import 'splash_state.dart';
 /// kick off (non-blocking) recurrence materialization, then decide the exit
 /// route. Splash never touches the network or requests permissions.
 ///
-/// Migration-before-upgrade (OPERATIONS Section 3) is not exercised yet: M1
-/// only ever creates schema v1, so there is nothing to migrate from. Wiring
-/// `backupAppDatabaseBeforeMigration` into this sequence is required before
-/// `AppDatabase.schemaVersion` is ever bumped past 1.
+/// The database opener verifies an encrypted backup before upgrading an
+/// existing database. In-flight Pomodoro sessions remain unchanged on startup.
 class SplashCubit extends Cubit<SplashState> {
   SplashCubit({Future<AppDatabase> Function()? databaseOpener})
       : _openDatabase = databaseOpener ?? openAppDatabase,
@@ -58,21 +56,25 @@ class SplashCubit extends Cubit<SplashState> {
       }
 
       final settings = await db.settingsDao.getUserSettings(user!.id);
+      await db.pomodoroDao.getInFlightSession(user.id);
       if (settings != null) {
         // Non-blocking: design/screens/splash.md "Materialisasi ringan ...
         // boleh dimulai tanpa memblokir tampilan".
         final location = tz.getLocation(settings.timezone);
-        unawaited(MaterializationRunner(db).run(userId: user.id, location: location));
+        unawaited(
+            MaterializationRunner(db).run(userId: user.id, location: location));
 
         if (locator.isRegistered<ValueNotifier<Locale?>>()) {
-          locator<ValueNotifier<Locale?>>().value = Locale(settings.language.name);
+          locator<ValueNotifier<Locale?>>().value =
+              Locale(settings.language.name);
         }
       }
 
       // Apply the per-device theme before the shell is visible (design/screens/
       // splash.md: "menerapkannya tanpa flash permukaan terang pada mode gelap").
       if (locator.isRegistered<ValueNotifier<ThemeMode>>()) {
-        locator<ValueNotifier<ThemeMode>>().value = themeModeFromPreference(device!.theme);
+        locator<ValueNotifier<ThemeMode>>().value =
+            themeModeFromPreference(device!.theme);
       }
 
       final destination = device!.onboardingCompletedAt == null
@@ -84,12 +86,16 @@ class SplashCubit extends Cubit<SplashState> {
         userId: user.id,
         deviceId: device.deviceId,
       ));
+    } on DatabaseDowngradeException {
+      emit(const SplashState.failed(
+          reasonKey: 'splashDowngradeForbidden', retriable: false));
     } catch (_) {
       // Splash does not surface SQL/paths/stack traces (design spec "Panduan
       // pemulihan"); the generic "could not open" message with retry covers
       // the retriable cases (locked file, transient IO) it can distinguish
       // without deeper native testing.
-      emit(const SplashState.failed(reasonKey: 'splashOpenFailed', retriable: true));
+      emit(const SplashState.failed(
+          reasonKey: 'splashOpenFailed', retriable: true));
     }
   }
 }

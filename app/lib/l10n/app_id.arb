@@ -412,5 +412,99 @@
         "type": "String"
       }
     }
+  },
+  "homeFollowUpTitle": "Perlu ditindaklanjuti",
+  "homeFollowUpEmpty": "Tidak ada yang perlu ditindaklanjuti.",
+  "homeWithoutTime": "Belum memiliki jam",
+  "homeUnfinishedActivity": "Aktivitas belum selesai",
+  "homeSetTime": "Tentukan waktu",
+  "homeEditActivity": "Edit aktivitas",
+  "homeClearTime": "Tetap tanpa jam",
+  "homeSaveFailed": "Perubahan belum tersimpan. Coba lagi.",
+  "homeHabitIntegrationGap": "Kebiasaan belum tersedia pada versi ini.",
+  "homeTimeboxIntegrationGap": "Timebox belum tersedia pada versi ini.",
+  "homeReviewIntegrationGap": "Weekly Review belum tersedia pada versi ini.",
+  "homeDerivedIntegrationGap": "Aktivitas ini mengikuti fitur asalnya. Perubahan belum tersedia dari Home.",
+  "tugasChecklistReadFailed": "Checklist gagal dimuat. Coba lagi sebelum menyimpan.",
+  "tugasChecklistLoading": "Memuat checklist…",
+  "tugasUseChecklist": "Gunakan checklist (opsional)",
+  "tugasChecklistRemove": "Hapus item",
+  "tugasChecklistTitleRequired": "Isi semua item checklist atau hapus item kosong.",
+  "tugasSaveFailed": "Belum tersimpan. Input tetap tersedia; coba lagi.",
+  "settingsSourceUser": "Preferensi pengguna · tersimpan lokal; sinkronisasi belum tersedia",
+  "settingsSourceDevice": "Hanya perangkat ini",
+  "settingsSavingField": "Sedang menyimpan…",
+  "settingsSavedField": "Tersimpan di perangkat ini",
+  "settingsTimerHint": "Durasi baru berlaku pada sesi berikutnya.",
+  "settingsNotificationHint": "Preferensi ini bukan izin notifikasi sistem. Integrasi notifikasi belum tersedia.",
+  "settingsReviewHint": "Hari review: Minggu. Penjadwalan pengingat belum tersedia.",
+  "settingsSyncUnavailable": "Sinkronisasi dan registrasi perangkat belum tersedia pada versi ini.",
+  "settingsAboutTitle": "Tentang",
+  "settingsSyncTitle": "Pusat Sync",
+  "settingsAboutBody": "Dailys · aplikasi produktivitas lokal. Informasi build belum tersedia di layar ini.",
+  "splashRecoveryGuide": "Panduan pemulihan",
+  "splashRecoveryAdvice": "Jangan reset atau menghapus database. Pertahankan salinan lokal yang telah diverifikasi dan gunakan prosedur pemulihan yang sesuai. Periksa ruang penyimpanan dan gunakan versi aplikasi yang sesuai dengan data.",
+  "navPomodoro": "Pomodoro",
+  "pomodoroSettingsShortcut": "Pengaturan",
+  "pomodoroFokus": "Fokus",
+  "pomodoroShortBreak": "Istirahat pendek",
+  "pomodoroLongBreak": "Istirahat panjang",
+  "pomodoroIdle": "Siap mulai",
+  "pomodoroOvertime": "Melebihi durasi rencana",
+  "pomodoroOfferLongBreak": "Sudah beberapa sesi fokus berturut-turut. Ambil istirahat panjang?",
+  "pomodoroPresetLabel": "Durasi",
+  "pomodoroMinutes": "{minutes} menit",
+  "@pomodoroMinutes": {
+  "placeholders": {
+    "minutes": {
+      "type": "int"
+    }
   }
+},
+  "pomodoroCustomPreset": "Custom",
+  "pomodoroCustomMinutesLabel": "Menit",
+  "pomodoroLinkFree": "Sesi bebas",
+  "pomodoroStartFocus": "Mulai fokus",
+  "pomodoroStartShortBreak": "Mulai istirahat pendek",
+  "pomodoroStartLongBreak": "Mulai istirahat panjang",
+  "pomodoroPause": "Jeda",
+  "pomodoroResume": "Lanjutkan",
+  "pomodoroCompleteSession": "Selesaikan",
+  "pomodoroCancelSession": "Batalkan",
+  "pomodoroSkipBreak": "Lewati",
+  "pomodoroCancelConfirmTitle": "Batalkan sesi fokus?",
+  "pomodoroCancelConfirmBody": "Sesi fokus yang dibatalkan tidak dihitung selesai dan tidak menghasilkan entry Activity.",
+  "pomodoroCancelConfirmAction": "Batalkan sesi",
+  "pomodoroStatsTitle": "Statistik fokus",
+  "pomodoroStatsDaily": "Hari ini",
+  "pomodoroStatsWeekly": "Minggu ini",
+  "pomodoroStatsMonthly": "Bulan ini",
+  "pomodoroStatValue": "{minutes} menit · {count} sesi",
+  "@pomodoroStatValue": {
+  "placeholders": {
+    "minutes": {
+      "type": "int"
+    },
+    "count": {
+      "type": "int"
+    }
+  }
+},
+  "pomodoroHistoryTitle": "Riwayat sesi",
+  "pomodoroHistoryEmpty": "Belum ada riwayat sesi.",
+  "pomodoroStatusCancelled": "Dibatalkan",
+  "pomodoroStatusRunning": "Berjalan",
+  "pomodoroStatusPaused": "Dijeda",
+  "pomodoroIntro": "Satu sesi untuk pekerjaan yang dipilih.",
+  "pomodoroTimerSettings": "Timer & alarm",
+  "pomodoroReadFailed": "Sesi belum dapat dimuat. Coba lagi.",
+  "pomodoroSaveFailed": "Perubahan sesi belum tersimpan. Coba lagi.",
+  "pomodoroFocusFor": "Fokus untuk",
+  "pomodoroHabitUnavailable": "Kaitan Habit belum tersedia.",
+  "pomodoroManualNote": "Mulai setiap sesi secara manual.",
+  "pomodoroCustomInvalid": "Masukkan durasi 1–180 menit.",
+  "pomodoroLongBreakCount": "{count}/{interval} sesi fokus sebelum istirahat panjang.",
+  "pomodoroFocusTime": "Waktu fokus",
+  "pomodoroActual": "Aktual",
+  "pomodoroPlanned": "Rencana"
 }

@@ -128,7 +128,8 @@ class _TugasListScreenState extends State<TugasListScreen> {
                               Text(l10n.tugasTitle,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .headlineMedium),
+                                      .headlineMedium
+                                      ?.copyWith(fontSize: mobile ? 28 : 30)),
                               const SizedBox(height: 8),
                               Text(l10n.tugasIntro,
                                   style: Theme.of(context).textTheme.bodySmall)
@@ -236,7 +237,10 @@ class _ActiveTab extends StatelessWidget {
               _FilterSortBar(cubit: cubit, state: state, l10n: l10n),
               const SizedBox(height: 24),
               Text(l10n.tugasActiveCount(tasks.length),
-                  style: Theme.of(context).textTheme.titleMedium),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleMedium
+                      ?.copyWith(fontSize: 20)),
               const SizedBox(height: 16),
               if (tasks.isEmpty)
                 Padding(
@@ -372,7 +376,10 @@ class _FilterSortBar extends StatelessWidget {
                 isExpanded: true,
                 items: items,
                 onChanged: onChanged,
-                style: Theme.of(context).textTheme.bodyMedium)
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(fontSize: 13))
           ]);
       final fields = <Widget>[
         field<String>(

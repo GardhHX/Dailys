@@ -110,7 +110,7 @@ bukan nama model perangkat. Pastikan hasil tetap dapat dipakai pada 320 px.
 Grid mingguan Home berubah menjadi agenda tujuh hari pada ponsel; hari, blok,
 deadline, dan quick-add tetap tersedia.
 
-Geometri preview mempunyai variasi yang disengaja: Home memakai rail 142/76 px;
+Geometri preview mempunyai variasi yang disengaja: Home memakai rail 142/76 px dan 166 px mulai 1150 px;
 empat layar berikutnya memakai 142 px, 166 px mulai 1150 px, dan 88 px saat compact.
 Padding wide desktop keempat layar tersebut 38 px horizontal/32 px vertikal.
 Variasi ini dicatat pada `layout.screenOverrides` di token; jangan meratakan semua

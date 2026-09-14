@@ -11,6 +11,7 @@ import '../../core/projections/completion_rate.dart';
 import '../../core/projections/overlap.dart';
 import '../../core/recurrence/materialization_runner.dart';
 import '../../core/time/local_date.dart';
+import '../../core/time/tz_resolver.dart';
 import 'activity_home_state.dart';
 
 /// Drives Home Today (design/screens/home.md; M1-PLAN `features/activity`):
@@ -22,24 +23,48 @@ class ActivityHomeCubit extends Cubit<ActivityHomeState> {
     required String userId,
     required tz.Location location,
     LocalDate? initialDate,
+    DateTime Function()? now,
   })  : _db = db,
         _userId = userId,
         _location = location,
+        _now = now ?? (() => DateTime.now().toUtc()),
         super(ActivityHomeState(
           date: initialDate ??
               LocalDate.fromInstant(DateTime.now().toUtc(), location),
         )) {
-    _categoriesSub =
-        _db.activityDao.watchPickableCategories(_userId).listen((cats) {
-      _categories = cats;
-      _emit();
-    }, onError: (_) => emit(state.copyWith(loading: false, error: "load")));
+    _watchCategories();
+    _clock = Timer.periodic(const Duration(seconds: 30), (_) => _emit());
     _watchDate(state.date);
   }
 
   final AppDatabase _db;
   final String _userId;
   final tz.Location _location;
+  final DateTime Function() _now;
+  Timer? _clock;
+  bool _categoriesReady = false;
+  bool _activitiesReady = false;
+  bool _failed = false;
+
+  DateTime localTime(LocalDate date, int hour, int minute) =>
+      TzResolver.localToUtc(
+          _location, date.year, date.month, date.day, hour, minute);
+
+  void _watchCategories() {
+    _categoriesSub?.cancel();
+    _categoriesReady = false;
+    _categoriesSub =
+        _db.activityDao.watchPickableCategories(_userId).listen((cats) {
+      _categories = cats;
+      _categoriesReady = true;
+      _emit();
+    }, onError: (_) => _fail());
+  }
+
+  void _fail() {
+    _failed = true;
+    if (!isClosed) emit(state.copyWith(loading: false, error: 'load'));
+  }
 
   String get timezone => _location.name;
   String formatTime(DateTime instant) {
@@ -48,7 +73,9 @@ class ActivityHomeCubit extends Cubit<ActivityHomeState> {
   }
 
   void retry() {
+    _failed = false;
     emit(state.copyWith(loading: true));
+    _watchCategories();
     _watchDate(state.date);
   }
 
@@ -64,15 +91,19 @@ class ActivityHomeCubit extends Cubit<ActivityHomeState> {
 
   void _watchDate(LocalDate date) {
     _activitiesSub?.cancel();
+    _activitiesReady = false;
+    _activities = const [];
     _activitiesSub = _db.activityDao
         .watchActivitiesForDate(_userId, date.toYmd())
         .listen((rows) {
       _activities = rows;
+      _activitiesReady = true;
       _emit();
-    }, onError: (_) => emit(state.copyWith(loading: false, error: "load")));
+    }, onError: (_) => _fail());
   }
 
   void _emit() {
+    if (isClosed || _failed) return;
     final completed =
         _activities.where((a) => a.status == ActivityStatus.selesai).length;
     final rate = completionRatePercent(
@@ -99,7 +130,8 @@ class ActivityHomeCubit extends Cubit<ActivityHomeState> {
       categories: _categories,
       completionRatePercent: rate,
       overlaps: findOverlaps(intervals),
-      loading: false,
+      loading: !(_activitiesReady && _categoriesReady),
+      now: _now(),
     ));
   }
 
@@ -113,8 +145,7 @@ class ActivityHomeCubit extends Cubit<ActivityHomeState> {
 
   void goToNextDay() => goToDate(state.date.addDays(1));
 
-  void goToToday() =>
-      goToDate(LocalDate.fromInstant(DateTime.now().toUtc(), _location));
+  void goToToday() => goToDate(LocalDate.fromInstant(_now(), _location));
 
   /// Creates a single, non-recurring Activity on the active date (FR-1.1;
   /// schema 8). `reminder_offsets_minutes` must stay `[]` when there is no
@@ -124,6 +155,7 @@ class ActivityHomeCubit extends Cubit<ActivityHomeState> {
     required String judul,
     required String activityCategoryId,
     bool isAllDay = false,
+    LocalDate? date,
     DateTime? startTime,
     DateTime? endTime,
     List<int> reminderOffsetsMinutes = const [],
@@ -134,7 +166,7 @@ class ActivityHomeCubit extends Cubit<ActivityHomeState> {
       createdAt: ts,
       updatedAt: ts,
       userId: _userId,
-      occurrenceDate: state.date.toYmd(),
+      occurrenceDate: (date ?? state.date).toYmd(),
       judul: judul,
       activityCategoryId: activityCategoryId,
       startTime: Value(isAllDay ? null : startTime),
@@ -144,34 +176,6 @@ class ActivityHomeCubit extends Cubit<ActivityHomeState> {
       source: ActivitySource.manual,
       reminderOffsetsMinutes: Value(
           isAllDay || startTime == null ? const [] : reminderOffsetsMinutes),
-    ));
-  }
-
-  /// Creates a single Timebox occurrence on the active date (Activity with
-  /// `source = timebox`). Start/end are required for a Timebox (design
-  /// preview home.html). Recurring Timeboxes are out of scope here.
-  Future<void> createTimeboxOccurrence({
-    required String judul,
-    required String activityCategoryId,
-    required DateTime startTime,
-    required DateTime endTime,
-    List<int> reminderOffsetsMinutes = const [],
-  }) async {
-    final ts = DateTime.now().toUtc();
-    await _db.activityDao.insertActivity(ActivityCompanion.insert(
-      id: DeterministicId.v4(),
-      createdAt: ts,
-      updatedAt: ts,
-      userId: _userId,
-      occurrenceDate: state.date.toYmd(),
-      judul: judul,
-      activityCategoryId: activityCategoryId,
-      startTime: Value(startTime),
-      endTime: Value(endTime),
-      isAllDay: const Value(false),
-      status: ActivityStatus.belum_mulai,
-      source: ActivitySource.timebox,
-      reminderOffsetsMinutes: Value(reminderOffsetsMinutes),
     ));
   }
 
@@ -209,6 +213,22 @@ class ActivityHomeCubit extends Cubit<ActivityHomeState> {
     await MaterializationRunner(_db).run(userId: _userId, location: _location);
   }
 
+  Future<void> editManualActivity(
+          {required ActivityRow existing,
+          required String judul,
+          required String activityCategoryId,
+          bool isAllDay = false,
+          DateTime? startTime,
+          DateTime? endTime}) =>
+      _db.activityDao.editManualActivity(
+          userId: _userId,
+          id: existing.id,
+          judul: judul,
+          activityCategoryId: activityCategoryId,
+          isAllDay: isAllDay,
+          startTime: startTime,
+          endTime: endTime);
+
   Future<void> setStatus(String activityId, ActivityStatus status) =>
       _db.activityDao.setActivityStatus(activityId, status);
 
@@ -217,6 +237,7 @@ class ActivityHomeCubit extends Cubit<ActivityHomeState> {
 
   @override
   Future<void> close() {
+    _clock?.cancel();
     _activitiesSub?.cancel();
     _categoriesSub?.cancel();
     return super.close();

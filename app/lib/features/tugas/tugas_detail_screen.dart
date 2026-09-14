@@ -163,7 +163,10 @@ class _TugasDetailScreenState extends State<TugasDetailScreen> {
                                 label: Text(l10n.actionBack))),
                         const SizedBox(height: 12),
                         Text(t.judul,
-                            style: Theme.of(context).textTheme.headlineMedium),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(fontSize: mobile ? 28 : 30)),
                         const SizedBox(height: 8),
                         Text(
                             DateFormat.yMMMEd(locale).add_Hm().format(
