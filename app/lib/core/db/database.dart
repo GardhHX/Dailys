@@ -2,7 +2,9 @@ import 'package:drift/drift.dart';
 
 import 'daos/activity_dao.dart';
 import 'daos/mata_kuliah_dao.dart';
+import 'daos/pomodoro_dao.dart';
 import 'daos/settings_dao.dart';
+import 'daos/timebox_dao.dart';
 import 'daos/tugas_dao.dart';
 import '../ids/deterministic_id.dart';
 import 'migrations.dart';
@@ -10,13 +12,15 @@ import 'seed/category_seed.dart';
 import 'tables/converters.dart';
 import 'tables/enums.dart';
 import 'tables/m1_tables.dart';
+import 'tables/m3_tables.dart';
 
 part 'database.g.dart';
 
-/// The local Drift database — offline source of truth for M1 (NFR-2).
+/// The local Drift database — offline source of truth for M1+ (NFR-2).
 ///
-/// Only the M1 subset of tables is created; deferred milestones add the rest via
-/// future migrations (schema 22, M1-PLAN Section 3).
+/// M1 created a fixed subset of tables; M3 (schema 22, "migration menuju M2+
+/// menambah sisanya") adds TimeboxSchedule/TimeboxExecution and
+/// PomodoroSession via the v1 -> v2 migration below.
 @DriftDatabase(
   tables: [
     Users,
@@ -29,20 +33,32 @@ part 'database.g.dart';
     ActivityCategory,
     ActivityRecurrence,
     Activity,
+    PomodoroSession,
+    TimeboxSchedule,
+    TimeboxExecution,
   ],
-  daos: [SettingsDao, MataKuliahDao, TugasDao, ActivityDao],
+  daos: [SettingsDao, MataKuliahDao, TugasDao, ActivityDao, TimeboxDao, PomodoroDao],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
         onCreate: (m) async {
           await m.createAll();
           await createM1Indexes(m);
+          await createM3Indexes(m);
+        },
+        onUpgrade: (m, from, to) async {
+          if (from < 2) {
+            await m.createTable(pomodoroSession);
+            await m.createTable(timeboxSchedule);
+            await m.createTable(timeboxExecution);
+            await createM3Indexes(m);
+          }
         },
         beforeOpen: (details) async {
           // Soft-delete keeps rows, so FK enforcement is safe and wanted.

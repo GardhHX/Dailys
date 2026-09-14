@@ -8,9 +8,11 @@ import '../db/database.dart';
 import 'activity_reminder_plan.dart';
 import 'notification_gateway.dart';
 import 'planned_reminder.dart';
+import 'timebox_reminder_plan.dart';
 import 'tugas_reminder_plan.dart';
 
-/// Drives Activity and Tugas reminders (FR-1.10, FR-6.4) by polling rather
+/// Drives Activity, Tugas, and Timebox reminders (FR-1.10, FR-6.4, FR-3.13) by
+/// polling rather
 /// than pre-scheduling: `local_notifier` has no OS-level "fire this at time
 /// T" API (unlike `flutter_local_notifications`, which isn't available on
 /// Windows at all — see `notification_gateway.dart`), so this recomputes the
@@ -74,12 +76,15 @@ class ReminderScheduler {
 
     final activities = await _db.activityDao.getReminderCandidates(_userId);
     final tugasRows = await _db.tugasDao.getReminderCandidates(_userId);
+    final timeboxOccurrences = await _db.timeboxDao.getReminderCandidates(_userId);
 
     final planned = <PlannedReminder>[
       for (final a in activities)
         ...planActivityReminders(a, l10n: l10n, location: location),
       for (final t in tugasRows)
         ...planTugasReminders(t, l10n: l10n, location: location),
+      for (final o in timeboxOccurrences)
+        ...planTimeboxReminders(o, l10n: l10n, location: location),
     ];
 
     final validIds = planned.map((p) => p.id).toSet();

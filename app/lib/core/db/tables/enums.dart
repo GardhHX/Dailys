@@ -42,3 +42,12 @@ enum ActivityStatus { belum_mulai, selesai, dilewati }
 
 /// Activity.source (schema 8).
 enum ActivitySource { manual, pomodoro, timebox, habit }
+
+/// TimeboxExecution.status (schema 10.1).
+enum TimeboxExecutionStatus { pending, completed, missed, skipped, rescheduled }
+
+/// PomodoroSession.jenis (schema 9).
+enum PomodoroJenis { fokus, istirahat_pendek, istirahat_panjang }
+
+/// PomodoroSession.status (schema 9).
+enum PomodoroStatus { running, paused, completed, cancelled }

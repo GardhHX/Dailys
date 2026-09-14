@@ -1,21 +1,27 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import '../../app/theme/tokens.dart';
+import '../../core/db/daos/timebox_dao.dart';
 import '../../core/db/database.dart';
 import '../../core/db/tables/enums.dart';
 import '../../core/time/local_date.dart';
 import '../../core/time/tz_data.dart';
 import '../../l10n/app_localizations.dart';
+import '../pomodoro/pomodoro_screen.dart';
 import '../settings/settings_screen.dart';
+import '../timebox/timebox_cubit.dart';
+import '../timebox/timebox_state.dart';
+import '../timebox/timebox_widgets.dart';
 import '../tugas/tugas_list_screen.dart';
 import 'activity_home_cubit.dart';
 import 'activity_home_state.dart';
 import 'add_activity_sheet.dart';
 import 'habits_panel.dart';
-import 'timebox_execution.dart';
 
 class ActivityHomeScreen extends StatefulWidget {
   const ActivityHomeScreen({
@@ -39,14 +45,23 @@ enum _ScheduleMode { list, timeline, week }
 
 class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
   ActivityHomeCubit? _cubit;
+  TimeboxCubit? _timeboxCubit;
   _ScheduleMode _mode = _ScheduleMode.timeline;
   String? _initError;
   late Stream<List<TugasRow>> _deadlines;
+
+  /// Latest snapshot of active Tugas, for the add-Timebox sheet's optional
+  /// link picker (FR-3.5) — the sheet needs a plain list, not a stream.
+  List<TugasRow> _tugasSnapshot = const [];
+  StreamSubscription<List<TugasRow>>? _tugasSnapshotSub;
 
   @override
   void initState() {
     super.initState();
     _deadlines = widget.db.tugasDao.watchActiveTugas(widget.userId);
+    _tugasSnapshotSub = _deadlines.listen((rows) {
+      if (mounted) setState(() => _tugasSnapshot = rows);
+    });
     _init();
   }
 
@@ -60,6 +75,8 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
       setState(() {
         _cubit = ActivityHomeCubit(
             db: widget.db, userId: widget.userId, location: location);
+        _timeboxCubit = TimeboxCubit(
+            db: widget.db, userId: widget.userId, location: location);
       });
     } catch (_) {
       if (mounted) setState(() => _initError = "load");
@@ -69,6 +86,8 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
   @override
   void dispose() {
     _cubit?.close();
+    _timeboxCubit?.close();
+    _tugasSnapshotSub?.cancel();
     super.dispose();
   }
 
@@ -76,7 +95,8 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final cubit = _cubit;
-    if (cubit == null) {
+    final timeboxCubit = _timeboxCubit;
+    if (cubit == null || timeboxCubit == null) {
       return Scaffold(
           body: Center(
               child: _initError == null
@@ -92,7 +112,9 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
                     ])));
     }
     final locale = Localizations.localeOf(context).toString();
-    return BlocBuilder<ActivityHomeCubit, ActivityHomeState>(
+    return BlocBuilder<TimeboxCubit, TimeboxState>(
+      bloc: timeboxCubit,
+      builder: (context, timeboxState) => BlocBuilder<ActivityHomeCubit, ActivityHomeState>(
       bloc: cubit,
       builder: (context, state) =>
           LayoutBuilder(builder: (context, constraints) {
@@ -106,12 +128,12 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
         final navigation = [
           (Icons.home_filled, l10n.homeTitle),
           (Icons.article, l10n.navTasks),
-          (Icons.timer, 'Pomodoro'),
+          (Icons.timer, l10n.navPomodoro),
           (Icons.account_balance_wallet, l10n.navFinance),
           (Icons.check_box, l10n.navHabit),
         ];
         Widget navItem(int i) => Tooltip(
-              message: i <= 1 ? navigation[i].$2 : l10n.featureUnavailable,
+              message: i <= 2 ? navigation[i].$2 : l10n.featureUnavailable,
               child: TextButton(
                 onPressed: i == 0
                     ? cubit.goToToday
@@ -121,7 +143,13 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
                                 db: widget.db,
                                 userId: widget.userId,
                                 deviceId: widget.deviceId)))
-                        : null,
+                        : i == 2
+                            ? () => Navigator.of(context).push(MaterialPageRoute(
+                                builder: (_) => PomodoroScreen(
+                                    db: widget.db,
+                                    userId: widget.userId,
+                                    deviceId: widget.deviceId)))
+                            : null,
                 style: TextButton.styleFrom(
                   backgroundColor:
                       i == 0 ? colors.primaryContainer : Colors.transparent,
@@ -238,12 +266,18 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
                 monday: monday,
                 cubit: cubit,
                 state: state,
+                timeboxCubit: timeboxCubit,
                 deadlines: _deadlines,
                 l10n: l10n,
                 locale: locale,
                 mobile: mobile,
                 onActivityTap: (a) =>
-                    _openActivity(context, a, cubit, l10n))
+                    _openActivity(context, a, cubit, l10n),
+                onTimeboxTap: (o) => showTimeboxOccurrenceDetail(context,
+                    occurrence: o,
+                    cubit: timeboxCubit,
+                    categories: state.categories,
+                    l10n: l10n))
           else if (state.loading)
             const Padding(
                 padding: EdgeInsets.all(24),
@@ -256,7 +290,16 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
           else ...[
             if (state.overlaps.isNotEmpty)
               _OverlapBanner(count: state.overlaps.length, l10n: l10n),
-            if (state.activities.isEmpty)
+            if (_missedNotDismissed(timeboxState, timeboxCubit).isNotEmpty)
+              _MissedTimeboxBanner(
+                  count: _missedNotDismissed(timeboxState, timeboxCubit).length,
+                  l10n: l10n,
+                  onReview: () => showMissedTimeboxReview(context,
+                      missed: _missedNotDismissed(timeboxState, timeboxCubit),
+                      cubit: timeboxCubit,
+                      l10n: l10n)),
+            if (state.activities.isEmpty &&
+                timeboxState.pendingForDate(state.date.toYmd()).isEmpty)
               Card(
                   child: Padding(
                       padding: const EdgeInsets.all(24),
@@ -268,12 +311,15 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
                             textAlign: TextAlign.center),
                         const SizedBox(height: 16),
                         TextButton.icon(
-                            onPressed: () =>
-                                showAddActivitySheet(context, cubit: cubit),
+                            onPressed: () => showAddActivitySheet(context,
+                                cubit: cubit,
+                                timeboxCubit: timeboxCubit,
+                                tugasOptions: _tugasSnapshot,
+                                initialDate: state.date),
                             icon: const Icon(Icons.add),
                             label: Text(l10n.homeAdd)),
                       ]))),
-            ..._buildAgenda(context, state, cubit, l10n, mobile),
+            ..._buildAgenda(context, state, cubit, timeboxState, timeboxCubit, l10n, mobile),
           ],
         ]);
         return Scaffold(
@@ -359,7 +405,10 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
                                 ElevatedButton.icon(
                                     onPressed: () => showAddActivitySheet(
                                         context,
-                                        cubit: cubit),
+                                        cubit: cubit,
+                                        timeboxCubit: timeboxCubit,
+                                        tugasOptions: _tugasSnapshot,
+                                        initialDate: state.date),
                                     icon: const Icon(Icons.add, size: 18),
                                     label: Text(l10n.homeAdd)),
                               ]),
@@ -385,33 +434,74 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
           ]),
         );
       }),
+      ),
     );
   }
 
-  /// Builds the day's agenda body: timed entries (Timeline puts the start time
-  /// in a left gutter), the "no specific time" flexible section, and deadline
-  /// overlays for tasks due on the active date — mirroring design/preview/home.html.
-  List<Widget> _buildAgenda(BuildContext context, ActivityHomeState state,
-      ActivityHomeCubit cubit, AppLocalizations l10n, bool mobile) {
-    if (state.activities.isEmpty) return const [];
+  /// Builds the day's agenda body: timed entries — Activity occurrences
+  /// (including a completed Timebox block's derived Activity) merged
+  /// chronologically with still-`pending`/`missed`/`skipped`/`rescheduled`
+  /// TimeboxExecution occurrences for the date (a `completed` one is skipped
+  /// here since its Activity is already the displayed unit — design/screens/
+  /// home.md "tidak menggandakan entry") — then the "no specific time"
+  /// flexible section, mirroring design/preview/home.html.
+  List<Widget> _buildAgenda(
+      BuildContext context,
+      ActivityHomeState state,
+      ActivityHomeCubit cubit,
+      TimeboxState timeboxState,
+      TimeboxCubit timeboxCubit,
+      AppLocalizations l10n,
+      bool mobile) {
+    final pendingTimebox = timeboxState.pendingForDate(state.date.toYmd());
+    if (state.activities.isEmpty && pendingTimebox.isEmpty) return const [];
     final widgets = <Widget>[];
-    // The first not-started Timebox becomes the highlighted "feature" card.
-    ActivityRow? feature;
+
+    // The first not-started Timebox (Activity-sourced or still-pending
+    // occurrence) becomes the highlighted "feature" card.
+    ActivityRow? featureActivity;
     for (final a in state.timed) {
       if (a.source == ActivitySource.timebox &&
           a.status == ActivityStatus.belum_mulai) {
-        feature = a;
+        featureActivity = a;
         break;
       }
     }
-    for (final activity in state.timed) {
-      final entry = _AgendaEntry(
-          activity: activity,
-          state: state,
-          cubit: cubit,
-          l10n: l10n,
-          feature: identical(activity, feature),
-          onTap: () => _openActivity(context, activity, cubit, l10n));
+    TimeboxOccurrence? featureOccurrence;
+    if (featureActivity == null) {
+      for (final o in pendingTimebox) {
+        if (o.execution.status == TimeboxExecutionStatus.pending) {
+          featureOccurrence = o;
+          break;
+        }
+      }
+    }
+
+    final entries = <_TimelineEntry>[
+      for (final a in state.timed) _TimelineEntry.activity(a),
+      for (final o in pendingTimebox) _TimelineEntry.timebox(o),
+    ]..sort((a, b) => a.start.compareTo(b.start));
+
+    for (final e in entries) {
+      final child = e.activity != null
+          ? _AgendaEntry(
+              activity: e.activity!,
+              state: state,
+              cubit: cubit,
+              l10n: l10n,
+              feature: identical(e.activity, featureActivity),
+              onTap: () => _openActivity(context, e.activity!, cubit, l10n))
+          : TimeboxAgendaCard(
+              occurrence: e.occurrence!,
+              categories: state.categories,
+              cubit: timeboxCubit,
+              l10n: l10n,
+              feature: identical(e.occurrence, featureOccurrence),
+              onTap: () => showTimeboxOccurrenceDetail(context,
+                  occurrence: e.occurrence!,
+                  cubit: timeboxCubit,
+                  categories: state.categories,
+                  l10n: l10n));
       if (_mode == _ScheduleMode.timeline && !mobile) {
         widgets.add(Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.md),
@@ -420,15 +510,14 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
                   width: 48,
                   child: Padding(
                       padding: const EdgeInsets.only(top: 17),
-                      child: Text(cubit.formatTime(activity.startTime!),
+                      child: Text(cubit.formatTime(e.start),
                           style: Theme.of(context).textTheme.bodySmall))),
               const SizedBox(width: 12),
-              Expanded(child: entry),
+              Expanded(child: child),
             ])));
       } else {
         widgets.add(Padding(
-            padding: const EdgeInsets.only(bottom: AppSpacing.md),
-            child: entry));
+            padding: const EdgeInsets.only(bottom: AppSpacing.md), child: child));
       }
     }
     if (state.untimed.isNotEmpty) {
@@ -445,6 +534,17 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
       }
     }
     return widgets;
+  }
+
+  /// FR-3.7 missed candidates still awaiting a decision (excludes ones the
+  /// user chose "masih berlaku" on today).
+  List<TimeboxOccurrence> _missedNotDismissed(
+      TimeboxState timeboxState, TimeboxCubit timeboxCubit) {
+    final now = timeboxState.now ?? DateTime.now().toUtc();
+    return timeboxState
+        .missedCandidates(now)
+        .where((o) => !timeboxCubit.isMissedPromptDismissed(o.execution.id))
+        .toList();
   }
 
   void _showActivityActions(BuildContext context, ActivityRow activity,
@@ -475,7 +575,12 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
                   cubit.setStatus(activity.id, ActivityStatus.dilewati);
                   Navigator.pop(sheetContext);
                 }),
-          if (activity.status != ActivityStatus.belum_mulai)
+          // Reopening a Timebox/Pomodoro-derived Activity can't be undone on
+          // its source side (the execution/session stays `completed`), so
+          // that one-way domain event never offers "reopen" back to
+          // belum_mulai — only a plain manual Activity does.
+          if (activity.status != ActivityStatus.belum_mulai &&
+              activity.source == ActivitySource.manual)
             ListTile(
                 leading: const Icon(Icons.restart_alt),
                 title: Text(l10n.activityReopen),
@@ -495,118 +600,15 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
     );
   }
 
-  /// Routes a tap: Timebox occurrences get the execution detail (start/complete
-  /// block); everything else gets the generic status actions.
+  /// Every Activity occurrence — including one derived from a completed
+  /// Timebox block or Pomodoro session — gets the same generic status/delete
+  /// actions; a still-`pending` Timebox occurrence never reaches this method
+  /// at all (it has no Activity yet, so its card opens
+  /// `showTimeboxOccurrenceDetail` directly — see `_buildAgenda`/`_WeekGrid`).
   void _openActivity(BuildContext context, ActivityRow activity,
       ActivityHomeCubit cubit, AppLocalizations l10n) {
-    if (activity.source == ActivitySource.timebox) {
-      _showTimeboxDetail(context, activity, cubit, l10n);
-    } else {
-      _showActivityActions(context, activity, cubit, l10n);
-    }
+    _showActivityActions(context, activity, cubit, l10n);
   }
-
-  /// Timebox execution detail mirroring design/preview/home.html `itemDetail`
-  /// for a Timebox: plan + actual times and the start/complete/skip lifecycle.
-  /// Actual times are held in [TimeboxExecution] (in memory, M1).
-  void _showTimeboxDetail(BuildContext context, ActivityRow activity,
-      ActivityHomeCubit cubit, AppLocalizations l10n) {
-    final exec = TimeboxExecution.instance;
-    final theme = Theme.of(context);
-    String hm(DateTime? i) => i == null ? '' : cubit.formatTime(i);
-    showModalBottomSheet<void>(
-      context: context,
-      builder: (sheetContext) {
-        final finished = activity.status == ActivityStatus.selesai;
-        final running = exec.isRunning(activity.id) && !finished;
-        final actualStart = exec.actualStart(activity.id);
-        final actualEnd = exec.actualEnd(activity.id);
-        final actualText = actualStart == null
-            ? l10n.timeboxNotStarted
-            : '${hm(actualStart)}${actualEnd != null ? '–${hm(actualEnd)}' : ''}';
-        final statusText =
-            '${_statusLabel(activity.status, l10n)}${running ? ' · ${l10n.timeboxBlockStarted}' : ''}';
-        final planText = activity.startTime == null
-            ? l10n.activityFlexible
-            : '${hm(activity.startTime)}${activity.endTime != null ? '–${hm(activity.endTime)}' : ''}';
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
-            child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(l10n.timeboxDetailTitle,
-                      style: theme.textTheme.labelMedium
-                          ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
-                  const SizedBox(height: 4),
-                  Text(activity.judul, style: theme.textTheme.titleSmall),
-                  const SizedBox(height: AppSpacing.md),
-                  _metaLine(context, l10n.activityFieldCategory,
-                      _categoryName(cubit.state, activity) ?? '—'),
-                  _metaLine(context, l10n.tugasFilterStatus, statusText),
-                  _metaLine(context, l10n.timeboxPlan, planText),
-                  _metaLine(context, l10n.timeboxActual, actualText),
-                  const SizedBox(height: AppSpacing.md),
-                  Wrap(spacing: AppSpacing.sm, runSpacing: AppSpacing.sm, children: [
-                    if (!finished && !running)
-                      FilledButton.icon(
-                          icon: const Icon(Icons.play_arrow, size: 18),
-                          label: Text(l10n.timeboxStart),
-                          onPressed: () {
-                            exec.start(activity.id, DateTime.now().toUtc());
-                            Navigator.pop(sheetContext);
-                            setState(() {});
-                          }),
-                    if (running)
-                      FilledButton.icon(
-                          icon: const Icon(Icons.check, size: 18),
-                          label: Text(l10n.timeboxComplete),
-                          onPressed: () {
-                            exec.complete(activity.id, DateTime.now().toUtc());
-                            cubit.setStatus(activity.id, ActivityStatus.selesai);
-                            Navigator.pop(sheetContext);
-                            setState(() {});
-                          }),
-                    if (!finished)
-                      OutlinedButton(
-                          onPressed: () {
-                            exec.reset(activity.id);
-                            cubit.setStatus(
-                                activity.id, ActivityStatus.dilewati);
-                            Navigator.pop(sheetContext);
-                            setState(() {});
-                          },
-                          child: Text(l10n.timeboxSkip)),
-                    OutlinedButton(
-                        onPressed: () {
-                          cubit.deleteActivity(activity.id);
-                          Navigator.pop(sheetContext);
-                        },
-                        child: Text(l10n.activityDelete)),
-                  ]),
-                  const SizedBox(height: AppSpacing.sm),
-                  Text(l10n.timeboxDemoNote,
-                      style: theme.textTheme.labelSmall),
-                ]),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _metaLine(BuildContext context, String label, String value) => Padding(
-        padding: const EdgeInsets.only(bottom: 6),
-        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          SizedBox(
-              width: 90,
-              child: Text(label,
-                  style: Theme.of(context).textTheme.bodySmall)),
-          Expanded(
-              child: Text(value,
-                  style: Theme.of(context).textTheme.bodyMedium)),
-        ]),
-      );
 
   Widget _sidebar(
       BuildContext context, ActivityHomeCubit cubit, AppLocalizations l10n) {
@@ -779,6 +781,49 @@ class _OverlapBanner extends StatelessWidget {
   }
 }
 
+/// FR-3.7: banner surfacing still-pending Timebox blocks whose planned end
+/// already passed, opening the grouped "Missed Block Review" list.
+class _MissedTimeboxBanner extends StatelessWidget {
+  const _MissedTimeboxBanner(
+      {required this.count, required this.l10n, required this.onReview});
+  final int count;
+  final AppLocalizations l10n;
+  final VoidCallback onReview;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: AppSpacing.md),
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.errorContainer,
+        borderRadius: BorderRadius.circular(AppRadius.control),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.event_busy_outlined),
+          const SizedBox(width: AppSpacing.sm),
+          Expanded(child: Text(l10n.timeboxMissedBanner(count))),
+          TextButton(onPressed: onReview, child: Text(l10n.timeboxReviewAction)),
+        ],
+      ),
+    );
+  }
+}
+
+/// One merged timeline slot: either an Activity occurrence (`startTime` is
+/// non-null for every entry `_buildAgenda` puts through this — it only ever
+/// wraps `state.timed`) or a still-pending TimeboxExecution occurrence.
+class _TimelineEntry {
+  const _TimelineEntry.activity(this.activity) : occurrence = null;
+  const _TimelineEntry.timebox(this.occurrence) : activity = null;
+
+  final ActivityRow? activity;
+  final TimeboxOccurrence? occurrence;
+
+  DateTime get start => activity?.startTime ?? occurrence!.execution.plannedStartAt;
+}
+
 class _SectionHeader extends StatelessWidget {
   const _SectionHeader({required this.title});
   final String title;
@@ -824,7 +869,12 @@ class _AgendaEntry extends StatelessWidget {
         ? l10n.activityFlexible
         : '${cubit.formatTime(activity.startTime!)}'
             '${activity.endTime != null ? '–${cubit.formatTime(activity.endTime!)}' : ''}';
-    final recurring = activity.source == ActivitySource.timebox &&
+    // A completed Timebox/Pomodoro Activity has no link back to its
+    // (possibly recurring) schedule/session — schema 8 only carries
+    // `source`/`source_id`, not the originating template — so there is
+    // nothing here to show a "weekly" suffix for; only a manual
+    // ActivityRecurrence occurrence can.
+    final recurring = activity.source == ActivitySource.manual &&
             activity.recurrenceId != null
         ? ' · ${l10n.activityRecurringWeekly}'
         : '';
@@ -866,12 +916,12 @@ class _AgendaEntry extends StatelessWidget {
                 ]),
               ),
               const SizedBox(width: 8),
-              Text(
-                  activity.source == ActivitySource.timebox &&
-                          TimeboxExecution.instance.isRunning(activity.id) &&
-                          activity.status != ActivityStatus.selesai
-                      ? l10n.timeboxBlockStarted
-                      : _statusLabel(activity.status, l10n),
+              // A Timebox/Pomodoro-derived Activity only ever exists once
+              // completed (schema 10.1/9: created exactly at completion), so
+              // there is no "started but not yet done" Activity status left
+              // to special-case here — the transient state lives entirely in
+              // TimeboxExecution/PomodoroSession before that point.
+              Text(_statusLabel(activity.status, l10n),
                   style: TextStyle(fontSize: 11, color: muted)),
             ]),
             SizedBox(height: feature ? 11 : 7),
@@ -1187,21 +1237,25 @@ class _WeekGrid extends StatelessWidget {
     required this.monday,
     required this.cubit,
     required this.state,
+    required this.timeboxCubit,
     required this.deadlines,
     required this.l10n,
     required this.locale,
     required this.mobile,
     required this.onActivityTap,
+    required this.onTimeboxTap,
   });
 
   final DateTime monday;
   final ActivityHomeCubit cubit;
   final ActivityHomeState state;
+  final TimeboxCubit timeboxCubit;
   final Stream<List<TugasRow>> deadlines;
   final AppLocalizations l10n;
   final String locale;
   final bool mobile;
   final void Function(ActivityRow) onActivityTap;
+  final void Function(TimeboxOccurrence) onTimeboxTap;
 
   static const List<int> _hours = [8, 10, 12, 14, 16, 18, 20, 22];
 
@@ -1232,16 +1286,27 @@ class _WeekGrid extends StatelessWidget {
         final timed = snapshot.data!
             .where((a) => !a.isAllDay && a.startTime != null)
             .toList();
-        return StreamBuilder<List<TugasRow>>(
-          stream: deadlines,
-          builder: (context, dsnap) {
-            final tasks = (dsnap.data ?? const <TugasRow>[])
-                .where((t) =>
-                    t.status != TugasStatus.selesai && t.archivedAt == null)
+        return StreamBuilder<List<TimeboxOccurrence>>(
+          stream: timeboxCubit.watchRange(start, end),
+          builder: (context, tbsnap) {
+            // Only still-pending occurrences are shown here (a completed
+            // one's Activity is already in `timed` — same "don't duplicate
+            // the entry" rule as `_buildAgenda`).
+            final pendingTimebox = (tbsnap.data ?? const <TimeboxOccurrence>[])
+                .where((o) => o.execution.status == TimeboxExecutionStatus.pending)
                 .toList();
-            return mobile
-                ? _buildMobile(context, days, timed, tasks)
-                : _buildGrid(context, days, timed, tasks);
+            return StreamBuilder<List<TugasRow>>(
+              stream: deadlines,
+              builder: (context, dsnap) {
+                final tasks = (dsnap.data ?? const <TugasRow>[])
+                    .where((t) =>
+                        t.status != TugasStatus.selesai && t.archivedAt == null)
+                    .toList();
+                return mobile
+                    ? _buildMobile(context, days, timed, pendingTimebox, tasks)
+                    : _buildGrid(context, days, timed, pendingTimebox, tasks);
+              },
+            );
           },
         );
       },
@@ -1250,11 +1315,13 @@ class _WeekGrid extends StatelessWidget {
 
   DateTime _localStart(ActivityRow a) =>
       tz.TZDateTime.from(a.startTime!, tz.getLocation(cubit.timezone));
+  DateTime _localTimeboxStart(TimeboxOccurrence o) => tz.TZDateTime.from(
+      o.execution.plannedStartAt, tz.getLocation(cubit.timezone));
   DateTime _localDue(TugasRow t) =>
       tz.TZDateTime.from(t.deadline, tz.getLocation(cubit.timezone));
 
-  Widget _buildGrid(BuildContext context, List<DateTime> days,
-      List<ActivityRow> timed, List<TugasRow> tasks) {
+  Widget _buildGrid(BuildContext context, List<DateTime> days, List<ActivityRow> timed,
+      List<TimeboxOccurrence> pendingTimebox, List<TugasRow> tasks) {
     final colors = Theme.of(context).colorScheme;
     final border = BorderSide(color: colors.outlineVariant);
     Widget headCell(String text) => Container(
@@ -1288,7 +1355,7 @@ class _WeekGrid extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 10, color: colors.onSurfaceVariant))),
         for (final d in days)
-          _cell(context, d, hour, timed, tasks),
+          _cell(context, d, hour, timed, pendingTimebox, tasks),
       ]));
     }
 
@@ -1311,62 +1378,84 @@ class _WeekGrid extends StatelessWidget {
     });
   }
 
-  Widget _cell(BuildContext context, DateTime day, int hour,
-      List<ActivityRow> timed, List<TugasRow> tasks) {
+  Widget _cell(BuildContext context, DateTime day, int hour, List<ActivityRow> timed,
+      List<TimeboxOccurrence> pendingTimebox, List<TugasRow> tasks) {
     final colors = Theme.of(context).colorScheme;
     final border = BorderSide(color: colors.outlineVariant);
     final blocks = timed.where((a) {
       final s = _localStart(a);
       return _ymd(s) == _ymd(day) && _bucket(s.hour) == hour;
     }).toList();
+    final timeboxBlocks = pendingTimebox.where((o) {
+      final s = _localTimeboxStart(o);
+      return _ymd(s) == _ymd(day) && _bucket(s.hour) == hour;
+    }).toList();
     final due = tasks.where((t) {
       final s = _localDue(t);
       return _ymd(s) == _ymd(day) && _bucket(s.hour) == hour;
     }).toList();
-    return Container(
-      constraints: const BoxConstraints(minHeight: 74),
-      padding: const EdgeInsets.all(3),
-      decoration: BoxDecoration(border: Border(right: border, bottom: border)),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        for (final a in blocks)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 3),
-            child: Material(
-              color: colors.primaryContainer,
-              borderRadius: BorderRadius.circular(AppRadius.denseCell),
-              child: InkWell(
-                onTap: () => onActivityTap(a),
-                child: Padding(
-                  padding: const EdgeInsets.all(3),
-                  child: Text('${cubit.formatTime(a.startTime!)}\n${a.judul}',
-                      style: TextStyle(fontSize: 10, color: colors.primary)),
+    return InkWell(
+      // FR-3.15 quick-add: an empty cell opens the add sheet prefilled with
+      // this day/hour, defaulted to Timebox (drag-to-create is out of scope).
+      onTap: blocks.isEmpty && timeboxBlocks.isEmpty && due.isEmpty
+          ? () => showAddActivitySheet(context,
+              cubit: cubit,
+              timeboxCubit: timeboxCubit,
+              initialDate: LocalDate(day.year, day.month, day.day),
+              initialStartTime: TimeOfDay(hour: hour, minute: 0),
+              startAsTimebox: true)
+          : null,
+      child: Container(
+        constraints: const BoxConstraints(minHeight: 74),
+        padding: const EdgeInsets.all(3),
+        decoration: BoxDecoration(border: Border(right: border, bottom: border)),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          for (final a in blocks)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 3),
+              child: Material(
+                color: colors.primaryContainer,
+                borderRadius: BorderRadius.circular(AppRadius.denseCell),
+                child: InkWell(
+                  onTap: () => onActivityTap(a),
+                  child: Padding(
+                    padding: const EdgeInsets.all(3),
+                    child: Text('${cubit.formatTime(a.startTime!)}\n${a.judul}',
+                        style: TextStyle(fontSize: 10, color: colors.primary)),
+                  ),
                 ),
               ),
             ),
-          ),
-        for (final t in due)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 3),
-            child: Container(
-              padding: const EdgeInsets.all(3),
-              decoration: BoxDecoration(
-                  color: colors.errorContainer,
-                  borderRadius: BorderRadius.circular(AppRadius.denseCell)),
-              child: Text(
-                  '${l10n.tugasDeadlineLabel} ${cubit.formatTime(t.deadline)}\n${t.judul}',
-                  style: TextStyle(fontSize: 10, color: colors.error)),
+          for (final o in timeboxBlocks)
+            TimeboxGridChip(
+                occurrence: o, cubit: timeboxCubit, onTap: () => onTimeboxTap(o)),
+          for (final t in due)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 3),
+              child: Container(
+                padding: const EdgeInsets.all(3),
+                decoration: BoxDecoration(
+                    color: colors.errorContainer,
+                    borderRadius: BorderRadius.circular(AppRadius.denseCell)),
+                child: Text(
+                    '${l10n.tugasDeadlineLabel} ${cubit.formatTime(t.deadline)}\n${t.judul}',
+                    style: TextStyle(fontSize: 10, color: colors.error)),
+              ),
             ),
-          ),
-      ]),
+        ]),
+      ),
     );
   }
 
-  Widget _buildMobile(BuildContext context, List<DateTime> days,
-      List<ActivityRow> timed, List<TugasRow> tasks) {
+  Widget _buildMobile(BuildContext context, List<DateTime> days, List<ActivityRow> timed,
+      List<TimeboxOccurrence> pendingTimebox, List<TugasRow> tasks) {
     final children = <Widget>[];
     for (final d in days) {
       final blocks = timed.where((a) => _ymd(_localStart(a)) == _ymd(d)).toList()
         ..sort((a, b) => a.startTime!.compareTo(b.startTime!));
+      final timeboxBlocks =
+          pendingTimebox.where((o) => _ymd(_localTimeboxStart(o)) == _ymd(d)).toList()
+            ..sort((a, b) => a.execution.plannedStartAt.compareTo(b.execution.plannedStartAt));
       final due = tasks.where((t) => _ymd(_localDue(t)) == _ymd(d)).toList();
       children.add(Padding(
         padding: const EdgeInsets.only(top: AppSpacing.lgx, bottom: AppSpacing.sm),
@@ -1374,7 +1463,7 @@ class _WeekGrid extends StatelessWidget {
             DateFormat.MMMMEEEEd(locale).format(d),
             style: Theme.of(context).textTheme.titleSmall),
       ));
-      if (blocks.isEmpty && due.isEmpty) {
+      if (blocks.isEmpty && timeboxBlocks.isEmpty && due.isEmpty) {
         children.add(Text(l10n.homeNoDeadlines,
             style: Theme.of(context).textTheme.bodySmall));
       }
@@ -1388,6 +1477,18 @@ class _WeekGrid extends StatelessWidget {
               l10n: l10n,
               feature: false,
               onTap: () => onActivityTap(a)),
+        ));
+      }
+      for (final o in timeboxBlocks) {
+        children.add(Padding(
+          padding: const EdgeInsets.only(bottom: AppSpacing.md),
+          child: TimeboxAgendaCard(
+              occurrence: o,
+              categories: state.categories,
+              cubit: timeboxCubit,
+              l10n: l10n,
+              feature: false,
+              onTap: () => onTimeboxTap(o)),
         ));
       }
       for (final t in due) {

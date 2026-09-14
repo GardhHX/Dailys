@@ -147,34 +147,6 @@ class ActivityHomeCubit extends Cubit<ActivityHomeState> {
     ));
   }
 
-  /// Creates a single Timebox occurrence on the active date (Activity with
-  /// `source = timebox`). Start/end are required for a Timebox (design
-  /// preview home.html). Recurring Timeboxes are out of scope here.
-  Future<void> createTimeboxOccurrence({
-    required String judul,
-    required String activityCategoryId,
-    required DateTime startTime,
-    required DateTime endTime,
-    List<int> reminderOffsetsMinutes = const [],
-  }) async {
-    final ts = DateTime.now().toUtc();
-    await _db.activityDao.insertActivity(ActivityCompanion.insert(
-      id: DeterministicId.v4(),
-      createdAt: ts,
-      updatedAt: ts,
-      userId: _userId,
-      occurrenceDate: state.date.toYmd(),
-      judul: judul,
-      activityCategoryId: activityCategoryId,
-      startTime: Value(startTime),
-      endTime: Value(endTime),
-      isAllDay: const Value(false),
-      status: ActivityStatus.belum_mulai,
-      source: ActivitySource.timebox,
-      reminderOffsetsMinutes: Value(reminderOffsetsMinutes),
-    ));
-  }
-
   /// Creates a recurrence template (schema 7) and immediately runs the
   /// materializer so occurrences within the rolling window appear right away
   /// (API-SPEC "Materializer berjalan pada ... sesudah template berubah").

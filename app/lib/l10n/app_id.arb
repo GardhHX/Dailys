@@ -190,7 +190,6 @@
   "timeboxStart": "Mulai block",
   "timeboxComplete": "Selesaikan block",
   "timeboxSkip": "Lewati kejadian ini",
-  "timeboxDemoNote": "Waktu aktual disimpan sementara (modul Timebox menyusul).",
   "onboardingIntro": "Pertama kali menggunakan Dailys",
   "onboardingHeading": "Atur bahasa & waktu",
   "onboardingLocalTitle": "Data tetap di perangkatmu",
@@ -402,6 +401,14 @@
       }
     }
   },
+  "reminderTimeboxBody": "Mulai jam {time}",
+  "@reminderTimeboxBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "reminderTugasBody": "Tenggat {date} {time}",
   "@reminderTugasBody": {
     "placeholders": {
@@ -412,5 +419,81 @@
         "type": "String"
       }
     }
-  }
+  },
+  "navPomodoro": "Pomodoro",
+  "timeboxLinkTugas": "Kaitkan ke Tugas (opsional)",
+  "timeboxLinkNone": "Tidak ada",
+  "timeboxUnavailable": "Timebox belum bisa disimpan saat ini.",
+  "timeboxMissedBanner": "{count} block Timebox terlewat",
+  "@timeboxMissedBanner": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "timeboxReviewAction": "Tinjau",
+  "timeboxReviewTitle": "Tinjau block terlewat",
+  "timeboxStatusMissed": "Terlewat",
+  "timeboxStatusSkipped": "Dilewati",
+  "timeboxStatusRescheduled": "Dijadwalkan ulang",
+  "timeboxRescheduleAction": "Jadwalkan ulang",
+  "timeboxMarkMissedAction": "Tandai terlewat",
+  "timeboxStillValidAction": "Masih berlaku",
+  "timeboxDeactivateTemplate": "Nonaktifkan template",
+  "timeboxReactivateTemplate": "Aktifkan kembali template",
+  "timeboxDuplicateAction": "Duplikasi ke hari lain",
+  "timeboxDuplicateTitle": "Duplikasi block",
+  "timeboxDuplicatePickDay": "Pilih hari tujuan",
+  "timeboxDuplicatePickDate": "Pilih tanggal tujuan",
+  "pomodoroSettingsShortcut": "Pengaturan",
+  "pomodoroFokus": "Fokus",
+  "pomodoroShortBreak": "Istirahat pendek",
+  "pomodoroLongBreak": "Istirahat panjang",
+  "pomodoroIdle": "Siap mulai",
+  "pomodoroOvertime": "Melebihi durasi rencana",
+  "pomodoroOfferLongBreak": "Sudah beberapa sesi fokus berturut-turut. Ambil istirahat panjang?",
+  "pomodoroPresetLabel": "Durasi",
+  "pomodoroMinutes": "{minutes} menit",
+  "@pomodoroMinutes": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "pomodoroCustomPreset": "Custom",
+  "pomodoroCustomMinutesLabel": "Menit",
+  "pomodoroLinkFree": "Sesi bebas",
+  "pomodoroStartFocus": "Mulai fokus",
+  "pomodoroStartShortBreak": "Mulai istirahat pendek",
+  "pomodoroStartLongBreak": "Mulai istirahat panjang",
+  "pomodoroPause": "Jeda",
+  "pomodoroResume": "Lanjutkan",
+  "pomodoroCompleteSession": "Selesaikan",
+  "pomodoroCancelSession": "Batalkan",
+  "pomodoroSkipBreak": "Lewati",
+  "pomodoroCancelConfirmTitle": "Batalkan sesi fokus?",
+  "pomodoroCancelConfirmBody": "Sesi fokus yang dibatalkan tidak dihitung selesai dan tidak menghasilkan entry Activity.",
+  "pomodoroCancelConfirmAction": "Batalkan sesi",
+  "pomodoroStatsTitle": "Statistik fokus",
+  "pomodoroStatsDaily": "Hari ini",
+  "pomodoroStatsWeekly": "Minggu ini",
+  "pomodoroStatsMonthly": "Bulan ini",
+  "pomodoroStatValue": "{minutes} menit · {count} sesi",
+  "@pomodoroStatValue": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "pomodoroHistoryTitle": "Riwayat sesi",
+  "pomodoroHistoryEmpty": "Belum ada riwayat sesi.",
+  "pomodoroStatusCancelled": "Dibatalkan",
+  "pomodoroStatusRunning": "Berjalan",
+  "pomodoroStatusPaused": "Dijeda"
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/db/database.dart';
 import '../../l10n/app_localizations.dart';
+import '../pomodoro/pomodoro_screen.dart';
 import '../settings/settings_screen.dart';
 
 class TugasShell extends StatelessWidget {
@@ -25,19 +26,23 @@ class TugasShell extends StatelessWidget {
         final items = [
           (Icons.home_outlined, l10n.homeTitle),
           (Icons.assignment_outlined, l10n.tugasTitle),
-          (Icons.timer_outlined, 'Pomodoro'),
+          (Icons.timer_outlined, l10n.navPomodoro),
           (Icons.account_balance_wallet_outlined, l10n.navFinance),
           (Icons.checklist, l10n.navHabit)
         ];
         Widget item(int i) => Tooltip(
-            message: i > 1 ? l10n.featureUnavailable : items[i].$2,
+            message: i > 2 ? l10n.featureUnavailable : items[i].$2,
             child: TextButton(
               onPressed: i == 0
                   ? () =>
                       Navigator.of(context).popUntil((route) => route.isFirst)
                   : i == 1
                       ? () {}
-                      : null,
+                      : i == 2
+                          ? () => Navigator.of(context).push(MaterialPageRoute(
+                              builder: (_) => PomodoroScreen(
+                                  db: db, userId: userId, deviceId: deviceId)))
+                          : null,
               style: TextButton.styleFrom(
                   backgroundColor:
                       i == 1 ? colors.primaryContainer : Colors.transparent,
