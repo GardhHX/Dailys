@@ -100,6 +100,24 @@ class ActivityDao extends DatabaseAccessor<AppDatabase> with _$ActivityDaoMixin 
             ]))
           .watch();
 
+  /// Active activities whose local `occurrence_date` falls within the inclusive
+  /// `[startDate, endDate]` range (both `YYYY-MM-DD`), for the Home week grid.
+  /// String comparison is safe because ISO dates sort lexicographically.
+  Stream<List<ActivityRow>> watchActivitiesForRange(
+          String userId, String startDate, String endDate) =>
+      (select(activity)
+            ..where((t) =>
+                t.userId.equals(userId) &
+                t.isDeleted.equals(false) &
+                t.occurrenceDate.isBiggerOrEqualValue(startDate) &
+                t.occurrenceDate.isSmallerOrEqualValue(endDate))
+            ..orderBy([
+              (t) => OrderingTerm(expression: t.occurrenceDate),
+              (t) => OrderingTerm(expression: t.startTime),
+              (t) => OrderingTerm(expression: t.judul),
+            ]))
+          .watch();
+
   Future<void> setActivityStatus(String id, ActivityStatus status, {DateTime? now}) async {
     final ts = now ?? DateTime.now().toUtc();
     await (update(activity)..where((t) => t.id.equals(id))).write(

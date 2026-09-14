@@ -52,6 +52,11 @@ class ActivityHomeCubit extends Cubit<ActivityHomeState> {
     _watchDate(state.date);
   }
 
+  /// Active activities across an inclusive local-date range (`YYYY-MM-DD`), for
+  /// the Home "Minggu" grid.
+  Stream<List<ActivityRow>> watchRange(String startDate, String endDate) =>
+      _db.activityDao.watchActivitiesForRange(_userId, startDate, endDate);
+
   StreamSubscription<List<ActivityRow>>? _activitiesSub;
   StreamSubscription<List<ActivityCategoryRow>>? _categoriesSub;
   List<ActivityRow> _activities = const [];

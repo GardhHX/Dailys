@@ -31,9 +31,13 @@ class ActivityHomeScreen extends StatefulWidget {
   State<ActivityHomeScreen> createState() => _ActivityHomeScreenState();
 }
 
+/// Home schedule view modes (design/preview/home.html toolbar: Daftar /
+/// Timeline / Minggu).
+enum _ScheduleMode { list, timeline, week }
+
 class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
   ActivityHomeCubit? _cubit;
-  bool _timeline = true;
+  _ScheduleMode _mode = _ScheduleMode.timeline;
   String? _initError;
   late Stream<List<TugasRow>> _deadlines;
 
@@ -145,7 +149,7 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
               spacing: 12,
               runSpacing: 12,
               children: [
-                SegmentedButton<bool>(
+                SegmentedButton<_ScheduleMode>(
                     style: ButtonStyle(
                         backgroundColor: WidgetStateProperty.resolveWith(
                             (states) => states.contains(WidgetState.selected)
@@ -157,13 +161,17 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
                                 : colors.onSurface)),
                     showSelectedIcon: false,
                     segments: [
-                      ButtonSegment(value: false, label: Text(l10n.homeList)),
                       ButtonSegment(
-                          value: true, label: Text(l10n.homeTimeline)),
+                          value: _ScheduleMode.list, label: Text(l10n.homeList)),
+                      ButtonSegment(
+                          value: _ScheduleMode.timeline,
+                          label: Text(l10n.homeTimeline)),
+                      ButtonSegment(
+                          value: _ScheduleMode.week, label: Text(l10n.homeWeek)),
                     ],
-                    selected: {_timeline},
+                    selected: {_mode},
                     onSelectionChanged: (v) =>
-                        setState(() => _timeline = v.first)),
+                        setState(() => _mode = v.first)),
                 Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
                   IconButton(
                       tooltip: l10n.previousDay,
@@ -215,10 +223,26 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
             Expanded(
                 child: Text(l10n.homeSchedule,
                     style: Theme.of(context).textTheme.titleMedium)),
-            _CompletionBadge(state: state, l10n: l10n),
+            if (_mode == _ScheduleMode.week)
+              Text(
+                  '${DateFormat.MMMd(locale).format(monday)} – ${DateFormat.MMMd(locale).format(monday.add(const Duration(days: 6)))}',
+                  style: Theme.of(context).textTheme.bodySmall)
+            else
+              _CompletionBadge(state: state, l10n: l10n),
           ]),
           const SizedBox(height: 16),
-          if (state.loading)
+          if (_mode == _ScheduleMode.week)
+            _WeekGrid(
+                monday: monday,
+                cubit: cubit,
+                state: state,
+                deadlines: _deadlines,
+                l10n: l10n,
+                locale: locale,
+                mobile: mobile,
+                onActivityTap: (a) =>
+                    _showActivityActions(context, a, cubit, l10n))
+          else if (state.loading)
             const Padding(
                 padding: EdgeInsets.all(24),
                 child: Center(child: CircularProgressIndicator()))
@@ -386,7 +410,7 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
           l10n: l10n,
           feature: identical(activity, feature),
           onTap: () => _showActivityActions(context, activity, cubit, l10n));
-      if (_timeline && !mobile) {
+      if (_mode == _ScheduleMode.timeline && !mobile) {
         widgets.add(Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.md),
             child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -934,6 +958,237 @@ class _WeeklyReviewSection extends StatelessWidget {
         ),
       ),
     ]);
+  }
+}
+
+/// Reference `dh-weekgrid` / `dh-weekmobile`: the "Minggu" view. A 2-hour-bucket
+/// grid (08.00–22.00) of the week's timed activities on wide screens, and a
+/// stacked per-day list on phones. Deadlines for each day show as danger cells.
+class _WeekGrid extends StatelessWidget {
+  const _WeekGrid({
+    required this.monday,
+    required this.cubit,
+    required this.state,
+    required this.deadlines,
+    required this.l10n,
+    required this.locale,
+    required this.mobile,
+    required this.onActivityTap,
+  });
+
+  final DateTime monday;
+  final ActivityHomeCubit cubit;
+  final ActivityHomeState state;
+  final Stream<List<TugasRow>> deadlines;
+  final AppLocalizations l10n;
+  final String locale;
+  final bool mobile;
+  final void Function(ActivityRow) onActivityTap;
+
+  static const List<int> _hours = [8, 10, 12, 14, 16, 18, 20, 22];
+
+  String _ymd(DateTime d) =>
+      '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+
+  int _bucket(int hour) => hour < 8 ? 8 : (hour > 22 ? 22 : (hour ~/ 2) * 2);
+
+  @override
+  Widget build(BuildContext context) {
+    final days = List.generate(7, (i) => monday.add(Duration(days: i)));
+    final start = _ymd(days.first);
+    final end = _ymd(days.last);
+    return StreamBuilder<List<ActivityRow>>(
+      stream: cubit.watchRange(start, end),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Column(children: [
+            Text(l10n.homeReadFailed),
+            TextButton(onPressed: cubit.retry, child: Text(l10n.actionRetry)),
+          ]);
+        }
+        if (!snapshot.hasData) {
+          return const Padding(
+              padding: EdgeInsets.all(24),
+              child: Center(child: CircularProgressIndicator()));
+        }
+        final timed = snapshot.data!
+            .where((a) => !a.isAllDay && a.startTime != null)
+            .toList();
+        return StreamBuilder<List<TugasRow>>(
+          stream: deadlines,
+          builder: (context, dsnap) {
+            final tasks = (dsnap.data ?? const <TugasRow>[])
+                .where((t) =>
+                    t.status != TugasStatus.selesai && t.archivedAt == null)
+                .toList();
+            return mobile
+                ? _buildMobile(context, days, timed, tasks)
+                : _buildGrid(context, days, timed, tasks);
+          },
+        );
+      },
+    );
+  }
+
+  DateTime _localStart(ActivityRow a) =>
+      tz.TZDateTime.from(a.startTime!, tz.getLocation(cubit.timezone));
+  DateTime _localDue(TugasRow t) =>
+      tz.TZDateTime.from(t.deadline, tz.getLocation(cubit.timezone));
+
+  Widget _buildGrid(BuildContext context, List<DateTime> days,
+      List<ActivityRow> timed, List<TugasRow> tasks) {
+    final colors = Theme.of(context).colorScheme;
+    final border = BorderSide(color: colors.outlineVariant);
+    Widget headCell(String text) => Container(
+        height: 42,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(border: Border(right: border, bottom: border)),
+        child: Text(text,
+            textAlign: TextAlign.center,
+            style: const TextStyle(fontSize: 11)));
+
+    final columnWidths = <int, TableColumnWidth>{0: const FixedColumnWidth(44)};
+    for (var i = 1; i <= 7; i++) {
+      columnWidths[i] = const FlexColumnWidth();
+    }
+
+    final rows = <TableRow>[
+      TableRow(children: [
+        headCell(l10n.homeWeekHour),
+        for (final d in days)
+          headCell(
+              '${DateFormat.E(locale).format(d)}\n${DateFormat.MMMd(locale).format(d)}'),
+      ]),
+    ];
+    for (final hour in _hours) {
+      rows.add(TableRow(children: [
+        Container(
+            padding: const EdgeInsets.only(top: 12),
+            decoration:
+                BoxDecoration(border: Border(right: border, bottom: border)),
+            child: Text('$hour.00',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 10, color: colors.onSurfaceVariant))),
+        for (final d in days)
+          _cell(context, d, hour, timed, tasks),
+      ]));
+    }
+
+    return LayoutBuilder(builder: (context, constraints) {
+      final grid = Container(
+        width: constraints.maxWidth < 620 ? 620 : constraints.maxWidth,
+        decoration: BoxDecoration(
+          color: colors.surface,
+          border: Border.all(color: colors.outlineVariant),
+          borderRadius: BorderRadius.circular(AppRadius.status + 3),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Table(
+            columnWidths: columnWidths,
+            defaultVerticalAlignment: TableCellVerticalAlignment.top,
+            children: rows),
+      );
+      return SingleChildScrollView(
+          scrollDirection: Axis.horizontal, child: grid);
+    });
+  }
+
+  Widget _cell(BuildContext context, DateTime day, int hour,
+      List<ActivityRow> timed, List<TugasRow> tasks) {
+    final colors = Theme.of(context).colorScheme;
+    final border = BorderSide(color: colors.outlineVariant);
+    final blocks = timed.where((a) {
+      final s = _localStart(a);
+      return _ymd(s) == _ymd(day) && _bucket(s.hour) == hour;
+    }).toList();
+    final due = tasks.where((t) {
+      final s = _localDue(t);
+      return _ymd(s) == _ymd(day) && _bucket(s.hour) == hour;
+    }).toList();
+    return Container(
+      constraints: const BoxConstraints(minHeight: 74),
+      padding: const EdgeInsets.all(3),
+      decoration: BoxDecoration(border: Border(right: border, bottom: border)),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        for (final a in blocks)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 3),
+            child: Material(
+              color: colors.primaryContainer,
+              borderRadius: BorderRadius.circular(AppRadius.denseCell),
+              child: InkWell(
+                onTap: () => onActivityTap(a),
+                child: Padding(
+                  padding: const EdgeInsets.all(3),
+                  child: Text('${cubit.formatTime(a.startTime!)}\n${a.judul}',
+                      style: TextStyle(fontSize: 10, color: colors.primary)),
+                ),
+              ),
+            ),
+          ),
+        for (final t in due)
+          Padding(
+            padding: const EdgeInsets.only(bottom: 3),
+            child: Container(
+              padding: const EdgeInsets.all(3),
+              decoration: BoxDecoration(
+                  color: colors.errorContainer,
+                  borderRadius: BorderRadius.circular(AppRadius.denseCell)),
+              child: Text(
+                  '${l10n.tugasDeadlineLabel} ${cubit.formatTime(t.deadline)}\n${t.judul}',
+                  style: TextStyle(fontSize: 10, color: colors.error)),
+            ),
+          ),
+      ]),
+    );
+  }
+
+  Widget _buildMobile(BuildContext context, List<DateTime> days,
+      List<ActivityRow> timed, List<TugasRow> tasks) {
+    final children = <Widget>[];
+    for (final d in days) {
+      final blocks = timed.where((a) => _ymd(_localStart(a)) == _ymd(d)).toList()
+        ..sort((a, b) => a.startTime!.compareTo(b.startTime!));
+      final due = tasks.where((t) => _ymd(_localDue(t)) == _ymd(d)).toList();
+      children.add(Padding(
+        padding: const EdgeInsets.only(top: AppSpacing.lgx, bottom: AppSpacing.sm),
+        child: Text(
+            DateFormat.MMMMEEEEd(locale).format(d),
+            style: Theme.of(context).textTheme.titleSmall),
+      ));
+      if (blocks.isEmpty && due.isEmpty) {
+        children.add(Text(l10n.homeNoDeadlines,
+            style: Theme.of(context).textTheme.bodySmall));
+      }
+      for (final a in blocks) {
+        children.add(Padding(
+          padding: const EdgeInsets.only(bottom: AppSpacing.md),
+          child: _AgendaEntry(
+              activity: a,
+              state: state,
+              cubit: cubit,
+              l10n: l10n,
+              feature: false,
+              onTap: () => onActivityTap(a)),
+        ));
+      }
+      for (final t in due) {
+        final colors = Theme.of(context).colorScheme;
+        children.add(Padding(
+          padding: const EdgeInsets.only(bottom: AppSpacing.md),
+          child: Container(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            decoration: BoxDecoration(
+                color: colors.errorContainer,
+                borderRadius: BorderRadius.circular(AppRadius.control)),
+            child: Text(
+                '${l10n.tugasDeadlineLabel} ${cubit.formatTime(t.deadline)} · ${t.judul}',
+                style: TextStyle(fontSize: 12, color: colors.error)),
+          ),
+        ));
+      }
+    }
+    return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children);
   }
 }
 
