@@ -122,6 +122,19 @@
   "homeWeeklyReviewBody": "Review this week and plan the next.",
   "homeWeeklyReviewOpen": "Open this week's review",
   "homeWeekHour": "Hour",
+  "homeHabits": "Habits",
+  "habitEveryDay": "Every day",
+  "habitStreak": "Streak {count} days",
+  "@habitStreak": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "habitNotDone": "Not done yet",
+  "habitSkipped": "Leave",
+  "habitDemoNote": "Sample habit data — not saved yet (Habit module to come).",
   "onboardingIntro": "First time using Dailys",
   "onboardingHeading": "Set language & time",
   "onboardingLocalTitle": "Your data stay on your device",

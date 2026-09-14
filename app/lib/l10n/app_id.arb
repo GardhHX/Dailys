@@ -159,6 +159,19 @@
   "homeWeeklyReviewBody": "Evaluasi minggu ini dan rencanakan minggu depan.",
   "homeWeeklyReviewOpen": "Buka review minggu ini",
   "homeWeekHour": "Jam",
+  "homeHabits": "Habits",
+  "habitEveryDay": "Setiap hari",
+  "habitStreak": "Streak {count} hari",
+  "@habitStreak": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "habitNotDone": "Belum selesai",
+  "habitSkipped": "Izin",
+  "habitDemoNote": "Data habit contoh — belum tersimpan (modul Habit menyusul).",
   "onboardingIntro": "Pertama kali menggunakan Dailys",
   "onboardingHeading": "Atur bahasa & waktu",
   "onboardingLocalTitle": "Data tetap di perangkatmu",

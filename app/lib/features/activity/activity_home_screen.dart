@@ -14,6 +14,7 @@ import '../tugas/tugas_list_screen.dart';
 import 'activity_home_cubit.dart';
 import 'activity_home_state.dart';
 import 'add_activity_sheet.dart';
+import 'habits_panel.dart';
 
 class ActivityHomeScreen extends StatefulWidget {
   const ActivityHomeScreen({
@@ -495,8 +496,20 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
 
   Widget _sidebar(
       BuildContext context, ActivityHomeCubit cubit, AppLocalizations l10n) {
+    final state = cubit.state;
+    final activeDate =
+        DateTime(state.date.year, state.date.month, state.date.day);
+    final now = tz.TZDateTime.now(tz.getLocation(cubit.timezone));
+    final isToday = activeDate.year == now.year &&
+        activeDate.month == now.month &&
+        activeDate.day == now.day;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       _deadlinePanel(context, cubit, l10n),
+      const SizedBox(height: AppSpacing.xxxl),
+      HabitsPanel(
+          activeDate: activeDate,
+          isToday: isToday,
+          locale: Localizations.localeOf(context).toString()),
       const SizedBox(height: AppSpacing.xxxl),
       _WeeklyReviewSection(l10n: l10n),
     ]);
