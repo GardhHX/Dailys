@@ -331,5 +331,54 @@
     }
   },
   "tugasPreviousWeek": "Minggu sebelumnya",
-  "tugasNextWeek": "Minggu berikutnya"
+  "tugasNextWeek": "Minggu berikutnya",
+  "homeNextDeadlineTitle": "Tenggat berikutnya",
+  "homeNextDeadlineEmpty": "Tidak ada tenggat mendatang",
+  "homeNextDeadlineOverdueSection": "Terlambat",
+  "homeNextDeadlineUpcomingSection": "Akan datang",
+  "homeNextDeadlineDueToday": "Jatuh tempo hari ini",
+  "homeNextDeadlineDaysLeft": "{days} hari lagi",
+  "@homeNextDeadlineDaysLeft": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "homeNextDeadlineDaysOverdue": "{days} hari terlambat",
+  "@homeNextDeadlineDaysOverdue": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "homeNextDeadlineMoreOverdue": "+{count} lagi terlambat",
+  "@homeNextDeadlineMoreOverdue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tugasThisWeek": "Minggu ini",
+  "reminderActivityBody": "Mulai jam {time}",
+  "@reminderActivityBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "reminderTugasBody": "Tenggat {date} {time}",
+  "@reminderTugasBody": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  }
 }

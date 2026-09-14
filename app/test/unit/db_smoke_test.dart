@@ -228,6 +228,72 @@ void main() {
         kSeedActivityCategories.length);
   });
 
+  test('M1 user data (Activity, Tugas, checklist) survives a restart', () async {
+    final dir = await Directory.systemTemp.createTemp('dailys_restart_data');
+    addTearDown(() => dir.deleteSync(recursive: true));
+    final file = File('${dir.path}/dailys.db');
+    final now = DateTime.utc(2026, 9, 14, 3);
+
+    var db = AppDatabase(NativeDatabase(file));
+    await db.provisionLocalUser(
+        userId: userId, deviceId: deviceId, nama: 'A', apiKeyHash: 'h');
+    final catId = DeterministicId.seedActivityCategory(userId, 'kuliah');
+
+    const activityId = '99999999-9999-4999-8999-999999999999';
+    await db.activityDao.insertActivity(ActivityCompanion.insert(
+      id: activityId,
+      createdAt: now,
+      updatedAt: now,
+      userId: userId,
+      occurrenceDate: '2026-09-14',
+      judul: 'Kelas Basis Data',
+      activityCategoryId: catId,
+      status: ActivityStatus.belum_mulai,
+      source: ActivitySource.manual,
+    ));
+
+    const tugasId = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+    await db.tugasDao.insertTugas(TugasCompanion.insert(
+      id: tugasId,
+      createdAt: now,
+      updatedAt: now,
+      userId: userId,
+      judul: 'Laporan Akhir',
+      deadline: now,
+      prioritas: TugasPrioritas.high,
+      status: TugasStatus.belum,
+      reminders: const [],
+    ));
+    await db.tugasDao.insertChecklistItem(TugasChecklistCompanion.insert(
+      id: 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb',
+      createdAt: now,
+      updatedAt: now,
+      tugasId: tugasId,
+      judul: 'Bab 1',
+      urutan: 0,
+    ));
+    await db.close(); // close cleanly before reopening the same file
+
+    db = AppDatabase(NativeDatabase(file));
+    addTearDown(db.close);
+
+    final activity =
+        await (db.select(db.activity)..where((a) => a.id.equals(activityId))).getSingle();
+    expect(activity.judul, 'Kelas Basis Data');
+    expect(activity.status, ActivityStatus.belum_mulai);
+
+    final tugas =
+        await (db.select(db.tugas)..where((t) => t.id.equals(tugasId))).getSingle();
+    expect(tugas.judul, 'Laporan Akhir');
+    expect(tugas.prioritas, TugasPrioritas.high);
+
+    final checklist = await (db.select(db.tugasChecklist)
+          ..where((c) => c.tugasId.equals(tugasId)))
+        .getSingle();
+    expect(checklist.judul, 'Bab 1');
+    expect(checklist.isDone, isFalse);
+  });
+
   test('OPERATIONS 3 backup: encrypted, verified, decryptable round-trip', () async {
     final dir = await Directory.systemTemp.createTemp('dailys_backup');
     addTearDown(() => dir.deleteSync(recursive: true));

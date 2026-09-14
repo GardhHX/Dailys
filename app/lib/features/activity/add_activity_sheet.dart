@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../app/theme/tokens.dart';
 import '../../l10n/app_localizations.dart';
@@ -226,10 +227,13 @@ class _AddActivitySheetState extends State<_AddActivitySheet> {
   String _formatTod(TimeOfDay t) =>
       '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}:00';
 
+  /// Locale-aware Mon..Sun abbreviations, driven by `intl` rather than a
+  /// hand-rolled id/en array (NFR-7: resources are the source of truth, not
+  /// strings baked into feature code).
   List<String> _weekdayShortLabels(BuildContext context) {
-    final lang = Localizations.localeOf(context).languageCode;
-    return lang == 'en'
-        ? const ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        : const ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+    final locale = Localizations.localeOf(context).toString();
+    final fmt = DateFormat.E(locale);
+    // 2024-01-01 was a Monday; iterating from there covers ISO weekdays 1..7.
+    return List.generate(7, (i) => fmt.format(DateTime(2024, 1, 1 + i)));
   }
 }

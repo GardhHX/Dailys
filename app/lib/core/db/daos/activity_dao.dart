@@ -118,6 +118,21 @@ class ActivityDao extends DatabaseAccessor<AppDatabase> with _$ActivityDaoMixin 
             ]))
           .watch();
 
+  /// Active, still-pending, timed activities for [userId] — the candidate set
+  /// for reminder scheduling (FR-1.10). Occurrences that are done/skipped, or
+  /// have no `start_time` (all-day/flexible, which must carry no reminders
+  /// per schema 8), are excluded up front.
+  Future<List<ActivityRow>> getReminderCandidates(String userId) => (select(
+        activity,
+      )..where(
+          (t) =>
+              t.userId.equals(userId) &
+              t.isDeleted.equals(false) &
+              t.status.equalsValue(ActivityStatus.belum_mulai) &
+              t.startTime.isNotNull(),
+        ))
+      .get();
+
   Future<void> setActivityStatus(String id, ActivityStatus status, {DateTime? now}) async {
     final ts = now ?? DateTime.now().toUtc();
     await (update(activity)..where((t) => t.id.equals(id))).write(

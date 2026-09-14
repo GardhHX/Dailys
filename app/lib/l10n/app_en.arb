@@ -277,5 +277,16 @@
     }
   },
   "tugasPreviousWeek": "Previous week",
-  "tugasNextWeek": "Next week"
+  "tugasNextWeek": "Next week",
+  "homeNextDeadlineTitle": "Next deadline",
+  "homeNextDeadlineEmpty": "No upcoming deadlines",
+  "homeNextDeadlineOverdueSection": "Overdue",
+  "homeNextDeadlineUpcomingSection": "Coming up",
+  "homeNextDeadlineDueToday": "Due today",
+  "homeNextDeadlineDaysLeft": "{days} days left",
+  "homeNextDeadlineDaysOverdue": "{days} days overdue",
+  "homeNextDeadlineMoreOverdue": "+{count} more overdue",
+  "tugasThisWeek": "This week",
+  "reminderActivityBody": "Starts at {time}",
+  "reminderTugasBody": "Due {date} {time}"
 }
