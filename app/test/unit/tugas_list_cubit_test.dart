@@ -35,8 +35,8 @@ void main() {
   });
   tearDown(() => db.close());
 
-  TugasListCubit makeCubit() =>
-      TugasListCubit(db: db, userId: userId, location: jakarta);
+  TugasListCubit makeCubit({DateTime Function()? now}) =>
+      TugasListCubit(db: db, userId: userId, location: jakarta, now: now);
 
   Future<void> pump() => Future<void>.delayed(const Duration(milliseconds: 20));
 
@@ -122,6 +122,48 @@ void main() {
 
     cubit.setStatusFilter(null);
     expect(cubit.state.active, hasLength(2));
+  });
+
+  test('crosses into history once the clock advances past the grace window, '
+      'without any DB write', () async {
+    DateTime now = DateTime.utc(2026, 9, 14, 3); // 2026-09-14 10:00 WIB
+    final cubit = makeCubit(now: () => now);
+    addTearDown(cubit.close);
+    await pump();
+    final id = await seedTask(cubit);
+    await db.tugasDao.setStatus(id, TugasStatus.selesai,
+        completedAt: now, now: now);
+    await pump();
+
+    // Still inside the 7-day grace window (schema 5): stays active.
+    expect(cubit.state.active, hasLength(1));
+
+    // Advance the clock past the auto-archive boundary (2026-09-21) without
+    // touching the database — only refreshClock() (what the periodic Timer
+    // calls) should be needed to reclassify it.
+    now = DateTime.utc(2026, 9, 21, 3);
+    cubit.refreshClock();
+
+    expect(cubit.state.active, isEmpty);
+  });
+
+  test('overdue badge tracks the clock, not just DB writes', () async {
+    DateTime now = DateTime.utc(2026, 9, 14, 3);
+    final cubit = makeCubit(now: () => now);
+    addTearDown(cubit.close);
+    await pump();
+    await cubit.createTugas(
+      judul: 'due soon',
+      deadline: DateTime.utc(2026, 9, 14, 4), // 1h after `now`
+      prioritas: TugasPrioritas.medium,
+    );
+    await pump();
+    final row = cubit.state.tugas.single;
+    expect(cubit.state.isOverdue(row), isFalse);
+
+    now = DateTime.utc(2026, 9, 14, 5); // 1h past the deadline
+    cubit.refreshClock();
+    expect(cubit.state.isOverdue(row), isTrue);
   });
 
   test('priority sort orders high before low', () async {
