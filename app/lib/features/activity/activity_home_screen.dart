@@ -15,6 +15,7 @@ import 'activity_home_cubit.dart';
 import 'activity_home_state.dart';
 import 'add_activity_sheet.dart';
 import 'habits_panel.dart';
+import 'timebox_execution.dart';
 
 class ActivityHomeScreen extends StatefulWidget {
   const ActivityHomeScreen({
@@ -242,7 +243,7 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
                 locale: locale,
                 mobile: mobile,
                 onActivityTap: (a) =>
-                    _showActivityActions(context, a, cubit, l10n))
+                    _openActivity(context, a, cubit, l10n))
           else if (state.loading)
             const Padding(
                 padding: EdgeInsets.all(24),
@@ -410,7 +411,7 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
           cubit: cubit,
           l10n: l10n,
           feature: identical(activity, feature),
-          onTap: () => _showActivityActions(context, activity, cubit, l10n));
+          onTap: () => _openActivity(context, activity, cubit, l10n));
       if (_mode == _ScheduleMode.timeline && !mobile) {
         widgets.add(Padding(
             padding: const EdgeInsets.only(bottom: AppSpacing.md),
@@ -440,7 +441,7 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
             state: state,
             cubit: cubit,
             l10n: l10n,
-            onTap: () => _showActivityActions(context, activity, cubit, l10n)));
+            onTap: () => _openActivity(context, activity, cubit, l10n)));
       }
     }
     return widgets;
@@ -493,6 +494,119 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
       ),
     );
   }
+
+  /// Routes a tap: Timebox occurrences get the execution detail (start/complete
+  /// block); everything else gets the generic status actions.
+  void _openActivity(BuildContext context, ActivityRow activity,
+      ActivityHomeCubit cubit, AppLocalizations l10n) {
+    if (activity.source == ActivitySource.timebox) {
+      _showTimeboxDetail(context, activity, cubit, l10n);
+    } else {
+      _showActivityActions(context, activity, cubit, l10n);
+    }
+  }
+
+  /// Timebox execution detail mirroring design/preview/home.html `itemDetail`
+  /// for a Timebox: plan + actual times and the start/complete/skip lifecycle.
+  /// Actual times are held in [TimeboxExecution] (in memory, M1).
+  void _showTimeboxDetail(BuildContext context, ActivityRow activity,
+      ActivityHomeCubit cubit, AppLocalizations l10n) {
+    final exec = TimeboxExecution.instance;
+    final theme = Theme.of(context);
+    String hm(DateTime? i) => i == null ? '' : cubit.formatTime(i);
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (sheetContext) {
+        final finished = activity.status == ActivityStatus.selesai;
+        final running = exec.isRunning(activity.id) && !finished;
+        final actualStart = exec.actualStart(activity.id);
+        final actualEnd = exec.actualEnd(activity.id);
+        final actualText = actualStart == null
+            ? l10n.timeboxNotStarted
+            : '${hm(actualStart)}${actualEnd != null ? '–${hm(actualEnd)}' : ''}';
+        final statusText =
+            '${_statusLabel(activity.status, l10n)}${running ? ' · ${l10n.timeboxBlockStarted}' : ''}';
+        final planText = activity.startTime == null
+            ? l10n.activityFlexible
+            : '${hm(activity.startTime)}${activity.endTime != null ? '–${hm(activity.endTime)}' : ''}';
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(l10n.timeboxDetailTitle,
+                      style: theme.textTheme.labelMedium
+                          ?.copyWith(color: theme.colorScheme.onSurfaceVariant)),
+                  const SizedBox(height: 4),
+                  Text(activity.judul, style: theme.textTheme.titleSmall),
+                  const SizedBox(height: AppSpacing.md),
+                  _metaLine(context, l10n.activityFieldCategory,
+                      _categoryName(cubit.state, activity) ?? '—'),
+                  _metaLine(context, l10n.tugasFilterStatus, statusText),
+                  _metaLine(context, l10n.timeboxPlan, planText),
+                  _metaLine(context, l10n.timeboxActual, actualText),
+                  const SizedBox(height: AppSpacing.md),
+                  Wrap(spacing: AppSpacing.sm, runSpacing: AppSpacing.sm, children: [
+                    if (!finished && !running)
+                      FilledButton.icon(
+                          icon: const Icon(Icons.play_arrow, size: 18),
+                          label: Text(l10n.timeboxStart),
+                          onPressed: () {
+                            exec.start(activity.id, DateTime.now().toUtc());
+                            Navigator.pop(sheetContext);
+                            setState(() {});
+                          }),
+                    if (running)
+                      FilledButton.icon(
+                          icon: const Icon(Icons.check, size: 18),
+                          label: Text(l10n.timeboxComplete),
+                          onPressed: () {
+                            exec.complete(activity.id, DateTime.now().toUtc());
+                            cubit.setStatus(activity.id, ActivityStatus.selesai);
+                            Navigator.pop(sheetContext);
+                            setState(() {});
+                          }),
+                    if (!finished)
+                      OutlinedButton(
+                          onPressed: () {
+                            exec.reset(activity.id);
+                            cubit.setStatus(
+                                activity.id, ActivityStatus.dilewati);
+                            Navigator.pop(sheetContext);
+                            setState(() {});
+                          },
+                          child: Text(l10n.timeboxSkip)),
+                    OutlinedButton(
+                        onPressed: () {
+                          cubit.deleteActivity(activity.id);
+                          Navigator.pop(sheetContext);
+                        },
+                        child: Text(l10n.activityDelete)),
+                  ]),
+                  const SizedBox(height: AppSpacing.sm),
+                  Text(l10n.timeboxDemoNote,
+                      style: theme.textTheme.labelSmall),
+                ]),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _metaLine(BuildContext context, String label, String value) => Padding(
+        padding: const EdgeInsets.only(bottom: 6),
+        child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          SizedBox(
+              width: 90,
+              child: Text(label,
+                  style: Theme.of(context).textTheme.bodySmall)),
+          Expanded(
+              child: Text(value,
+                  style: Theme.of(context).textTheme.bodyMedium)),
+        ]),
+      );
 
   Widget _sidebar(
       BuildContext context, ActivityHomeCubit cubit, AppLocalizations l10n) {
@@ -752,7 +866,12 @@ class _AgendaEntry extends StatelessWidget {
                 ]),
               ),
               const SizedBox(width: 8),
-              Text(_statusLabel(activity.status, l10n),
+              Text(
+                  activity.source == ActivitySource.timebox &&
+                          TimeboxExecution.instance.isRunning(activity.id) &&
+                          activity.status != ActivityStatus.selesai
+                      ? l10n.timeboxBlockStarted
+                      : _statusLabel(activity.status, l10n),
                   style: TextStyle(fontSize: 11, color: muted)),
             ]),
             SizedBox(height: feature ? 11 : 7),
