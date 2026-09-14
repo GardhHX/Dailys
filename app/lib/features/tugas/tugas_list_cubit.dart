@@ -20,12 +20,28 @@ class TugasListCubit extends Cubit<TugasListState> {
     required AppDatabase db,
     required String userId,
     required tz.Location location,
+    DateTime Function()? now,
   })  : _db = db,
         _userId = userId,
+        _location = location,
+        _now = now ?? (() => DateTime.now().toUtc()),
         super(_initial(location)) {
     _watch();
+    // Re-derives `today`/`now` even absent a DB write, so a task that crosses
+    // the day boundary (active/history split, schema 5) or an overdue
+    // deadline doesn't sit stale while this screen stays open — mirrors
+    // ActivityHomeCubit's clock tick.
+    _clock = Timer.periodic(const Duration(seconds: 30), (_) => refreshClock());
   }
 
+  /// Re-derives `today`/`now` immediately instead of waiting for the next
+  /// periodic tick. The clock timer calls this too; exposed (not private) so
+  /// tests can call it directly instead of waiting on a real [Timer].
+  void refreshClock() => _emit();
+
+  final tz.Location _location;
+  final DateTime Function() _now;
+  Timer? _clock;
   bool _tasksReady = false;
   bool _coursesReady = false;
   void _watch() {
@@ -73,10 +89,13 @@ class TugasListCubit extends Cubit<TugasListState> {
   }
 
   void _emit() {
+    if (isClosed) return;
+    final nowInstant = _now();
     emit(state.copyWith(
       tugas: _tugas,
       courses: _courses,
-      now: DateTime.now().toUtc(),
+      today: LocalDate.fromInstant(nowInstant, _location),
+      now: nowInstant,
       loading: !state.failed && !(_tasksReady && _coursesReady),
     ));
   }
@@ -180,6 +199,7 @@ class TugasListCubit extends Cubit<TugasListState> {
 
   @override
   Future<void> close() {
+    _clock?.cancel();
     _tugasSub?.cancel();
     _coursesSub?.cancel();
     return super.close();
