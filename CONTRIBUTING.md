@@ -56,11 +56,10 @@ git push origin --delete feat/m1-drift-db
 
 - Baris pertama imperatif dan ringkas (mis. "Add ...", "Fix ...", "Update ...").
 - Detail opsional pada baris berikutnya.
-- Commit yang dibuat lewat Claude Code menyertakan trailer atribusi di akhir:
-
-  ```
-  Co-Authored-By: Claude Opus 4.8 <noreply@anthropic.com>
-  ```
+- Semua commit di repo ini — termasuk yang dibuat lewat Claude Code — memakai
+  identitas git pemilik repo (`GardhHX <gardhastudy@gmail.com>`), **bukan**
+  trailer atribusi Claude/AI. Lihat `CLAUDE.md` untuk instruksi setup identitas
+  git di awal sesi Claude Code.
 
 ## Aturan yang dijaga
 
