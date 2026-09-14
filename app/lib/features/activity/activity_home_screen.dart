@@ -939,13 +939,103 @@ class _DeadlineCard extends StatelessWidget {
   }
 }
 
-/// Reference `dh-review`: a divider, heading, body line and an open button.
-class _WeeklyReviewSection extends StatelessWidget {
+/// Reference `dh-review` + `review()` modal: divider, heading, status line and
+/// an open button that launches the in-memory review form (evaluation +
+/// next-week focus). The WeeklyReview table is deferred past M1, so completion
+/// state lives in memory only and resets on restart.
+class _WeeklyReviewSection extends StatefulWidget {
   const _WeeklyReviewSection({required this.l10n});
   final AppLocalizations l10n;
 
   @override
+  State<_WeeklyReviewSection> createState() => _WeeklyReviewSectionState();
+}
+
+class _WeeklyReviewSectionState extends State<_WeeklyReviewSection> {
+  bool _completed = false;
+  String _evaluation = '';
+  String _focus = '';
+
+  Future<void> _openReview() async {
+    final l10n = widget.l10n;
+    final evalCtrl = TextEditingController(text: _evaluation);
+    final focusCtrl = TextEditingController(text: _focus);
+    final saved = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) {
+        String? error;
+        return StatefulBuilder(builder: (context, setDialogState) {
+          return AlertDialog(
+            title: Text(l10n.homeWeeklyReview),
+            content: SingleChildScrollView(
+              child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(l10n.homeReviewDemoNote,
+                        style: Theme.of(context).textTheme.bodySmall),
+                    const SizedBox(height: AppSpacing.lg),
+                    Text(l10n.homeReviewEvaluation,
+                        style: Theme.of(context).textTheme.labelMedium),
+                    const SizedBox(height: AppSpacing.xs),
+                    TextField(
+                        controller: evalCtrl,
+                        minLines: 2,
+                        maxLines: 4,
+                        decoration: InputDecoration(
+                            hintText: l10n.homeReviewEvaluationHint)),
+                    const SizedBox(height: AppSpacing.lg),
+                    Text(l10n.homeReviewFocus,
+                        style: Theme.of(context).textTheme.labelMedium),
+                    const SizedBox(height: AppSpacing.xs),
+                    TextField(
+                        controller: focusCtrl,
+                        minLines: 2,
+                        maxLines: 4,
+                        decoration: InputDecoration(
+                            hintText: l10n.homeReviewFocusHint)),
+                    if (error != null) ...[
+                      const SizedBox(height: AppSpacing.sm),
+                      Text(error!,
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.error,
+                              fontSize: 12)),
+                    ],
+                  ]),
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(dialogContext, false),
+                  child: Text(l10n.closeDialog)),
+              FilledButton(
+                  onPressed: () {
+                    if (evalCtrl.text.trim().isEmpty ||
+                        focusCtrl.text.trim().isEmpty) {
+                      setDialogState(() => error = l10n.homeReviewError);
+                      return;
+                    }
+                    Navigator.pop(dialogContext, true);
+                  },
+                  child: Text(l10n.homeReviewFinish)),
+            ],
+          );
+        });
+      },
+    );
+    if (saved == true) {
+      setState(() {
+        _evaluation = evalCtrl.text.trim();
+        _focus = focusCtrl.text.trim();
+        _completed = true;
+      });
+    }
+    evalCtrl.dispose();
+    focusCtrl.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final l10n = widget.l10n;
     final colors = Theme.of(context).colorScheme;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Divider(color: colors.outlineVariant),
@@ -953,22 +1043,18 @@ class _WeeklyReviewSection extends StatelessWidget {
       Text(l10n.homeWeeklyReview,
           style: Theme.of(context).textTheme.titleSmall),
       const SizedBox(height: 7),
-      Text(l10n.homeWeeklyReviewBody,
+      Text(_completed ? l10n.homeReviewDoneStatus : l10n.homeWeeklyReviewBody,
           style: Theme.of(context).textTheme.bodySmall),
       const SizedBox(height: 10),
-      // The Weekly Review screen is not built in this M1 checkout.
-      Tooltip(
-        message: l10n.featureUnavailable,
-        child: TextButton(
-          onPressed: null,
-          style: TextButton.styleFrom(
-              padding: EdgeInsets.zero,
-              alignment: Alignment.centerLeft,
-              foregroundColor: colors.primary),
-          child: Text(l10n.homeWeeklyReviewOpen,
-              style: const TextStyle(
-                  fontSize: 12, fontWeight: FontWeight.w600)),
-        ),
+      TextButton(
+        onPressed: _openReview,
+        style: TextButton.styleFrom(
+            padding: EdgeInsets.zero,
+            alignment: Alignment.centerLeft,
+            foregroundColor: colors.primary),
+        child: Text(l10n.homeWeeklyReviewOpen,
+            style:
+                const TextStyle(fontSize: 12, fontWeight: FontWeight.w600)),
       ),
     ]);
   }
