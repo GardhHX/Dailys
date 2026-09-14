@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../app/theme/tokens.dart';
 import '../../core/db/database.dart';
 import '../../core/db/tables/enums.dart';
+import '../../core/reminders/task_reminder.dart';
 import '../../l10n/app_localizations.dart';
 import 'add_edit_tugas_sheet.dart';
 import '../shell/tugas_shell.dart';
@@ -12,7 +13,6 @@ import 'package:timezone/timezone.dart' as tz;
 import 'tugas_detail_cubit.dart';
 import 'tugas_list_cubit.dart';
 import 'tugas_labels.dart';
-import 'domain/task_reminder.dart';
 
 /// Tugas detail route (design/screens/tugas.md: "Detail sebagai route dengan
 /// tombol kembali"): title/deadline, description, checklist, status/priority/
