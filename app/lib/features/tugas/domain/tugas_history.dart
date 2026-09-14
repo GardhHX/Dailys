@@ -72,7 +72,8 @@ class WeekRange {
   WeekRange get next => WeekRange(monday.addDays(7));
 
   @override
-  bool operator ==(Object other) => other is WeekRange && other.monday == monday;
+  bool operator ==(Object other) =>
+      other is WeekRange && other.monday == monday;
 
   @override
   int get hashCode => monday.hashCode;

@@ -6,6 +6,8 @@ import '../../core/db/database.dart';
 import '../../core/db/tables/enums.dart';
 import '../../l10n/app_localizations.dart';
 import 'tugas_list_cubit.dart';
+import 'package:timezone/timezone.dart' as tz;
+import '../../core/time/tz_resolver.dart';
 
 /// Add/edit Tugas modal (design/screens/tugas.md: "Add/edit adalah modal:
 /// judul, course, priority, deadline tanggal/jam, deskripsi, estimasi
@@ -17,11 +19,13 @@ Future<void> showAddEditTugasSheet(
   required TugasListCubit cubit,
   TugasRow? existing,
 }) {
-  return showModalBottomSheet<void>(
-    context: context,
-    isScrollControlled: true,
-    builder: (_) => _AddEditTugasSheet(cubit: cubit, existing: existing),
-  );
+  return showDialog<void>(
+      context: context,
+      builder: (_) => Dialog(
+          insetPadding: const EdgeInsets.all(16),
+          child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 660),
+              child: _AddEditTugasSheet(cubit: cubit, existing: existing))));
 }
 
 class _AddEditTugasSheet extends StatefulWidget {
@@ -53,9 +57,10 @@ class _AddEditTugasSheetState extends State<_AddEditTugasSheet> {
     _estimasi = TextEditingController(text: e?.estimasiMenit?.toString() ?? '');
     _courseId = e?.mataKuliahId;
     _prioritas = e?.prioritas ?? TugasPrioritas.medium;
-    final now = DateTime.now();
-    _deadlineLocal =
-        e?.deadline.toLocal() ?? DateTime(now.year, now.month, now.day + 1, 23, 59);
+    final now = tz.TZDateTime.now(widget.cubit.state.location);
+    _deadlineLocal = e == null
+        ? DateTime(now.year, now.month, now.day + 1, 23, 59)
+        : tz.TZDateTime.from(e.deadline, widget.cubit.state.location);
   }
 
   @override
@@ -84,23 +89,33 @@ class _AddEditTugasSheetState extends State<_AddEditTugasSheet> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              _isEdit ? l10n.tugasEditTitle : l10n.tugasAddTitle,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+            Row(children: [
+              Expanded(
+                  child: Text(
+                      _isEdit ? l10n.tugasEditTitle : l10n.tugasAddTitle,
+                      style: Theme.of(context).textTheme.titleLarge)),
+              IconButton(
+                  tooltip: l10n.closeDialog,
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Icon(Icons.close))
+            ]),
             const SizedBox(height: AppSpacing.lg),
             TextField(
               controller: _judul,
+              autofocus: true,
               decoration: InputDecoration(labelText: l10n.tugasFieldJudul),
             ),
             const SizedBox(height: AppSpacing.md),
             DropdownButtonFormField<String?>(
               initialValue: _courseId,
+              isExpanded: true,
               decoration: InputDecoration(labelText: l10n.tugasFieldCourse),
               items: [
                 DropdownMenuItem(value: null, child: Text(l10n.tugasNoCourse)),
                 for (final c in courses)
-                  DropdownMenuItem(value: c.id, child: Text(c.nama)),
+                  DropdownMenuItem(
+                      value: c.id,
+                      child: Text(c.nama, overflow: TextOverflow.ellipsis)),
               ],
               onChanged: (v) => setState(() => _courseId = v),
             ),
@@ -110,28 +125,39 @@ class _AddEditTugasSheetState extends State<_AddEditTugasSheet> {
               decoration: InputDecoration(labelText: l10n.tugasFieldPriority),
               items: [
                 for (final p in TugasPrioritas.values)
-                  DropdownMenuItem(value: p, child: Text(_priorityLabel(p, l10n))),
+                  DropdownMenuItem(
+                      value: p, child: Text(_priorityLabel(p, l10n))),
               ],
               onChanged: (v) => setState(() => _prioritas = v ?? _prioritas),
             ),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(l10n.tugasFieldDeadlineDate),
-              trailing: Text(DateFormat.yMMMEd(locale).format(_deadlineLocal)),
-              onTap: _pickDate,
-            ),
-            ListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(l10n.tugasFieldDeadlineTime),
-              trailing: Text(TimeOfDay.fromDateTime(_deadlineLocal).format(context)),
-              onTap: _pickTime,
-            ),
+            const SizedBox(height: 12),
+            Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text(l10n.tugasFieldDeadlineDate),
+                  TextButton(
+                      onPressed: _pickDate,
+                      child: Text(
+                          DateFormat.yMMMEd(locale).format(_deadlineLocal)))
+                ]),
+            Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text(l10n.tugasFieldDeadlineTime),
+                  TextButton(
+                      onPressed: _pickTime,
+                      child: Text(TimeOfDay.fromDateTime(_deadlineLocal)
+                          .format(context)))
+                ]),
             const SizedBox(height: AppSpacing.sm),
             TextField(
               controller: _deskripsi,
               minLines: 1,
               maxLines: 4,
-              decoration: InputDecoration(labelText: l10n.tugasFieldDescription),
+              decoration:
+                  InputDecoration(labelText: l10n.tugasFieldDescription),
             ),
             const SizedBox(height: AppSpacing.md),
             TextField(
@@ -141,7 +167,8 @@ class _AddEditTugasSheetState extends State<_AddEditTugasSheet> {
             ),
             if (_error != null) ...[
               const SizedBox(height: AppSpacing.md),
-              Text(_error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+              Text(_error!,
+                  style: TextStyle(color: Theme.of(context).colorScheme.error)),
             ],
             const SizedBox(height: AppSpacing.lg),
             ElevatedButton(onPressed: _submit, child: Text(l10n.tugasSave)),
@@ -170,8 +197,12 @@ class _AddEditTugasSheetState extends State<_AddEditTugasSheet> {
       initialTime: TimeOfDay.fromDateTime(_deadlineLocal),
     );
     if (picked != null) {
-      setState(() => _deadlineLocal = DateTime(_deadlineLocal.year,
-          _deadlineLocal.month, _deadlineLocal.day, picked.hour, picked.minute));
+      setState(() => _deadlineLocal = DateTime(
+          _deadlineLocal.year,
+          _deadlineLocal.month,
+          _deadlineLocal.day,
+          picked.hour,
+          picked.minute));
     }
   }
 
@@ -191,8 +222,15 @@ class _AddEditTugasSheetState extends State<_AddEditTugasSheet> {
         return;
       }
     }
-    final deskripsi = _deskripsi.text.trim().isEmpty ? null : _deskripsi.text.trim();
-    final deadline = _deadlineLocal.toUtc();
+    final deskripsi =
+        _deskripsi.text.trim().isEmpty ? null : _deskripsi.text.trim();
+    final deadline = TzResolver.localToUtc(
+        widget.cubit.state.location,
+        _deadlineLocal.year,
+        _deadlineLocal.month,
+        _deadlineLocal.day,
+        _deadlineLocal.hour,
+        _deadlineLocal.minute);
 
     if (_isEdit) {
       await widget.cubit.editTugas(

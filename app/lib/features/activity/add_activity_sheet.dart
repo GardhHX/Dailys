@@ -9,11 +9,15 @@ import 'activity_home_cubit.dart';
 /// Timebox melalui modal"). Activity may be created without a time; a
 /// recurring series creates an `ActivityRecurrence` template instead of a
 /// single occurrence and triggers the materializer immediately.
-Future<void> showAddActivitySheet(BuildContext context, {required ActivityHomeCubit cubit}) {
-  return showModalBottomSheet<void>(
+Future<void> showAddActivitySheet(BuildContext context,
+    {required ActivityHomeCubit cubit}) {
+  return showDialog<void>(
     context: context,
-    isScrollControlled: true,
-    builder: (context) => _AddActivitySheet(cubit: cubit),
+    builder: (context) => Dialog(
+        insetPadding: const EdgeInsets.all(16),
+        child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 520),
+            child: _AddActivitySheet(cubit: cubit))),
   );
 }
 
@@ -28,6 +32,7 @@ class _AddActivitySheet extends StatefulWidget {
 class _AddActivitySheetState extends State<_AddActivitySheet> {
   final _judulController = TextEditingController();
   String? _categoryId;
+  bool _isTimebox = false;
   bool _isAllDay = false;
   TimeOfDay? _startTime;
   TimeOfDay? _endTime;
@@ -59,27 +64,62 @@ class _AddActivitySheetState extends State<_AddActivitySheet> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(l10n.activityAddTitle, style: Theme.of(context).textTheme.titleLarge),
+            Row(children: [
+              Expanded(
+                  child: Text(l10n.activityAddTitle,
+                      style: Theme.of(context).textTheme.titleLarge)),
+              IconButton(
+                  tooltip: l10n.closeDialog,
+                  onPressed: () => Navigator.of(context).pop(),
+                  icon: const Icon(Icons.close))
+            ]),
             const SizedBox(height: AppSpacing.lg),
+            Text(l10n.activityTypeLabel,
+                style: Theme.of(context).textTheme.labelMedium),
+            const SizedBox(height: AppSpacing.sm),
+            SegmentedButton<bool>(
+              showSelectedIcon: false,
+              segments: [
+                ButtonSegment(
+                    value: false, label: Text(l10n.activityTypeActivity)),
+                ButtonSegment(
+                    value: true, label: Text(l10n.activityTypeTimebox)),
+              ],
+              selected: {_isTimebox},
+              onSelectionChanged: (v) => setState(() {
+                _isTimebox = v.first;
+                if (_isTimebox) {
+                  _isAllDay = false;
+                  _isRecurring = false;
+                }
+              }),
+            ),
+            const SizedBox(height: AppSpacing.md),
             TextField(
               controller: _judulController,
+              autofocus: true,
               decoration: InputDecoration(labelText: l10n.activityFieldTitle),
             ),
             const SizedBox(height: AppSpacing.md),
             DropdownButtonFormField<String>(
               initialValue: _categoryId,
-              decoration: InputDecoration(labelText: l10n.activityFieldCategory),
+              isExpanded: true,
+              decoration:
+                  InputDecoration(labelText: l10n.activityFieldCategory),
               items: categories
-                  .map((c) => DropdownMenuItem(value: c.id, child: Text(c.nama)))
+                  .map((c) => DropdownMenuItem(
+                      value: c.id,
+                      child: Text(c.nama, overflow: TextOverflow.ellipsis)))
                   .toList(),
               onChanged: (v) => setState(() => _categoryId = v),
             ),
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(l10n.activityAllDaySwitch),
-              value: _isAllDay,
-              onChanged: (v) => setState(() => _isAllDay = v),
-            ),
+            if (!_isTimebox)
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(l10n.activityAllDaySwitch),
+                value: _isAllDay,
+                onChanged: (v) => setState(() => _isAllDay = v),
+              ),
             if (!_isAllDay) ...[
               ListTile(
                 contentPadding: EdgeInsets.zero,
@@ -106,14 +146,16 @@ class _AddActivitySheetState extends State<_AddActivitySheet> {
                 },
               ),
             ],
-            SwitchListTile(
-              contentPadding: EdgeInsets.zero,
-              title: Text(l10n.activityRecurringSwitch),
-              value: _isRecurring,
-              onChanged: (v) => setState(() => _isRecurring = v),
-            ),
-            if (_isRecurring) ...[
-              Text(l10n.activityRecurringDaysLabel, style: Theme.of(context).textTheme.labelLarge),
+            if (!_isTimebox)
+              SwitchListTile(
+                contentPadding: EdgeInsets.zero,
+                title: Text(l10n.activityRecurringSwitch),
+                value: _isRecurring,
+                onChanged: (v) => setState(() => _isRecurring = v),
+              ),
+            if (_isRecurring && !_isTimebox) ...[
+              Text(l10n.activityRecurringDaysLabel,
+                  style: Theme.of(context).textTheme.labelLarge),
               const SizedBox(height: AppSpacing.sm),
               Wrap(
                 spacing: AppSpacing.sm,
@@ -136,7 +178,8 @@ class _AddActivitySheetState extends State<_AddActivitySheet> {
             ],
             if (_error != null) ...[
               const SizedBox(height: AppSpacing.md),
-              Text(_error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+              Text(_error!,
+                  style: TextStyle(color: Theme.of(context).colorScheme.error)),
             ],
             const SizedBox(height: AppSpacing.lg),
             ElevatedButton(onPressed: _submit, child: Text(l10n.activitySave)),
@@ -161,15 +204,34 @@ class _AddActivitySheetState extends State<_AddActivitySheet> {
     DateTime? endInstant;
     final today = widget.cubit.state.date;
     if (!_isAllDay && _startTime != null) {
-      final local = DateTime(today.year, today.month, today.day, _startTime!.hour, _startTime!.minute);
+      final local = DateTime(today.year, today.month, today.day,
+          _startTime!.hour, _startTime!.minute);
       startInstant = local.toUtc();
     }
     if (!_isAllDay && _endTime != null) {
-      final local = DateTime(today.year, today.month, today.day, _endTime!.hour, _endTime!.minute);
+      final local = DateTime(
+          today.year, today.month, today.day, _endTime!.hour, _endTime!.minute);
       endInstant = local.toUtc();
     }
-    if (startInstant != null && endInstant != null && !endInstant.isAfter(startInstant)) {
+    if (startInstant != null &&
+        endInstant != null &&
+        !endInstant.isAfter(startInstant)) {
       setState(() => _error = l10n.activityEndAfterStart);
+      return;
+    }
+
+    if (_isTimebox) {
+      if (startInstant == null || endInstant == null) {
+        setState(() => _error = l10n.timeboxNeedsTime);
+        return;
+      }
+      await widget.cubit.createTimeboxOccurrence(
+        judul: judul,
+        activityCategoryId: _categoryId!,
+        startTime: startInstant,
+        endTime: endInstant,
+      );
+      if (mounted) Navigator.of(context).pop();
       return;
     }
 
@@ -184,7 +246,8 @@ class _AddActivitySheetState extends State<_AddActivitySheet> {
         recurringDays: _recurringDays.toList()..sort(),
         startsOn: today,
         isAllDay: _isAllDay,
-        startTime: _isAllDay || _startTime == null ? null : _formatTod(_startTime!),
+        startTime:
+            _isAllDay || _startTime == null ? null : _formatTod(_startTime!),
         endTime: _isAllDay || _endTime == null ? null : _formatTod(_endTime!),
       );
     } else {

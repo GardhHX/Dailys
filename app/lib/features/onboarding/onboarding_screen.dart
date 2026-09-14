@@ -35,7 +35,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   @override
   void initState() {
     super.initState();
-    _cubit = OnboardingCubit(db: widget.db, userId: widget.userId, deviceId: widget.deviceId);
+    _cubit = OnboardingCubit(
+        db: widget.db, userId: widget.userId, deviceId: widget.deviceId);
   }
 
   @override
@@ -53,30 +54,108 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         if (state.completed) widget.onCompleted();
       },
       builder: (context, state) => Scaffold(
-        body: SafeArea(
-          child: Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 480),
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(AppSpacing.xxl),
-                child: _step == 0
-                    ? _LanguageTimeStep(
-                        l10n: l10n,
-                        state: state,
-                        onLanguageChanged: _cubit.selectLanguage,
-                        onTimezoneChanged: _cubit.selectTimezone,
-                        onContinue: () => setState(() => _step = 1),
-                      )
-                    : _SummaryStep(
-                        l10n: l10n,
-                        state: state,
-                        onBack: () => setState(() => _step = 0),
-                        onFinish: _cubit.finish,
-                      ),
-              ),
-            ),
-          ),
-        ),
+        appBar: AppBar(
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            toolbarHeight: 68,
+            shape: Border(
+                bottom: BorderSide(
+                    color: Theme.of(context).colorScheme.outlineVariant)),
+            title: Text(l10n.appWordmark,
+                style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w800,
+                    letterSpacing: -1))),
+        body: SafeArea(child: LayoutBuilder(builder: (context, constraints) {
+          final mobile = constraints.maxWidth <= 680;
+          final form = _step == 0
+              ? _LanguageTimeStep(
+                  l10n: l10n,
+                  state: state,
+                  onLanguageChanged: _cubit.selectLanguage,
+                  onTimezoneChanged: _cubit.selectTimezone,
+                  onContinue: () => setState(() => _step = 1))
+              : _SummaryStep(
+                  l10n: l10n,
+                  state: state,
+                  onBack: () => setState(() => _step = 0),
+                  onFinish: _cubit.finish);
+          final colors = Theme.of(context).colorScheme;
+          final localInfo = Container(
+              padding: const EdgeInsets.all(22),
+              decoration: BoxDecoration(
+                  color: colors.primary,
+                  borderRadius: BorderRadius.circular(9)),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(l10n.onboardingLocalTitle,
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                            color: colors.onPrimary)),
+                    const SizedBox(height: 16),
+                    Text(l10n.onboardingLocalBody,
+                        style: TextStyle(color: colors.onPrimary, height: 1.5)),
+                  ]));
+          return SingleChildScrollView(
+              padding: EdgeInsets.symmetric(
+                  horizontal: mobile ? 16 : 28, vertical: 32),
+              child: Center(
+                  child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 1000),
+                      child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(l10n.onboardingIntro,
+                                style: Theme.of(context).textTheme.bodySmall),
+                            const SizedBox(height: 6),
+                            Text(
+                                _step == 0
+                                    ? l10n.onboardingHeading
+                                    : l10n.onboardingSummaryTitle,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium),
+                            const SizedBox(height: 24),
+                            Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: List.generate(
+                                    2,
+                                    (i) => Expanded(
+                                        child: Padding(
+                                            padding: EdgeInsets.only(
+                                                right: i == 0 ? 8 : 0),
+                                            child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                      height: 3,
+                                                      color: i == _step
+                                                          ? colors.primary
+                                                          : colors
+                                                              .outlineVariant),
+                                                  const SizedBox(height: 12),
+                                                  Text(
+                                                      '${i + 1} · ${i == 0 ? l10n.onboardingTitleLanguageTime : l10n.onboardingSummaryTitle}',
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodySmall),
+                                                ]))))),
+                            const SizedBox(height: 32),
+                            if (mobile) ...[
+                              form,
+                              const SizedBox(height: 28),
+                              localInfo
+                            ] else
+                              Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Expanded(child: form),
+                                    const SizedBox(width: 38),
+                                    SizedBox(width: 280, child: localInfo)
+                                  ]),
+                          ]))));
+        })),
       ),
     );
   }
@@ -103,33 +182,46 @@ class _LanguageTimeStep extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(l10n.onboardingTitleLanguageTime, style: Theme.of(context).textTheme.headlineSmall),
-        const SizedBox(height: AppSpacing.xxl),
-        Text(l10n.onboardingLanguageLabel, style: Theme.of(context).textTheme.labelLarge),
+        Text(l10n.onboardingLanguageLabel,
+            style: Theme.of(context).textTheme.labelLarge),
         const SizedBox(height: AppSpacing.sm),
         SegmentedButton<Language>(
           segments: [
-            ButtonSegment(value: Language.id, label: Text(l10n.onboardingLanguageId)),
-            ButtonSegment(value: Language.en, label: Text(l10n.onboardingLanguageEn)),
+            ButtonSegment(
+                value: Language.id, label: Text(l10n.onboardingLanguageId)),
+            ButtonSegment(
+                value: Language.en, label: Text(l10n.onboardingLanguageEn)),
           ],
           selected: {state.language},
           onSelectionChanged: (s) => onLanguageChanged(s.first),
         ),
         const SizedBox(height: AppSpacing.lg),
-        Text(l10n.onboardingTimezoneLabel, style: Theme.of(context).textTheme.labelLarge),
+        Text(l10n.onboardingTimezoneLabel,
+            style: Theme.of(context).textTheme.labelLarge),
         const SizedBox(height: AppSpacing.sm),
-        DropdownMenu<String>(
-          initialSelection: state.timezone,
-          width: double.infinity,
-          dropdownMenuEntries: state.availableTimezones
-              .map((tz) => DropdownMenuEntry(value: tz, label: tz))
-              .toList(),
-          onSelected: (v) {
-            if (v != null) onTimezoneChanged(v);
-          },
-        ),
+        LayoutBuilder(
+            builder: (context, constraints) => DropdownMenu<String>(
+                  initialSelection: state.timezone,
+                  width: constraints.maxWidth,
+                  enableFilter: true,
+                  requestFocusOnTap: true,
+                  dropdownMenuEntries: state.availableTimezones
+                      .map((tz) => DropdownMenuEntry(value: tz, label: tz))
+                      .toList(),
+                  onSelected: (v) {
+                    if (v != null) onTimezoneChanged(v);
+                  },
+                )),
+        const SizedBox(height: 16),
+        Text(l10n.onboardingZoneHint,
+            style: Theme.of(context).textTheme.bodySmall),
         const SizedBox(height: AppSpacing.xxl),
-        ElevatedButton(onPressed: onContinue, child: Text(l10n.actionContinue)),
+        const Divider(),
+        const SizedBox(height: 16),
+        Align(
+            alignment: Alignment.centerRight,
+            child: ElevatedButton(
+                onPressed: onContinue, child: Text(l10n.actionContinue))),
       ],
     );
   }
@@ -150,20 +242,20 @@ class _SummaryStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final languageLabel =
-        state.language == Language.id ? l10n.onboardingLanguageId : l10n.onboardingLanguageEn;
+    final languageLabel = state.language == Language.id
+        ? l10n.onboardingLanguageId
+        : l10n.onboardingLanguageEn;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Text(l10n.onboardingSummaryTitle, style: Theme.of(context).textTheme.headlineSmall),
-        const SizedBox(height: AppSpacing.xxl),
         Text(l10n.onboardingSummaryLanguage(languageLabel)),
         const SizedBox(height: AppSpacing.sm),
         Text(l10n.onboardingSummaryTimezone(state.timezone)),
         if (state.error != null) ...[
           const SizedBox(height: AppSpacing.lg),
-          Text(state.error!, style: TextStyle(color: Theme.of(context).colorScheme.error)),
+          Text(state.error!,
+              style: TextStyle(color: Theme.of(context).colorScheme.error)),
         ],
         const SizedBox(height: AppSpacing.xxl),
         Row(

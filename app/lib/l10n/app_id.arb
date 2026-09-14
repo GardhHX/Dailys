@@ -1,9 +1,9 @@
 {
   "@@locale": "id",
-
   "appWordmark": "dailys.",
-  "@appWordmark": {"description": "Wordmark; bukan judul terjemahan bebas (design/screens/splash.md)."},
-
+  "@appWordmark": {
+    "description": "Wordmark; bukan judul terjemahan bebas (design/screens/splash.md)."
+  },
   "splashStatusOpening": "Membuka data lokal…",
   "splashStatusNewInstall": "Menyiapkan data lokal…",
   "splashStatusBackup": "Membuat salinan sebelum pembaruan…",
@@ -19,7 +19,6 @@
   "actionRetry": "Coba lagi",
   "splashRecoveryGuide": "Panduan pemulihan",
   "splashCloseGuide": "Tutup panduan",
-
   "onboardingTitleLanguageTime": "Bahasa & waktu",
   "onboardingLanguageLabel": "Bahasa",
   "onboardingTimezoneLabel": "Zona waktu",
@@ -29,11 +28,22 @@
   "actionBack": "Kembali",
   "onboardingSummaryTitle": "Ringkasan & mulai",
   "onboardingSummaryLanguage": "Bahasa: {language}",
-  "@onboardingSummaryLanguage": {"placeholders": {"language": {"type": "String"}}},
+  "@onboardingSummaryLanguage": {
+    "placeholders": {
+      "language": {
+        "type": "String"
+      }
+    }
+  },
   "onboardingSummaryTimezone": "Zona waktu: {timezone}",
-  "@onboardingSummaryTimezone": {"placeholders": {"timezone": {"type": "String"}}},
+  "@onboardingSummaryTimezone": {
+    "placeholders": {
+      "timezone": {
+        "type": "String"
+      }
+    }
+  },
   "actionFinish": "Mulai",
-
   "settingsTitle": "Pengaturan",
   "settingsSectionAppearanceLanguage": "Tampilan & bahasa",
   "settingsSectionTimezone": "Waktu & zona",
@@ -55,14 +65,34 @@
   "settingsAlarmModeSound": "Suara",
   "settingsAlarmModeMuted": "Senyap",
   "settingsWeeklyReviewTimeLabel": "Waktu Weekly Review (Minggu)",
+  "settingsSaved": "Tersimpan",
   "settingsSaveFailed": "Gagal menyimpan",
   "settingsValueOutOfRange": "Nilai di luar rentang yang diizinkan",
-
+  "homePlaceholderTitle": "Today",
+  "homePlaceholderBody": "Home belum diimplementasikan pada langkah ini.",
   "activityToday": "Hari ini",
   "activityCompletionRate": "{completed}/{planned} selesai ({rate}%)",
-  "@activityCompletionRate": {"placeholders": {"completed": {"type": "int"}, "planned": {"type": "int"}, "rate": {"type": "String"}}},
+  "@activityCompletionRate": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "planned": {
+        "type": "int"
+      },
+      "rate": {
+        "type": "String"
+      }
+    }
+  },
   "activityOverlapWarning": "{count} jadwal tumpang tindih",
-  "@activityOverlapWarning": {"placeholders": {"count": {"type": "int"}}},
+  "@activityOverlapWarning": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "activityScheduledSection": "Berjadwal",
   "activityUnscheduledSection": "Tanpa waktu",
   "activityEmpty": "Belum ada activity pada tanggal ini",
@@ -88,34 +118,119 @@
   "activityCategoryRequired": "Pilih kategori",
   "activityEndAfterStart": "Waktu selesai harus setelah mulai",
   "activityRecurringDaysRequired": "Pilih minimal satu hari",
-
-  "homeNextDeadlineTitle": "Tenggat berikutnya",
-  "homeNextDeadlineEmpty": "Tidak ada tenggat mendatang",
-  "homeNextDeadlineOverdueSection": "Terlambat",
-  "homeNextDeadlineUpcomingSection": "Akan datang",
-  "homeNextDeadlineDueToday": "Jatuh tempo hari ini",
-  "homeNextDeadlineDaysLeft": "{days} hari lagi",
-  "@homeNextDeadlineDaysLeft": {"placeholders": {"days": {"type": "int"}}},
-  "homeNextDeadlineDaysOverdue": "{days} hari terlambat",
-  "@homeNextDeadlineDaysOverdue": {"placeholders": {"days": {"type": "int"}}},
-  "homeNextDeadlineMoreOverdue": "+{count} lagi terlambat",
-  "@homeNextDeadlineMoreOverdue": {"placeholders": {"count": {"type": "int"}}},
-
+  "homeTitle": "Home",
+  "navTasks": "Tugas",
+  "navFinance": "Keuangan",
+  "navHabit": "Habit",
+  "featureUnavailable": "Fitur ini belum tersedia pada build ini",
+  "homeAdd": "Tambah aktivitas",
+  "homeSchedule": "Jadwal hari ini",
+  "homeList": "Daftar",
+  "homeTimeline": "Timeline",
+  "homeWeek": "Minggu",
+  "previousDay": "Hari sebelumnya",
+  "nextDay": "Hari berikutnya",
+  "chooseDate": "Pilih tanggal",
+  "homeReadFailed": "Jadwal belum dapat dimuat",
+  "homeEmptyHint": "Tambahkan aktivitas untuk tanggal ini.",
+  "activityTypeActivity": "Aktivitas",
+  "activityTypeTimebox": "Timebox",
+  "activityTypeHabit": "Habit",
+  "activityTypePomodoro": "Pomodoro",
+  "activityRecurringWeekly": "Berulang mingguan",
+  "activityOpenBlock": "Buka block ›",
+  "activityPlannedRange": "Rencana {range}",
+  "@activityPlannedRange": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDeadlineOverlay": "Deadline · {title}",
+  "@homeDeadlineOverlay": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "homeWeeklyReview": "Weekly review",
+  "homeWeeklyReviewBody": "Evaluasi minggu ini dan rencanakan minggu depan.",
+  "homeWeeklyReviewOpen": "Buka review minggu ini",
+  "homeWeekHour": "Jam",
+  "homeHabits": "Habits",
+  "habitEveryDay": "Setiap hari",
+  "habitStreak": "Streak {count} hari",
+  "@habitStreak": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "habitNotDone": "Belum selesai",
+  "habitSkipped": "Izin",
+  "habitDemoNote": "Data habit contoh — belum tersimpan (modul Habit menyusul).",
+  "homeReviewEvaluation": "Evaluasi minggu ini",
+  "homeReviewEvaluationHint": "Tuliskan evaluasi minggu ini",
+  "homeReviewFocus": "Fokus minggu depan",
+  "homeReviewFocusHint": "Tuliskan fokus minggu depan",
+  "homeReviewFinish": "Selesaikan review",
+  "homeReviewError": "Isi evaluasi dan fokus minggu depan.",
+  "homeReviewDoneStatus": "Review selesai. Planning minggu depan terbuka.",
+  "homeReviewDemoNote": "Review contoh — belum tersimpan (modul Weekly Review menyusul).",
+  "activityTypeLabel": "Jenis",
+  "timeboxNeedsTime": "Timebox wajib memiliki jam mulai dan selesai.",
+  "timeboxDetailTitle": "Detail Timebox",
+  "timeboxPlan": "Rencana",
+  "timeboxActual": "Aktual",
+  "timeboxNotStarted": "Belum dimulai",
+  "timeboxBlockStarted": "Block dimulai",
+  "timeboxStart": "Mulai block",
+  "timeboxComplete": "Selesaikan block",
+  "timeboxSkip": "Lewati kejadian ini",
+  "timeboxDemoNote": "Waktu aktual disimpan sementara (modul Timebox menyusul).",
+  "onboardingIntro": "Pertama kali menggunakan Dailys",
+  "onboardingHeading": "Atur bahasa & waktu",
+  "onboardingLocalTitle": "Data tetap di perangkatmu",
+  "onboardingLocalBody": "Catatan dibaca dan disimpan lokal. Kamu dapat mulai tanpa koneksi internet.",
+  "onboardingZoneHint": "Tanggal dan jam ditampilkan sesuai timezone ini.",
+  "settingsIntro": "Preferensi aplikasi dan pengaturan perangkat ini.",
+  "settingsSections": "Bagian pengaturan",
+  "activityOptions": "Pilihan aktivitas",
+  "closeDialog": "Tutup",
+  "homeDeadlines": "Next deadline",
+  "homeNoDeadlines": "Belum ada deadline aktif",
+  "homeDeadlineFailed": "Deadline belum dapat dimuat",
+  "taskStatusNotStarted": "Belum dikerjakan",
+  "taskStatusProgress": "Progress",
+  "taskPriorityLow": "Prioritas rendah",
+  "taskPriorityMedium": "Prioritas sedang",
+  "taskPriorityHigh": "Prioritas tinggi",
+  "taskOverdue": "Terlambat",
   "navHome": "Beranda",
   "navTugas": "Tugas",
-
   "tugasTitle": "Tugas",
-  "tugasTabActive": "Aktif",
+  "tugasTabActive": "Tugas aktif",
   "tugasTabHistory": "Riwayat",
-  "tugasTabCourses": "Mata kuliah",
+  "tugasTabCourses": "Mata kuliah & catatan",
   "tugasEmpty": "Belum ada tugas aktif",
   "tugasEmptyFiltered": "Tidak ada tugas yang cocok dengan filter",
   "tugasHistoryEmpty": "Tidak ada riwayat pada minggu ini",
   "tugasWeekRange": "{start} – {end}",
-  "@tugasWeekRange": {"placeholders": {"start": {"type": "String"}, "end": {"type": "String"}}},
-  "tugasThisWeek": "Minggu ini",
-  "tugasStatusBelum": "Belum",
-  "tugasStatusProgress": "Berjalan",
+  "@tugasWeekRange": {
+    "placeholders": {
+      "start": {
+        "type": "String"
+      },
+      "end": {
+        "type": "String"
+      }
+    }
+  },
+  "tugasStatusBelum": "Belum dikerjakan",
+  "tugasStatusProgress": "Progress",
   "tugasStatusSelesai": "Selesai",
   "tugasPriorityLow": "Rendah",
   "tugasPriorityMedium": "Sedang",
@@ -123,13 +238,18 @@
   "tugasOverdue": "Terlambat",
   "tugasNoCourse": "Tanpa mata kuliah",
   "tugasEstimate": "{minutes} mnt",
-  "@tugasEstimate": {"placeholders": {"minutes": {"type": "int"}}},
+  "@tugasEstimate": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "tugasDeadlineLabel": "Tenggat",
   "tugasArchivedBadge": "Diarsip",
-
   "tugasFilters": "Filter",
   "tugasSort": "Urutkan",
-  "tugasSortDeadline": "Tenggat",
+  "tugasSortDeadline": "Deadline terdekat",
   "tugasSortPriority": "Prioritas",
   "tugasSortCourse": "Mata kuliah",
   "tugasFilterStatus": "Status",
@@ -137,7 +257,6 @@
   "tugasFilterCourse": "Mata kuliah",
   "tugasFilterAll": "Semua",
   "tugasClearFilters": "Hapus filter",
-
   "tugasMarkDone": "Tandai selesai",
   "tugasMarkProgress": "Tandai berjalan",
   "tugasReopen": "Buka kembali",
@@ -147,7 +266,6 @@
   "tugasDeleteConfirmTitle": "Hapus tugas?",
   "tugasDeleteConfirmBody": "Tugas ini beserta checklist-nya akan dihapus.",
   "actionCancel": "Batal",
-
   "tugasAddTitle": "Tambah tugas",
   "tugasEditTitle": "Ubah tugas",
   "tugasFieldJudul": "Judul",
@@ -160,13 +278,12 @@
   "tugasSave": "Simpan",
   "tugasTitleRequired": "Judul wajib diisi",
   "tugasEstimatePositive": "Estimasi harus lebih dari 0",
-
   "tugasChecklistTitle": "Checklist",
   "tugasChecklistAdd": "Tambah item",
   "tugasChecklistHint": "Item checklist",
   "tugasChecklistAllDone": "Semua item selesai. Tandai tugas selesai?",
   "tugasChecklistMarkComplete": "Tandai selesai",
-
+  "coursesTitle": "Mata kuliah & catatan",
   "coursesEmpty": "Belum ada mata kuliah",
   "courseAddTitle": "Tambah mata kuliah",
   "courseEditTitle": "Ubah mata kuliah",
@@ -185,9 +302,115 @@
   "courseNoteDate": "Tanggal",
   "courseNotesEmpty": "Belum ada catatan",
   "courseNoteRequired": "Isi catatan wajib diisi",
-
+  "tugasIntro": "Deadline, progres, dan catatan perkuliahan.",
+  "tugasActiveCount": "{count} tugas aktif",
+  "@tugasActiveCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tugasLoadFailed": "Tugas belum dapat dimuat",
+  "tugasDaysRemaining": "{count} hari lagi",
+  "tugasDaysOverdue": "Terlambat {count} hari",
+  "tugasDueToday": "Hari ini",
+  "tugasDueTomorrow": "Besok",
+  "tugasChecklistSummary": "{done}/{total} checklist selesai",
+  "@tugasDaysRemaining": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@tugasDaysOverdue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "@tugasChecklistSummary": {
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "tugasRemindersTitle": "Pengingat",
+  "tugasRemindersEmpty": "Tidak ada pengingat",
+  "tugasReminderCalendar": "H-{days} pukul {time}",
+  "@tugasReminderCalendar": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "tugasReminderRelative": "{minutes} menit sebelum deadline",
+  "@tugasReminderRelative": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "tugasPreviousWeek": "Minggu sebelumnya",
+  "tugasNextWeek": "Minggu berikutnya",
+  "homeNextDeadlineTitle": "Tenggat berikutnya",
+  "homeNextDeadlineEmpty": "Tidak ada tenggat mendatang",
+  "homeNextDeadlineOverdueSection": "Terlambat",
+  "homeNextDeadlineUpcomingSection": "Akan datang",
+  "homeNextDeadlineDueToday": "Jatuh tempo hari ini",
+  "homeNextDeadlineDaysLeft": "{days} hari lagi",
+  "@homeNextDeadlineDaysLeft": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "homeNextDeadlineDaysOverdue": "{days} hari terlambat",
+  "@homeNextDeadlineDaysOverdue": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "homeNextDeadlineMoreOverdue": "+{count} lagi terlambat",
+  "@homeNextDeadlineMoreOverdue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "tugasThisWeek": "Minggu ini",
   "reminderActivityBody": "Mulai jam {time}",
-  "@reminderActivityBody": {"placeholders": {"time": {"type": "String"}}},
+  "@reminderActivityBody": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "reminderTugasBody": "Tenggat {date} {time}",
-  "@reminderTugasBody": {"placeholders": {"date": {"type": "String"}, "time": {"type": "String"}}}
+  "@reminderTugasBody": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  }
 }

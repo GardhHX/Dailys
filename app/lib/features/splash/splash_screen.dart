@@ -51,7 +51,8 @@ class _SplashScreenState extends State<SplashScreen> {
       bloc: _cubit,
       listener: (context, state) {
         if (state.stage == SplashStage.ready) {
-          widget.onReady(state.destination!, state.db!, state.userId!, state.deviceId!);
+          widget.onReady(
+              state.destination!, state.db!, state.userId!, state.deviceId!);
         }
       },
       builder: (context, state) => Scaffold(
@@ -61,7 +62,10 @@ class _SplashScreenState extends State<SplashScreen> {
               constraints: const BoxConstraints(maxWidth: 420),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xxl),
-                child: _buildContent(context, l10n, state),
+                child: SingleChildScrollView(
+                    child: Semantics(
+                        liveRegion: true,
+                        child: _buildContent(context, l10n, state))),
               ),
             ),
           ),
@@ -70,12 +74,14 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  Widget _buildContent(BuildContext context, AppLocalizations l10n, SplashState state) {
+  Widget _buildContent(
+      BuildContext context, AppLocalizations l10n, SplashState state) {
     final theme = Theme.of(context);
     final wordmark = Text(
       l10n.appWordmark,
       textAlign: TextAlign.center,
-      style: theme.textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w800),
+      style: theme.textTheme.headlineMedium?.copyWith(
+          fontSize: 30, fontWeight: FontWeight.w700, letterSpacing: -1),
     );
 
     if (state.stage == SplashStage.failed) {
@@ -87,7 +93,8 @@ class _SplashScreenState extends State<SplashScreen> {
           const SizedBox(height: AppSpacing.xxl),
           Text(
             _failureMessage(l10n, state.failureReasonKey),
-            style: theme.textTheme.bodyMedium,
+            style: theme.textTheme.titleMedium
+                ?.copyWith(color: theme.colorScheme.error),
           ),
           const SizedBox(height: AppSpacing.md),
           if (state.retriable)

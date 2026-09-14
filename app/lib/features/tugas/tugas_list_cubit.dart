@@ -7,8 +7,8 @@ import 'package:timezone/timezone.dart' as tz;
 import '../../core/db/database.dart';
 import '../../core/db/tables/enums.dart';
 import '../../core/ids/deterministic_id.dart';
-import '../../core/reminders/task_reminder.dart';
 import '../../core/time/local_date.dart';
+import 'domain/task_reminder.dart';
 import 'domain/tugas_history.dart';
 import 'tugas_list_state.dart';
 
@@ -23,18 +23,39 @@ class TugasListCubit extends Cubit<TugasListState> {
   })  : _db = db,
         _userId = userId,
         super(_initial(location)) {
+    _watch();
+  }
+
+  bool _tasksReady = false;
+  bool _coursesReady = false;
+  void _watch() {
     _tugasSub = _db.tugasDao.watchActiveTugas(_userId).listen((rows) {
       _tugas = rows;
+      _tasksReady = true;
       _emit();
-    });
-    _coursesSub = _db.mataKuliahDao.watchActiveMataKuliah(_userId).listen((rows) {
+    }, onError: (_) => emit(state.copyWith(loading: false, failed: true)));
+    _coursesSub =
+        _db.mataKuliahDao.watchActiveMataKuliah(_userId).listen((rows) {
       _courses = rows;
+      _coursesReady = true;
       _emit();
-    });
+    }, onError: (_) => emit(state.copyWith(loading: false, failed: true)));
+  }
+
+  void retry() {
+    _tugasSub?.cancel();
+    _coursesSub?.cancel();
+    _tasksReady = false;
+    _coursesReady = false;
+    emit(state.copyWith(loading: true, failed: false));
+    _watch();
   }
 
   final AppDatabase _db;
   final String _userId;
+
+  Stream<List<TugasChecklistRow>> watchChecklist(String tugasId) =>
+      _db.tugasDao.watchChecklist(tugasId);
 
   StreamSubscription<List<TugasRow>>? _tugasSub;
   StreamSubscription<List<MataKuliahRow>>? _coursesSub;
@@ -56,7 +77,7 @@ class TugasListCubit extends Cubit<TugasListState> {
       tugas: _tugas,
       courses: _courses,
       now: DateTime.now().toUtc(),
-      loading: false,
+      loading: !state.failed && !(_tasksReady && _coursesReady),
     ));
   }
 

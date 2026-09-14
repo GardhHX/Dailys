@@ -48,17 +48,22 @@ class TugasDetailCubit extends Cubit<TugasDetailState> {
     _tugasSub = _db.tugasDao.watchTugasById(_tugasId).listen((row) async {
       _tugas = row;
       final courseId = row?.mataKuliahId;
-      _course = courseId == null ? null : await _db.mataKuliahDao.getById(courseId);
+      _course =
+          courseId == null ? null : await _db.mataKuliahDao.getById(courseId);
+      _taskReady = true;
       _emit();
     });
     _checklistSub = _db.tugasDao.watchChecklist(_tugasId).listen((rows) {
       _checklist = rows;
+      _checklistReady = true;
       _emit();
     });
   }
 
   final AppDatabase _db;
   final String _tugasId;
+  bool _taskReady = false;
+  bool _checklistReady = false;
 
   StreamSubscription<TugasRow?>? _tugasSub;
   StreamSubscription<List<TugasChecklistRow>>? _checklistSub;
@@ -70,7 +75,7 @@ class TugasDetailCubit extends Cubit<TugasDetailState> {
         tugas: _tugas,
         checklist: _checklist,
         course: _course,
-        loading: false,
+        loading: !(_taskReady && _checklistReady),
       ));
 
   Future<void> setStatus(TugasStatus status) =>

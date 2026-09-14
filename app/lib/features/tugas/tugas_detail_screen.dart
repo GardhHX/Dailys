@@ -1,38 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:timezone/timezone.dart' as tz;
 
 import '../../app/theme/tokens.dart';
 import '../../core/db/database.dart';
 import '../../core/db/tables/enums.dart';
 import '../../l10n/app_localizations.dart';
 import 'add_edit_tugas_sheet.dart';
+import '../shell/tugas_shell.dart';
+import 'package:timezone/timezone.dart' as tz;
 import 'tugas_detail_cubit.dart';
 import 'tugas_list_cubit.dart';
 import 'tugas_labels.dart';
+import 'domain/task_reminder.dart';
 
 /// Tugas detail route (design/screens/tugas.md: "Detail sebagai route dengan
 /// tombol kembali"): title/deadline, description, checklist, status/priority/
 /// estimate/course, and edit/archive/delete actions.
-///
-/// Opened both from the Tugas tab and from Home's Next Deadline panel
-/// (design/screens/home.md: "Panel deadline membuka detail contoh"), so it
-/// owns a private [TugasListCubit] for the edit sheet's course list rather
-/// than depending on the Tugas tab's instance.
 class TugasDetailScreen extends StatefulWidget {
   const TugasDetailScreen({
     super.key,
     required this.db,
-    required this.userId,
-    required this.location,
     required this.tugasId,
+    required this.listCubit,
+    required this.deviceId,
   });
 
   final AppDatabase db;
-  final String userId;
-  final tz.Location location;
   final String tugasId;
+  final TugasListCubit listCubit;
+  final String deviceId;
 
   @override
   State<TugasDetailScreen> createState() => _TugasDetailScreenState();
@@ -41,16 +38,10 @@ class TugasDetailScreen extends StatefulWidget {
 class _TugasDetailScreenState extends State<TugasDetailScreen> {
   late final TugasDetailCubit _cubit =
       TugasDetailCubit(db: widget.db, tugasId: widget.tugasId);
-  late final TugasListCubit _editCubit = TugasListCubit(
-    db: widget.db,
-    userId: widget.userId,
-    location: widget.location,
-  );
 
   @override
   void dispose() {
     _cubit.close();
-    _editCubit.close();
     super.dispose();
   }
 
@@ -63,7 +54,8 @@ class _TugasDetailScreenState extends State<TugasDetailScreen> {
       builder: (context, state) {
         final t = state.tugas;
         if (state.loading) {
-          return const Scaffold(body: Center(child: CircularProgressIndicator()));
+          return const Scaffold(
+              body: Center(child: CircularProgressIndicator()));
         }
         if (t == null) {
           // Deleted while open; leave the route.
@@ -73,64 +65,129 @@ class _TugasDetailScreenState extends State<TugasDetailScreen> {
           return const Scaffold(body: SizedBox.shrink());
         }
         final archived = t.archivedAt != null;
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(t.judul, overflow: TextOverflow.ellipsis),
-            actions: [
-              IconButton(
-                icon: const Icon(Icons.edit_outlined),
-                onPressed: () =>
-                    showAddEditTugasSheet(context, cubit: _editCubit, existing: t),
-              ),
-              IconButton(
-                icon: Icon(archived ? Icons.unarchive_outlined : Icons.archive_outlined),
-                tooltip: archived ? l10n.tugasUnarchive : l10n.tugasArchive,
-                onPressed: () => _cubit.setArchived(!archived),
-              ),
-              IconButton(
-                icon: const Icon(Icons.delete_outline),
-                tooltip: l10n.tugasDelete,
-                onPressed: () => _confirmDelete(context, l10n),
-              ),
-            ],
-          ),
-          body: ListView(
-            padding: const EdgeInsets.all(AppSpacing.lg),
-            children: [
-              Text(
-                '${l10n.tugasDeadlineLabel}: '
-                '${DateFormat.yMMMEd(locale).add_jm().format(t.deadline.toLocal())}',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-              const SizedBox(height: AppSpacing.sm),
-              Wrap(
-                spacing: AppSpacing.sm,
-                runSpacing: AppSpacing.sm,
+        final colors = Theme.of(context).colorScheme;
+        final content =
+            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          if (t.deskripsi != null && t.deskripsi!.isNotEmpty) ...[
+            Text(t.deskripsi!),
+            const SizedBox(height: 24)
+          ],
+          _ChecklistSection(cubit: _cubit, state: state, l10n: l10n),
+        ]);
+        final metadata = Container(
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+                color: colors.surface,
+                border: Border.all(color: colors.outlineVariant),
+                borderRadius: BorderRadius.circular(9)),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Chip(label: Text(tugasStatusLabel(t.status, l10n))),
-                  Chip(label: Text(tugasPriorityLabel(t.prioritas, l10n))),
-                  if (t.estimasiMenit != null)
-                    Chip(label: Text(l10n.tugasEstimate(t.estimasiMenit!))),
-                  Chip(label: Text(state.course?.nama ?? l10n.tugasNoCourse)),
-                  if (archived) Chip(label: Text(l10n.tugasArchivedBadge)),
-                ],
-              ),
-              if (t.deskripsi != null && t.deskripsi!.isNotEmpty) ...[
-                const SizedBox(height: AppSpacing.lg),
-                Text(t.deskripsi!),
-              ],
-              const SizedBox(height: AppSpacing.lg),
-              _StatusActions(cubit: _cubit, status: t.status, l10n: l10n),
-              const Divider(height: AppSpacing.xxl),
-              _ChecklistSection(cubit: _cubit, state: state, l10n: l10n),
-            ],
-          ),
-        );
+                  Text(l10n.tugasFilterStatus,
+                      style: Theme.of(context).textTheme.bodySmall),
+                  const SizedBox(height: 8),
+                  Text(tugasStatusLabel(t.status, l10n),
+                      style: Theme.of(context).textTheme.titleSmall),
+                  const SizedBox(height: 12),
+                  _StatusActions(cubit: _cubit, status: t.status, l10n: l10n),
+                  const SizedBox(height: 20),
+                  Text(l10n.tugasFieldPriority,
+                      style: Theme.of(context).textTheme.bodySmall),
+                  const SizedBox(height: 8),
+                  Text(tugasPriorityLabel(t.prioritas, l10n)),
+                  if (t.estimasiMenit != null) ...[
+                    const SizedBox(height: 20),
+                    Text(l10n.tugasFieldEstimate,
+                        style: Theme.of(context).textTheme.bodySmall),
+                    const SizedBox(height: 8),
+                    Text(l10n.tugasEstimate(t.estimasiMenit!))
+                  ],
+                  const SizedBox(height: 20),
+                  Text(l10n.tugasFieldCourse,
+                      style: Theme.of(context).textTheme.bodySmall),
+                  const SizedBox(height: 8),
+                  Text(state.course?.nama ?? l10n.tugasNoCourse),
+                  const SizedBox(height: 20),
+                  Text(l10n.tugasRemindersTitle,
+                      style: Theme.of(context).textTheme.bodySmall),
+                  const SizedBox(height: 8),
+                  if (t.reminders.isEmpty) Text(l10n.tugasRemindersEmpty),
+                  for (final reminder in TaskReminder.fromJsonList(t.reminders))
+                    Padding(
+                        padding: const EdgeInsets.only(bottom: 6),
+                        child: Text(switch (reminder) {
+                          CalendarDayReminder r => l10n.tugasReminderCalendar(
+                              r.daysBefore, r.localTime.substring(0, 5)),
+                          RelativeMinutesReminder r =>
+                            l10n.tugasReminderRelative(r.minutesBefore),
+                        })),
+                  if (archived) ...[
+                    const SizedBox(height: 20),
+                    Text(l10n.tugasArchivedBadge)
+                  ],
+                  const SizedBox(height: 20),
+                  OutlinedButton.icon(
+                      onPressed: () => showAddEditTugasSheet(context,
+                          cubit: widget.listCubit, existing: t),
+                      icon: const Icon(Icons.edit_outlined, size: 18),
+                      label: Text(l10n.tugasEditTitle)),
+                  const SizedBox(height: 8),
+                  OutlinedButton(
+                      onPressed: () => _cubit.setArchived(!archived),
+                      child: Text(
+                          archived ? l10n.tugasUnarchive : l10n.tugasArchive)),
+                  const SizedBox(height: 8),
+                  TextButton(
+                      style:
+                          TextButton.styleFrom(foregroundColor: colors.error),
+                      onPressed: () => _confirmDelete(context, l10n),
+                      child: Text(l10n.tugasDelete)),
+                ]));
+        return TugasShell(
+            db: widget.db,
+            userId: t.userId,
+            deviceId: widget.deviceId,
+            child: LayoutBuilder(builder: (context, constraints) {
+              final mobile = MediaQuery.sizeOf(context).width <= 680;
+              return SingleChildScrollView(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: mobile ? 16 : 38, vertical: mobile ? 22 : 32),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Align(
+                            alignment: Alignment.centerLeft,
+                            child: TextButton.icon(
+                                onPressed: () => Navigator.of(context).pop(),
+                                icon: const Icon(Icons.chevron_left),
+                                label: Text(l10n.actionBack))),
+                        const SizedBox(height: 12),
+                        Text(t.judul,
+                            style: Theme.of(context).textTheme.headlineMedium),
+                        const SizedBox(height: 8),
+                        Text(
+                            DateFormat.yMMMEd(locale).add_Hm().format(
+                                tz.TZDateTime.from(t.deadline,
+                                    widget.listCubit.state.location)),
+                            style: Theme.of(context).textTheme.bodySmall),
+                        const SizedBox(height: 24),
+                        if (constraints.maxWidth > 736)
+                          Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Expanded(child: content),
+                                const SizedBox(width: 30),
+                                SizedBox(width: 240, child: metadata)
+                              ])
+                        else ...[content, const SizedBox(height: 26), metadata],
+                      ]));
+            }));
       },
     );
   }
 
-  Future<void> _confirmDelete(BuildContext context, AppLocalizations l10n) async {
+  Future<void> _confirmDelete(
+      BuildContext context, AppLocalizations l10n) async {
     final ok = await showDialog<bool>(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -156,7 +213,8 @@ class _TugasDetailScreenState extends State<TugasDetailScreen> {
 }
 
 class _StatusActions extends StatelessWidget {
-  const _StatusActions({required this.cubit, required this.status, required this.l10n});
+  const _StatusActions(
+      {required this.cubit, required this.status, required this.l10n});
   final TugasDetailCubit cubit;
   final TugasStatus status;
   final AppLocalizations l10n;
@@ -187,7 +245,8 @@ class _StatusActions extends StatelessWidget {
 }
 
 class _ChecklistSection extends StatefulWidget {
-  const _ChecklistSection({required this.cubit, required this.state, required this.l10n});
+  const _ChecklistSection(
+      {required this.cubit, required this.state, required this.l10n});
   final TugasDetailCubit cubit;
   final TugasDetailState state;
   final AppLocalizations l10n;
@@ -212,19 +271,23 @@ class _ChecklistSectionState extends State<_ChecklistSection> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(l10n.tugasChecklistTitle, style: Theme.of(context).textTheme.titleMedium),
+        Text(l10n.tugasChecklistTitle,
+            style: Theme.of(context).textTheme.titleMedium),
         // All-done prompt offers a status change; never auto-changes (schema/
         // design: "Semua checklist selesai menawarkan perubahan status").
-        if (state.allChecklistDone && state.tugas?.status != TugasStatus.selesai)
+        if (state.allChecklistDone &&
+            state.tugas?.status != TugasStatus.selesai)
           Card(
-            color: Theme.of(context).colorScheme.secondaryContainer,
+            color: Theme.of(context).colorScheme.primaryContainer,
             child: Padding(
               padding: const EdgeInsets.all(AppSpacing.md),
-              child: Row(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(child: Text(l10n.tugasChecklistAllDone)),
+                  Text(l10n.tugasChecklistAllDone),
                   TextButton(
-                    onPressed: () => widget.cubit.setStatus(TugasStatus.selesai),
+                    onPressed: () =>
+                        widget.cubit.setStatus(TugasStatus.selesai),
                     child: Text(l10n.tugasChecklistMarkComplete),
                   ),
                 ],
@@ -235,10 +298,12 @@ class _ChecklistSectionState extends State<_ChecklistSection> {
           CheckboxListTile(
             contentPadding: EdgeInsets.zero,
             value: item.isDone,
-            onChanged: (v) => widget.cubit.setChecklistDone(item.id, v ?? false),
+            onChanged: (v) =>
+                widget.cubit.setChecklistDone(item.id, v ?? false),
             title: Text(item.judul),
             secondary: IconButton(
               icon: const Icon(Icons.close),
+              tooltip: l10n.tugasDelete,
               onPressed: () => widget.cubit.deleteChecklistItem(item.id),
             ),
           ),
@@ -252,10 +317,9 @@ class _ChecklistSectionState extends State<_ChecklistSection> {
               ),
             ),
             IconButton(
-              icon: const Icon(Icons.add),
-              tooltip: l10n.tugasChecklistAdd,
-              onPressed: _add,
-            ),
+                tooltip: l10n.tugasChecklistAdd,
+                icon: const Icon(Icons.add),
+                onPressed: _add),
           ],
         ),
       ],

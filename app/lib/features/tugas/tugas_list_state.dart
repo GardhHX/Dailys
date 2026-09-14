@@ -29,6 +29,7 @@ class TugasListState {
     this.courseFilter,
     this.sort = TugasSort.deadline,
     this.loading = true,
+    this.failed = false,
   });
 
   final tz.Location location;
@@ -42,6 +43,7 @@ class TugasListState {
   final String? courseFilter;
   final TugasSort sort;
   final bool loading;
+  final bool failed;
 
   static const _priorityRank = {
     TugasPrioritas.high: 0,
@@ -71,7 +73,8 @@ class TugasListState {
       case TugasSort.deadline:
         return a.deadline.compareTo(b.deadline);
       case TugasSort.prioritas:
-        final r = _priorityRank[a.prioritas]!.compareTo(_priorityRank[b.prioritas]!);
+        final r =
+            _priorityRank[a.prioritas]!.compareTo(_priorityRank[b.prioritas]!);
         return r != 0 ? r : a.deadline.compareTo(b.deadline);
       case TugasSort.course:
         final an = courseFor(a.mataKuliahId)?.nama ?? '';
@@ -84,7 +87,10 @@ class TugasListState {
   /// Active tasks (schema 5 classification) after filter + sort.
   List<TugasRow> get active {
     final c = classifier;
-    return tugas.where((t) => c.isActive(t, today)).where(_passesFilters).toList()
+    return tugas
+        .where((t) => c.isActive(t, today))
+        .where(_passesFilters)
+        .toList()
       ..sort(_compare);
   }
 
@@ -128,6 +134,7 @@ class TugasListState {
     bool clearCourseFilter = false,
     TugasSort? sort,
     bool? loading,
+    bool? failed,
   }) =>
       TugasListState(
         location: location,
@@ -136,11 +143,15 @@ class TugasListState {
         historyWeek: historyWeek ?? this.historyWeek,
         tugas: tugas ?? this.tugas,
         courses: courses ?? this.courses,
-        statusFilter: clearStatusFilter ? null : (statusFilter ?? this.statusFilter),
-        priorityFilter:
-            clearPriorityFilter ? null : (priorityFilter ?? this.priorityFilter),
-        courseFilter: clearCourseFilter ? null : (courseFilter ?? this.courseFilter),
+        statusFilter:
+            clearStatusFilter ? null : (statusFilter ?? this.statusFilter),
+        priorityFilter: clearPriorityFilter
+            ? null
+            : (priorityFilter ?? this.priorityFilter),
+        courseFilter:
+            clearCourseFilter ? null : (courseFilter ?? this.courseFilter),
         sort: sort ?? this.sort,
         loading: loading ?? this.loading,
+        failed: failed ?? this.failed,
       );
 }
