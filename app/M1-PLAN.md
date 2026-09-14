@@ -6,11 +6,24 @@ ActivityCategory, recurrence, reminder, settings pendukung) bekerja **offline** 
 Windows; create/edit/delete dan riwayat jalan, restart mempertahankan data, dan
 backup SQLite tersedia sebelum migration ketika ada data nyata.
 
-Belum termasuk M1 (jangan diimplementasi diam-diam): Pomodoro dan Timebox (M3),
-Habit dan Keuangan (M4), Weekly Review (M5), serta seluruh sync/server, Pusat Sync,
-review konflik, dan recovery (M2). Android juga M2. Struktur disiapkan agar area
-ini bisa ditambah tanpa membongkar fondasi (PRD: "struktur antrean dipersiapkan
-untuk M2").
+Belum termasuk M1 (jangan diimplementasi diam-diam): Pomodoro dan Timebox (M3,
+**diimplementasikan sesudah dokumen ini — lihat catatan M3 di bawah dan
+`../app/UI-ALIGNMENT.md`**), Habit dan Keuangan (M4), Weekly Review (M5), serta
+seluruh sync/server, Pusat Sync, review konflik, dan recovery (M2). Android juga
+M2. Struktur disiapkan agar area ini bisa ditambah tanpa membongkar fondasi (PRD:
+"struktur antrean dipersiapkan untuk M2").
+
+## Catatan M3 (Pomodoro + Timebox)
+
+M3 menambahkan `PomodoroSession` (schema 9) dan `TimeboxSchedule`/
+`TimeboxExecution` (schema 10/10.1) lewat migration Drift v1 -> v2
+(`core/db/database.dart`), DAO (`TimeboxDao`, `PomodoroDao`), materializer
+Timebox yang menggeneralisasi `RecurrenceMaterializer` (`core/recurrence/
+timebox_materializer.dart`), reminder plan Timebox pada `ReminderScheduler`
+yang sama, serta tab Pomodoro dan integrasi Timebox pada Home (grid mingguan +
+timeline). Seksi "Tabel Drift M1" dan "Pemetaan FR -> komponen" di atas tetap
+sebagai catatan sejarah scope M1; jangan diedit untuk mencerminkan M3 — lihat
+`../app/UI-ALIGNMENT.md` bagian "Update M3" untuk gap yang masih ada.
 
 ## 1. Stack dan keputusan
 
@@ -91,7 +104,8 @@ Tabel M1:
 - `ActivityCategory` (schema 6; enam seed deterministik UUIDv5)
 - `ActivityRecurrence` (schema 7), `Activity` (schema 8)
 
-Ditunda (jangan buat di M1): PomodoroSession, TimeboxSchedule/Execution, Habit*,
+Ditunda (jangan buat di M1): PomodoroSession, TimeboxSchedule/Execution (**dibuat
+di M3 lewat migration v1 -> v2, lihat catatan M3 di atas**), Habit*,
 Akun/CategoryKeuangan/Transaksi, WeeklyReview/WeeklyPlanDraft, dan seluruh tabel
 Sync* server-only maupun local-only. Instalasi baru M1 membuat subset ini; migration
 menuju M2+ menambah sisanya (schema 22).
@@ -120,8 +134,9 @@ verifikasi, baru migrate.
 | NFR-7 | Resource id/en (`l10n`) |
 | NFR-13 (fondasi) | `core/time/clock.dart` monotonic (recovery timer penuh di M3) |
 
-Ditunda: Timebox grid dan Weekly Grid Home (M3), panel Habits Home (M4), shortcut
-Weekly Review aktif (M5). Placeholder boleh ada tetapi tidak diisi desain generik.
+Ditunda: Timebox grid dan Weekly Grid Home (**dibuat di M3, lihat catatan M3 di
+atas**), panel Habits Home (M4), shortcut Weekly Review aktif (M5). Placeholder
+boleh ada tetapi tidak diisi desain generik.
 
 ## 5. Urutan kerja (dependency-ordered)
 

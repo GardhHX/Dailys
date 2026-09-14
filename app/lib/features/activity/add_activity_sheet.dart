@@ -2,28 +2,67 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../app/theme/tokens.dart';
+import '../../core/db/database.dart';
+import '../../core/time/local_date.dart';
 import '../../l10n/app_localizations.dart';
+import '../timebox/timebox_cubit.dart';
 import 'activity_home_cubit.dart';
 
 /// Opens the "Tambah Activity" form (design/screens/home.md "Tambah Activity/
 /// Timebox melalui modal"). Activity may be created without a time; a
-/// recurring series creates an `ActivityRecurrence` template instead of a
-/// single occurrence and triggers the materializer immediately.
-Future<void> showAddActivitySheet(BuildContext context,
-    {required ActivityHomeCubit cubit}) {
+/// recurring series creates an `ActivityRecurrence` template (Activity) or a
+/// `TimeboxSchedule` (Timebox, FR-3.1) instead of a single occurrence, and
+/// triggers the relevant materializer immediately.
+///
+/// [timeboxCubit] is required to actually submit a Timebox block; when null
+/// the Timebox segment is still shown (so the modal stays the single
+/// "Tambah Activity/Timebox" entry point design/screens/home.md calls for)
+/// but submission is disabled with an explanatory error, rather than
+/// silently no-oping. [initialDate]/[initialStartTime] prefill from a
+/// grid-cell quick-add (FR-3.15); [tugasOptions] backs the optional Tugas
+/// link (FR-3.5) for a Timebox block.
+Future<void> showAddActivitySheet(
+  BuildContext context, {
+  required ActivityHomeCubit cubit,
+  TimeboxCubit? timeboxCubit,
+  List<TugasRow> tugasOptions = const [],
+  LocalDate? initialDate,
+  TimeOfDay? initialStartTime,
+  bool startAsTimebox = false,
+}) {
   return showDialog<void>(
     context: context,
     builder: (context) => Dialog(
         insetPadding: const EdgeInsets.all(16),
         child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 520),
-            child: _AddActivitySheet(cubit: cubit))),
+            child: _AddActivitySheet(
+              cubit: cubit,
+              timeboxCubit: timeboxCubit,
+              tugasOptions: tugasOptions,
+              initialDate: initialDate,
+              initialStartTime: initialStartTime,
+              startAsTimebox: startAsTimebox,
+            ))),
   );
 }
 
 class _AddActivitySheet extends StatefulWidget {
-  const _AddActivitySheet({required this.cubit});
+  const _AddActivitySheet({
+    required this.cubit,
+    required this.timeboxCubit,
+    required this.tugasOptions,
+    required this.initialDate,
+    required this.initialStartTime,
+    required this.startAsTimebox,
+  });
+
   final ActivityHomeCubit cubit;
+  final TimeboxCubit? timeboxCubit;
+  final List<TugasRow> tugasOptions;
+  final LocalDate? initialDate;
+  final TimeOfDay? initialStartTime;
+  final bool startAsTimebox;
 
   @override
   State<_AddActivitySheet> createState() => _AddActivitySheetState();
@@ -32,12 +71,13 @@ class _AddActivitySheet extends StatefulWidget {
 class _AddActivitySheetState extends State<_AddActivitySheet> {
   final _judulController = TextEditingController();
   String? _categoryId;
-  bool _isTimebox = false;
+  late bool _isTimebox = widget.startAsTimebox;
   bool _isAllDay = false;
-  TimeOfDay? _startTime;
+  late TimeOfDay? _startTime = widget.initialStartTime;
   TimeOfDay? _endTime;
   bool _isRecurring = false;
   final Set<int> _recurringDays = {};
+  String? _linkedTugasId;
   String? _error;
 
   @override
@@ -88,10 +128,9 @@ class _AddActivitySheetState extends State<_AddActivitySheet> {
               selected: {_isTimebox},
               onSelectionChanged: (v) => setState(() {
                 _isTimebox = v.first;
-                if (_isTimebox) {
-                  _isAllDay = false;
-                  _isRecurring = false;
-                }
+                // A Timebox block always has a concrete time range (schema
+                // 10); Activity may be all-day/flexible.
+                if (_isTimebox) _isAllDay = false;
               }),
             ),
             const SizedBox(height: AppSpacing.md),
@@ -146,14 +185,13 @@ class _AddActivitySheetState extends State<_AddActivitySheet> {
                 },
               ),
             ],
-            if (!_isTimebox)
-              SwitchListTile(
-                contentPadding: EdgeInsets.zero,
-                title: Text(l10n.activityRecurringSwitch),
-                value: _isRecurring,
-                onChanged: (v) => setState(() => _isRecurring = v),
-              ),
-            if (_isRecurring && !_isTimebox) ...[
+            SwitchListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text(l10n.activityRecurringSwitch),
+              value: _isRecurring,
+              onChanged: (v) => setState(() => _isRecurring = v),
+            ),
+            if (_isRecurring) ...[
               Text(l10n.activityRecurringDaysLabel,
                   style: Theme.of(context).textTheme.labelLarge),
               const SizedBox(height: AppSpacing.sm),
@@ -174,6 +212,20 @@ class _AddActivitySheetState extends State<_AddActivitySheet> {
                     }),
                   );
                 }),
+              ),
+            ],
+            if (_isTimebox) ...[
+              const SizedBox(height: AppSpacing.md),
+              DropdownButtonFormField<String?>(
+                initialValue: _linkedTugasId,
+                isExpanded: true,
+                decoration: InputDecoration(labelText: l10n.timeboxLinkTugas),
+                items: [
+                  DropdownMenuItem(value: null, child: Text(l10n.timeboxLinkNone)),
+                  ...widget.tugasOptions.map((t) => DropdownMenuItem(
+                      value: t.id, child: Text(t.judul, overflow: TextOverflow.ellipsis))),
+                ],
+                onChanged: (v) => setState(() => _linkedTugasId = v),
               ),
             ],
             if (_error != null) ...[
@@ -200,9 +252,15 @@ class _AddActivitySheetState extends State<_AddActivitySheet> {
       setState(() => _error = l10n.activityCategoryRequired);
       return;
     }
+    final today = widget.initialDate ?? widget.cubit.state.date;
+
+    if (_isTimebox) {
+      await _submitTimebox(l10n, judul, today);
+      return;
+    }
+
     DateTime? startInstant;
     DateTime? endInstant;
-    final today = widget.cubit.state.date;
     if (!_isAllDay && _startTime != null) {
       final local = DateTime(today.year, today.month, today.day,
           _startTime!.hour, _startTime!.minute);
@@ -217,21 +275,6 @@ class _AddActivitySheetState extends State<_AddActivitySheet> {
         endInstant != null &&
         !endInstant.isAfter(startInstant)) {
       setState(() => _error = l10n.activityEndAfterStart);
-      return;
-    }
-
-    if (_isTimebox) {
-      if (startInstant == null || endInstant == null) {
-        setState(() => _error = l10n.timeboxNeedsTime);
-        return;
-      }
-      await widget.cubit.createTimeboxOccurrence(
-        judul: judul,
-        activityCategoryId: _categoryId!,
-        startTime: startInstant,
-        endTime: endInstant,
-      );
-      if (mounted) Navigator.of(context).pop();
       return;
     }
 
@@ -260,6 +303,54 @@ class _AddActivitySheetState extends State<_AddActivitySheet> {
       );
     }
 
+    if (mounted) Navigator.of(context).pop();
+  }
+
+  /// TimeboxSchedule stores `start_time`/`end_time` as **Local time**, not an
+  /// Instant (schema 10) — unlike the Activity branch above, so this never
+  /// touches the device's own timezone; the materializer resolves the actual
+  /// Instant per occurrence using the user's configured timezone.
+  Future<void> _submitTimebox(
+      AppLocalizations l10n, String judul, LocalDate today) async {
+    final timeboxCubit = widget.timeboxCubit;
+    if (timeboxCubit == null) {
+      setState(() => _error = l10n.timeboxUnavailable);
+      return;
+    }
+    if (_startTime == null || _endTime == null) {
+      setState(() => _error = l10n.timeboxNeedsTime);
+      return;
+    }
+    final startMinutes = _startTime!.hour * 60 + _startTime!.minute;
+    final endMinutes = _endTime!.hour * 60 + _endTime!.minute;
+    if (endMinutes <= startMinutes) {
+      setState(() => _error = l10n.activityEndAfterStart);
+      return;
+    }
+
+    if (_isRecurring) {
+      if (_recurringDays.isEmpty) {
+        setState(() => _error = l10n.activityRecurringDaysRequired);
+        return;
+      }
+      await timeboxCubit.createRecurringBlock(
+        judul: judul,
+        activityCategoryId: _categoryId!,
+        days: _recurringDays,
+        startTime: _formatTod(_startTime!),
+        endTime: _formatTod(_endTime!),
+        tugasId: _linkedTugasId,
+      );
+    } else {
+      await timeboxCubit.createAdHocBlock(
+        judul: judul,
+        activityCategoryId: _categoryId!,
+        date: today,
+        startTime: _formatTod(_startTime!),
+        endTime: _formatTod(_endTime!),
+        tugasId: _linkedTugasId,
+      );
+    }
     if (mounted) Navigator.of(context).pop();
   }
 

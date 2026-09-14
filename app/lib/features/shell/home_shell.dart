@@ -5,11 +5,12 @@ import '../../core/notifications/notification_gateway.dart';
 import '../../core/notifications/reminder_scheduler.dart';
 import '../../l10n/app_localizations.dart';
 import '../activity/activity_home_screen.dart';
+import '../pomodoro/pomodoro_screen.dart';
 import '../tugas/tugas_list_screen.dart';
 
-/// Bottom-nav shell for the primary tabs (PRD Section 7). M1 ships Home and
-/// Tugas; Pomodoro/Timebox (M3), Habit/Keuangan (M4), and Weekly Review (M5)
-/// tabs are intentionally absent rather than faked (M1-PLAN Section 4). Each
+/// Bottom-nav shell for the primary tabs (PRD Section 7). M1 shipped Home and
+/// Tugas; M3 adds Pomodoro. Habit/Keuangan (M4) and Weekly Review (M5) tabs
+/// are still intentionally absent rather than faked (M1-PLAN Section 4). Each
 /// tab keeps its own Scaffold (AppBar/FAB); this shell only owns the
 /// NavigationBar and preserves each tab's state via an IndexedStack.
 ///
@@ -63,6 +64,11 @@ class _HomeShellState extends State<HomeShell> {
             userId: widget.userId,
             deviceId: widget.deviceId,
           ),
+          PomodoroScreen(
+            db: widget.db,
+            userId: widget.userId,
+            deviceId: widget.deviceId,
+          ),
         ],
       ),
       bottomNavigationBar: NavigationBar(
@@ -78,6 +84,11 @@ class _HomeShellState extends State<HomeShell> {
             icon: const Icon(Icons.checklist_outlined),
             selectedIcon: const Icon(Icons.checklist),
             label: l10n.navTugas,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.timer_outlined),
+            selectedIcon: const Icon(Icons.timer),
+            label: l10n.navPomodoro,
           ),
         ],
       ),

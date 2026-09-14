@@ -10,6 +10,7 @@ import '../../core/db/database.dart';
 import '../../core/di/locator.dart';
 import '../../core/ids/deterministic_id.dart';
 import '../../core/recurrence/materialization_runner.dart';
+import '../../core/recurrence/timebox_materialization_runner.dart';
 import '../../core/time/tz_data.dart';
 import 'splash_state.dart';
 
@@ -63,6 +64,8 @@ class SplashCubit extends Cubit<SplashState> {
         // boleh dimulai tanpa memblokir tampilan".
         final location = tz.getLocation(settings.timezone);
         unawaited(MaterializationRunner(db).run(userId: user.id, location: location));
+        unawaited(
+            TimeboxMaterializationRunner(db).run(userId: user.id, location: location));
 
         if (locator.isRegistered<ValueNotifier<Locale?>>()) {
           locator<ValueNotifier<Locale?>>().value = Locale(settings.language.name);
