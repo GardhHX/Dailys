@@ -38,6 +38,12 @@ void main() {
     source.execute('DROP TABLE timebox_execution');
     source.execute('DROP TABLE timebox_schedule');
     source.execute('DROP TABLE pomodoro_session');
+    // M4 (v2 -> v3) tables must go too: the fixture DB was created fresh at
+    // currentSchemaVersion, so they exist even though a real v1 install
+    // never had them.
+    source.execute('DROP TABLE habit_log');
+    source.execute('DROP TABLE habit_schedule');
+    source.execute('DROP TABLE habit');
     source.execute('PRAGMA user_version = 1');
     source.dispose();
   });
@@ -79,7 +85,7 @@ void main() {
 
   test('newer schema blocks opening without downgrade', () async {
     final source = sqlite3.open(file.path);
-    source.execute('PRAGMA user_version = 3');
+    source.execute('PRAGMA user_version = 4');
     source.dispose();
     await expectLater(
         prepareDatabaseForOpen(file, keyStore: InMemoryBackupKeyStore()),

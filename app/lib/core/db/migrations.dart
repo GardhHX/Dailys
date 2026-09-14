@@ -46,6 +46,20 @@ const List<String> m3Indexes = [
       'WHERE is_deleted = 0',
 ];
 
+/// Index DDL for the M4 Habit tables (schema 11, 11.1, 11.2). Applied on
+/// fresh install (`onCreate`) and on the v2 -> v3 upgrade (`onUpgrade`).
+const List<String> m4HabitIndexes = [
+  'CREATE INDEX idx_habit_user ON habit (user_id, is_deleted, is_archived, urutan)',
+  'CREATE INDEX idx_habit_schedule_habit ON habit_schedule (habit_id, is_deleted, effective_from)',
+  'CREATE INDEX idx_habit_log_habit ON habit_log (habit_id, is_deleted, tanggal)',
+  // Unique active (habit_id, effective_from) (schema 11.1).
+  'CREATE UNIQUE INDEX uq_habit_schedule_active ON habit_schedule (habit_id, effective_from) '
+      'WHERE is_deleted = 0',
+  // Unique active (habit_id, tanggal) (schema 11.2).
+  'CREATE UNIQUE INDEX uq_habit_log_active ON habit_log (habit_id, tanggal) '
+      'WHERE is_deleted = 0',
+];
+
 /// Domain + local tables whose row counts are compared source-vs-copy during the
 /// pre-migration backup (OPERATIONS 3 step 5). Deferred M2+ tables
 /// (`SyncOutbox`, `SyncEntityBase`, …) are not created in M1, so only the tables
@@ -64,6 +78,9 @@ const List<String> _backupVerifiedTables = [
   'pomodoro_session',
   'timebox_schedule',
   'timebox_execution',
+  'habit',
+  'habit_schedule',
+  'habit_log',
 ];
 
 /// Applies M1 index DDL. Called from [MigrationStrategy.onCreate].
@@ -77,6 +94,14 @@ Future<void> createM1Indexes(Migrator m) async {
 /// `onCreate` and the v1 -> v2 `onUpgrade` step.
 Future<void> createM3Indexes(Migrator m) async {
   for (final stmt in m3Indexes) {
+    await m.database.customStatement(stmt);
+  }
+}
+
+/// Applies M4 Habit index DDL (see [m4HabitIndexes]). Called from both a
+/// fresh install's `onCreate` and the v2 -> v3 `onUpgrade` step.
+Future<void> createM4HabitIndexes(Migrator m) async {
+  for (final stmt in m4HabitIndexes) {
     await m.database.customStatement(stmt);
   }
 }

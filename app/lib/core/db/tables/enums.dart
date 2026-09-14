@@ -51,3 +51,9 @@ enum PomodoroJenis { fokus, istirahat_pendek, istirahat_panjang }
 
 /// PomodoroSession.status (schema 9).
 enum PomodoroStatus { running, paused, completed, cancelled }
+
+/// HabitSchedule.state (schema 11.1).
+enum HabitScheduleState { active, paused }
+
+/// HabitLog.status (schema 11.2).
+enum HabitLogStatus { done, skip, missed }

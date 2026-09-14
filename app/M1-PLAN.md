@@ -163,3 +163,14 @@ M4/M2; simpan sebagai test di-skip berlabel milestone agar tidak hilang.
 - Jangan menaruh logika sync di feature; sisakan boundary repository sehingga
   outbox/journal M2 masuk di `core` tanpa mengubah UI.
 - Identitas user hasil provisioning lokal stabil sebelum seed UUIDv5 dibuat.
+
+## 8. Status M4 Habit
+
+Habit tracker (schema 11/11.1/11.2, PRD FR-5.1-5.15) tidak lagi placeholder:
+tabel `Habit`/`HabitSchedule`/`HabitLog` (migration v2 -> v3), `HabitDao`
+(versioned schedule, unique aktif, HabitLog <-> Activity FR-5.15),
+`core/projections/streak.dart` (golden table 11.3) dan `features/habit/*`
+(tab Aktif/Dijeda, Hari-ini/lainnya, detail + heatmap, add/edit/jeda/
+reorder/hapus) sudah ada. `features/activity/habits_panel.dart` memakai
+`HabitDao` yang sama, bukan lagi data contoh. Keuangan (schema 12-14.1,
+FR-4.1-4.17) tetap belum dikerjakan — PR terpisah.

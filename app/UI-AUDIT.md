@@ -28,6 +28,6 @@ Tanggal: 14 September 2026. Acuan: DESIGN.md, design/README.md, spesifikasi laya
 ## Gap yang tetap ada
 
 - Bobot 650/750 pada CSS tidak identik dengan FontWeight diskret dan font Segoe UI statis Flutter. Ukuran font diperbaiki; kesamaan bobot/interpolasi font secara pixel belum terjamin.
-- Timebox, Habit, Weekly Review, Sync/registrasi, binding izin/notifikasi/volume OS dan materializer/recovery lengkap tetap gap domain yang sudah ada. Pesan unavailable tidak dianggap implementasi fitur tersebut.
+- Timebox, Weekly Review, Keuangan, Sync/registrasi, binding izin/notifikasi/volume OS dan materializer/recovery lengkap tetap gap domain yang sudah ada. Habit (M4) kini punya tabel/DAO/streak/UI normatif sendiri, bukan lagi placeholder in-memory. Pesan unavailable tidak dianggap implementasi fitur tersebut.
 - Audit native bukan pengujian semua state. CourseNote, onboarding dan failure Splash diperiksa melalui kode/widget; Android/perangkat ponsel fisik belum diuji. Batas angka inline dan penyesuaian breakpoint Home terakhir diverifikasi melalui widget/build, bukan pengulangan seluruh sesi native.
 - Render widget memuat Segoe UI regular untuk pengujian; gambar widget bukan bukti bobot font native. Audit ini tidak menyatakan kesamaan pixel penuh pada fitur yang sumber domainnya belum tersedia.

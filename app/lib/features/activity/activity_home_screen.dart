@@ -18,6 +18,7 @@ import 'habits_panel.dart';
 import '../tugas/tugas_detail_screen.dart';
 import '../tugas/tugas_list_cubit.dart';
 import '../pomodoro/pomodoro_screen.dart';
+import '../habit/habit_screen.dart';
 
 class ActivityHomeScreen extends StatefulWidget {
   const ActivityHomeScreen({
@@ -113,7 +114,7 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
           (Icons.check_box, l10n.navHabit),
         ];
         Widget navItem(int i) => Tooltip(
-              message: i <= 2 ? navigation[i].$2 : l10n.featureUnavailable,
+              message: i == 3 ? l10n.featureUnavailable : navigation[i].$2,
               child: TextButton(
                 onPressed: i == 0
                     ? cubit.goToToday
@@ -130,7 +131,14 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
                                         db: widget.db,
                                         userId: widget.userId,
                                         deviceId: widget.deviceId)))
-                            : null,
+                            : i == 4
+                                ? () => Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                        builder: (_) => HabitScreen(
+                                            db: widget.db,
+                                            userId: widget.userId,
+                                            deviceId: widget.deviceId)))
+                                : null,
                 style: TextButton.styleFrom(
                   backgroundColor:
                       i == 0 ? colors.primaryContainer : Colors.transparent,
@@ -726,19 +734,14 @@ class _ActivityHomeScreenState extends State<ActivityHomeScreen> {
   Widget _sidebar(
       BuildContext context, ActivityHomeCubit cubit, AppLocalizations l10n) {
     final state = cubit.state;
-    final activeDate =
-        DateTime(state.date.year, state.date.month, state.date.day);
-    final now = tz.TZDateTime.now(tz.getLocation(cubit.timezone));
-    final isToday = activeDate.year == now.year &&
-        activeDate.month == now.month &&
-        activeDate.day == now.day;
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       _deadlinePanel(context, cubit, l10n),
       const SizedBox(height: AppSpacing.xxxl),
       HabitsPanel(
-          activeDate: activeDate,
-          isToday: isToday,
-          locale: Localizations.localeOf(context).toString()),
+          db: widget.db,
+          userId: widget.userId,
+          activeDate: state.date,
+          location: tz.getLocation(cubit.timezone)),
       const SizedBox(height: AppSpacing.xxxl),
       _WeeklyReviewSection(l10n: l10n),
     ]);

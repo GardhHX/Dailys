@@ -4,6 +4,7 @@ import '../../l10n/app_localizations.dart';
 import '../settings/settings_screen.dart';
 import '../pomodoro/pomodoro_screen.dart';
 import '../tugas/tugas_list_screen.dart';
+import '../habit/habit_screen.dart';
 
 class TugasShell extends StatelessWidget {
   const TugasShell(
@@ -34,7 +35,7 @@ class TugasShell extends StatelessWidget {
           (Icons.checklist, l10n.navHabit)
         ];
         Widget item(int i) => Tooltip(
-            message: i > 2 ? l10n.featureUnavailable : items[i].$2,
+            message: i == 3 ? l10n.featureUnavailable : items[i].$2,
             child: TextButton(
               onPressed: i == 0
                   ? () =>
@@ -55,7 +56,14 @@ class TugasShell extends StatelessWidget {
                                           db: db,
                                           userId: userId,
                                           deviceId: deviceId)))
-                              : null,
+                              : i == 4
+                                  ? () => Navigator.of(context).pushReplacement(
+                                      MaterialPageRoute(
+                                          builder: (_) => HabitScreen(
+                                              db: db,
+                                              userId: userId,
+                                              deviceId: deviceId)))
+                                  : null,
               style: TextButton.styleFrom(
                   backgroundColor: i == activeIndex
                       ? colors.primaryContainer

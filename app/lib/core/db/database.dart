@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart';
 
 import 'daos/activity_dao.dart';
+import 'daos/habit_dao.dart';
 import 'daos/mata_kuliah_dao.dart';
 import 'daos/settings_dao.dart';
 import 'daos/tugas_dao.dart';
@@ -12,6 +13,7 @@ import 'tables/converters.dart';
 import 'tables/enums.dart';
 import 'tables/m1_tables.dart';
 import 'tables/m3_tables.dart';
+import 'tables/m4_habit_tables.dart';
 
 part 'database.g.dart';
 
@@ -34,13 +36,23 @@ part 'database.g.dart';
     PomodoroSession,
     TimeboxSchedule,
     TimeboxExecution,
+    Habit,
+    HabitSchedule,
+    HabitLog,
   ],
-  daos: [SettingsDao, MataKuliahDao, TugasDao, ActivityDao, PomodoroDao],
+  daos: [
+    SettingsDao,
+    MataKuliahDao,
+    TugasDao,
+    ActivityDao,
+    PomodoroDao,
+    HabitDao
+  ],
 )
 class AppDatabase extends _$AppDatabase {
   AppDatabase(super.e);
 
-  static const currentSchemaVersion = 2;
+  static const currentSchemaVersion = 3;
 
   @override
   int get schemaVersion => currentSchemaVersion;
@@ -51,6 +63,7 @@ class AppDatabase extends _$AppDatabase {
           await m.createAll();
           await createM1Indexes(m);
           await createM3Indexes(m);
+          await createM4HabitIndexes(m);
         },
         onUpgrade: (m, from, to) async {
           if (from < 2) {
@@ -58,6 +71,12 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(timeboxSchedule);
             await m.createTable(timeboxExecution);
             await createM3Indexes(m);
+          }
+          if (from < 3) {
+            await m.createTable(habit);
+            await m.createTable(habitSchedule);
+            await m.createTable(habitLog);
+            await createM4HabitIndexes(m);
           }
         },
         beforeOpen: (details) async {
