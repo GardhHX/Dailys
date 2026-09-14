@@ -79,6 +79,26 @@ void main() {
     return id;
   }
 
+  Future<String> insertTugasWithReminders({
+    required DateTime deadline,
+    required List<TaskReminder> reminders,
+  }) async {
+    final ts = DateTime.now().toUtc();
+    final id = DeterministicId.v4();
+    await db.tugasDao.insertTugas(TugasCompanion.insert(
+      id: id,
+      createdAt: ts,
+      updatedAt: ts,
+      userId: userId,
+      judul: 'T',
+      deadline: deadline,
+      prioritas: TugasPrioritas.medium,
+      status: TugasStatus.belum,
+      reminders: TaskReminder.toJsonList(reminders),
+    ));
+    return id;
+  }
+
   test('fires a due reminder exactly once across ticks', () async {
     // deadline - 500min = now, i.e. due right now.
     await insertTugasWithReminder(minutesBefore: 500);
@@ -116,6 +136,28 @@ void main() {
     final scheduler = makeScheduler();
     await scheduler.tick();
     expect(gateway.notified, isEmpty);
+  });
+
+  test('fires a due calendar_day reminder end-to-end (default timezone '
+      'Asia/Jakarta resolution)', () async {
+    // `now` is 2026-09-14 10:00 WIB. Deadline is 7 days later at 10:00 WIB;
+    // a "days_before: 7, local_time: 10:00:00" reminder should fire exactly
+    // at `now` through the scheduler's own settings-driven tz.Location, not
+    // just through planTugasReminders in isolation (tugas_reminder_plan_test).
+    final deadline = DateTime.utc(2026, 9, 21, 3); // 2026-09-21 10:00 WIB
+    await insertTugasWithReminders(
+      deadline: deadline,
+      reminders: const [
+        CalendarDayReminder(daysBefore: 7, localTime: '10:00:00'),
+      ],
+    );
+    final scheduler = makeScheduler();
+
+    await scheduler.tick();
+    expect(gateway.notified, hasLength(1));
+
+    await scheduler.tick();
+    expect(gateway.notified, hasLength(1)); // not fired twice
   });
 
   test('completing the task stops future firing without explicit cancel', () async {
