@@ -451,7 +451,7 @@ class _FilterSortBar extends StatelessWidget {
       };
 }
 
-class _TugasTile extends StatelessWidget {
+class _TugasTile extends StatefulWidget {
   const _TugasTile({
     required this.tugas,
     required this.state,
@@ -465,6 +465,35 @@ class _TugasTile extends StatelessWidget {
   final TugasListCubit cubit;
   final AppLocalizations l10n;
   final void Function(String tugasId) onOpen;
+
+  @override
+  State<_TugasTile> createState() => _TugasTileState();
+}
+
+class _TugasTileState extends State<_TugasTile> {
+  late Stream<List<TugasChecklistRow>> _checklist;
+
+  @override
+  void initState() {
+    super.initState();
+    _checklist = widget.cubit.watchChecklist(widget.tugas.id);
+  }
+
+  @override
+  void didUpdateWidget(_TugasTile old) {
+    super.didUpdateWidget(old);
+    // Only re-subscribe when the underlying task actually changes (e.g. the
+    // tile is reused for a different id via key-less list diffing); a plain
+    // rebuild of the same task must not drop and recreate the query stream.
+    if (old.tugas.id != widget.tugas.id) {
+      _checklist = widget.cubit.watchChecklist(widget.tugas.id);
+    }
+  }
+
+  TugasRow get tugas => widget.tugas;
+  TugasListState get state => widget.state;
+  AppLocalizations get l10n => widget.l10n;
+  void Function(String tugasId) get onOpen => widget.onOpen;
 
   @override
   Widget build(BuildContext context) {
@@ -535,7 +564,7 @@ class _TugasTile extends StatelessWidget {
                           style: Theme.of(context).textTheme.bodySmall)
                     ],
                     StreamBuilder<List<TugasChecklistRow>>(
-                        stream: cubit.watchChecklist(tugas.id),
+                        stream: _checklist,
                         builder: (context, snapshot) {
                           final items =
                               snapshot.data ?? const <TugasChecklistRow>[];
